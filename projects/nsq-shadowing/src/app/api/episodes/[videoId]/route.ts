@@ -5,9 +5,9 @@ import { validateVideoId } from '@/lib/validate'
 
 export async function GET(
   _request: Request,
-  { params }: { params: { videoId: string } }
+  { params }: { params: Promise<{ videoId: string }> }
 ) {
-  const { videoId } = params
+  const { videoId } = await params
 
   if (!validateVideoId(videoId)) {
     return Response.json({ error: 'Invalid videoId' }, { status: 400 })
