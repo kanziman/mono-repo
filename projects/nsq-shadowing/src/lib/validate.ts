@@ -19,5 +19,10 @@ export function getEpisodePath(videoId: string): string {
 }
 
 export function getFilePath(videoId: string, filename: string): string {
-  return path.join(getEpisodePath(videoId), filename)
+  const episodePath = getEpisodePath(videoId)
+  const resolved = path.resolve(episodePath, filename)
+  if (!resolved.startsWith(episodePath + path.sep)) {
+    throw new Error(`Invalid filename: ${filename}`)
+  }
+  return resolved
 }
