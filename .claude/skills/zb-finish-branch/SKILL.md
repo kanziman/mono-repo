@@ -12,6 +12,11 @@ description: 구현 완료 후 통합 단계에서 프로젝트 테스트를 검
 1. `[ ]` **시작 선언**: 시작할 때 반드시 `"I'm using the zb-finish-branch skill to complete this work."`라고 선언합니다.
 2. `[ ]` **테스트 검증**:
    - `npm test` 등 프로젝트 테스트 명령어를 먼저 실행하여 모든 테스트가 통과하는지 확인합니다. 실패 시 해결하기 전까지 진행하지 않습니다.
+2-a. `[ ]` **Dev Server 스모크 테스트** (프로젝트에 `scripts/smoke-test.sh` 존재 시):
+   - `bash scripts/smoke-test.sh`를 실행합니다.
+   - 성공(exit 0) 시 다음 단계로 진행합니다.
+   - 실패(exit 1) 시 **즉시 중단**하고 로그를 사용자에게 보고합니다. 해결 전까지 머지/PR을 진행하지 않습니다.
+   - `scripts/smoke-test.sh`가 없는 프로젝트에서는 이 단계를 건너뜁니다.
 3. **PR 컨벤션 파일 확인 및 예외 처리**:
    - `.claude/guides/pr-conventions.md` 파일이 존재하는지 검사합니다.
    - **[만약 없을 경우]**: 사용자에게 `".claude/guides/pr-conventions.md 파일이 존재하지 않습니다. 표준 템플릿으로 생성하시겠습니까?"`라고 묻습니다.
