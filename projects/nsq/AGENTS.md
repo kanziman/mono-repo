@@ -17,6 +17,19 @@ This file maps agent behavior for the NSQ project. Keep details in `docs/` when 
 * Do not duplicate design tokens inside this project.
 * Use Pretendard, semantic color tokens, and `next-themes` class-based dark mode.
 
+### Monorepo Symlink Setup (필수)
+
+Turbopack root가 mono-repo root(`../..`)이므로, design-system peer deps를 mono-repo root `node_modules/`에서 찾는다.
+`npm install` 이후 또는 `node_modules` 초기화 시 반드시 아래 심링크를 생성해야 `npm run dev`가 정상 동작한다:
+
+```bash
+NSQ="$(pwd)/node_modules"   # projects/nsq/ 에서 실행
+MONO="$(pwd)/../../node_modules"
+ln -sf "$NSQ/@radix-ui"        "$MONO/@radix-ui"
+ln -sf "$NSQ/next-themes"      "$MONO/next-themes"
+ln -sf "$NSQ/react-day-picker" "$MONO/react-day-picker"
+```
+
 ## Code Style & Quality Guidelines
 
 * Refer to [DESIGN.md](docs/DESIGN.md) for detailed architecture guidelines.
