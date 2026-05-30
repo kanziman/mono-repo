@@ -33,7 +33,7 @@ export async function downloadAudio(videoUrl: string, outputDir: string): Promis
 
 export async function downloadSubtitle(videoUrl: string, outputDir: string): Promise<string> {
   const vttGlob = (dir: string) =>
-    fs.readdirSync(dir).find((f) => f.endsWith('.vtt'))
+    fs.readdirSync(dir).find((f) => f.startsWith('subtitle.') && f.endsWith('.vtt'))
 
   // Try manual English subtitles first
   try {

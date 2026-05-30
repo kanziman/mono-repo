@@ -4,9 +4,9 @@ import type { Segment } from '@/types'
 function parseTimestamp(ts: string): number {
   const parts = ts.split(':')
   if (parts.length === 3) {
-    return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseFloat(parts[2])
+    return parseInt(parts[0], 10) * 3600 + parseInt(parts[1], 10) * 60 + parseFloat(parts[2])
   }
-  return parseInt(parts[0]) * 60 + parseFloat(parts[1])
+  return parseInt(parts[0], 10) * 60 + parseFloat(parts[1])
 }
 
 function stripHtmlTags(text: string): string {
