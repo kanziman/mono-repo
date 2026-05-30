@@ -92,9 +92,9 @@ export default function TutorPanel({ videoId }: TutorPanelProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 flex-1">
+    <div className="flex flex-col h-full">
       {/* Persona tabs */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 px-3 pt-3 pb-2">
         {(['angela', 'mike', 'general'] as Persona[]).map((p) => (
           <Chip
             key={p}
@@ -108,30 +108,38 @@ export default function TutorPanel({ videoId }: TutorPanelProps) {
 
       {/* Message list */}
       <ScrollArea className="flex-1 min-h-0">
-        <div className="flex flex-col gap-2 pr-2">
-          {messages.map((msg, i) => (
-            <div
-              key={i}
-              className={['flex', msg.role === 'user' ? 'justify-end' : 'justify-start'].join(' ')}
-            >
-              <span
-                className={[
-                  'rounded-xl px-3 py-2 max-w-[80%] text-sm',
-                  msg.role === 'user'
-                    ? 'bg-primary-normal text-static-white'
-                    : 'bg-background-elevated-normal text-label-normal',
-                ].join(' ')}
+        {messages.length === 0 ? (
+          <div className="flex items-center justify-center py-12">
+            <p className="text-label-alternative text-sm text-center leading-relaxed">
+              세그먼트를 클릭하거나<br />아래 버튼을 눌러<br />AI 튜터와 대화해보세요
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-2 px-3 pr-2">
+            {messages.map((msg, i) => (
+              <div
+                key={i}
+                className={['flex', msg.role === 'user' ? 'justify-end' : 'justify-start'].join(' ')}
               >
-                {msg.content}
-              </span>
-            </div>
-          ))}
-          <div ref={bottomRef} />
-        </div>
+                <span
+                  className={[
+                    'rounded-xl px-3 py-2 max-w-[80%] text-sm',
+                    msg.role === 'user'
+                      ? 'bg-primary-normal text-static-white'
+                      : 'bg-background-elevated-normal text-label-normal',
+                  ].join(' ')}
+                >
+                  {msg.content}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+        <div ref={bottomRef} />
       </ScrollArea>
 
       {/* Quick action chips */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 px-3 pb-1">
         <Chip
           selected={false}
           onClick={() =>
@@ -157,7 +165,7 @@ export default function TutorPanel({ videoId }: TutorPanelProps) {
       </div>
 
       {/* Input area */}
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center px-3 pb-3">
         <div className="flex-1">
           <TextField
             value={input}

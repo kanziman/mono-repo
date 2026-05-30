@@ -30,17 +30,30 @@ if [ $elapsed -ge $TIMEOUT ]; then
   exit 1
 fi
 
-HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$PORT" 2>/dev/null || echo "000")
+HTML=$(curl -s -w "\n%{http_code}" "http://localhost:$PORT" 2>/dev/null || echo -e "\n000")
+HTTP_STATUS=$(echo "$HTML" | tail -1)
+HTML_BODY=$(echo "$HTML" | sed '$d')
 
 kill $DEV_PID 2>/dev/null
 wait $DEV_PID 2>/dev/null
 
-if [ "$HTTP_STATUS" = "200" ]; then
-  echo "[smoke-test] OK: dev server started and returned 200"
-  exit 0
-else
+if [ "$HTTP_STATUS" != "200" ]; then
   echo "[smoke-test] FAIL: expected 200, got $HTTP_STATUS"
   echo "--- dev server log ---"
   cat /tmp/nsq-smoke.log
   exit 1
 fi
+
+echo "[smoke-test] OK: dev server started and returned 200"
+
+# next-themes ThemeProvider 주입 스크립트 확인
+# next-themes는 FOUC 방지를 위해 <head>에 동기 스크립트를 삽입함.
+# 이 스크립트가 없으면 ThemeProvider가 렌더링에서 빠진 것임.
+if echo "$HTML_BODY" | grep -q "next-themes\|updateDOM\|localStorage.getItem"; then
+  echo "[smoke-test] OK: next-themes script injected (dark mode provider active)"
+else
+  echo "[smoke-test] WARN: next-themes script not found — ThemeProvider may be missing or dark mode may not apply"
+  echo "  → Visual check required: open http://localhost:$PORT and verify dark background"
+fi
+
+exit 0

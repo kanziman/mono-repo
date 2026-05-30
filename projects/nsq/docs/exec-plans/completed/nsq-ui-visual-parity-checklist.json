@@ -1,0 +1,31 @@
+{
+  "planName": "nsq-ui-visual-parity",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Visual fixture and Playwright screenshot harness",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "Home screen visual parity with selected v5 artifact",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "Player layout and TutorPanel visual parity with Option A",
+      "status": "done"
+    },
+    {
+      "id": "task-4",
+      "name": "Design-system semantic token compliance cleanup",
+      "status": "done"
+    },
+    {
+      "id": "task-5",
+      "name": "Final browser visual parity review with saved evidence",
+      "status": "done"
+    }
+  ]
+}

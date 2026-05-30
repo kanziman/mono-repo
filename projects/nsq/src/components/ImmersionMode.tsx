@@ -46,10 +46,10 @@ export default function ImmersionMode({ audioRef }: ImmersionModeProps) {
             ref={(el) => { itemRefs.current[seg.index] = el }}
             onClick={handleSegmentClick}
             className={[
-              'rounded-xl p-4 cursor-pointer border transition-all',
+              'rounded-xl p-2 cursor-pointer transition-all',
               isActive
-                ? 'border-primary-normal bg-background-elevated-normal'
-                : 'border-line-normal-normal bg-background-elevated-normal',
+                ? 'border-2 border-primary-normal bg-fill-strong'
+                : 'border border-line-normal-normal bg-background-elevated-normal hover:bg-fill-normal',
             ].join(' ')}
           >
             {speakerBadge && <div className="mb-1">{speakerBadge}</div>}

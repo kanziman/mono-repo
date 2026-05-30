@@ -111,9 +111,9 @@ export default function ImportPage() {
         </div>
 
         {error ? (
-          <div className="rounded-xl border border-red-400 bg-red-50 p-4 flex flex-col gap-3">
-            <p className="text-red-700 font-medium">오류가 발생했습니다</p>
-            <p className="text-red-600 text-sm">{error}</p>
+          <div className="rounded-xl border border-status-negative bg-status-negative/10 p-4 flex flex-col gap-3">
+            <p className="text-status-negative font-medium">오류가 발생했습니다</p>
+            <p className="text-status-negative/80 text-sm">{error}</p>
             <a href="/" className="text-primary-normal underline text-sm">
               홈으로 돌아가기
             </a>
