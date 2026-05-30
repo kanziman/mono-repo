@@ -1,0 +1,45 @@
+<h2><!-- 질문 제목 --></h2>
+<p class="subtitle"><!-- 마음에 드는 카드를 선택하세요 (복수 선택 가능) --></p>
+
+<div class="cards" data-multiselect="true">
+
+  <div class="card" data-choice="card-a" onclick="toggleSelect(this)">
+    <div class="card-image"><!-- 이미지 대체 텍스트 또는 mock UI --></div>
+    <div class="card-body">
+      <div class="flex items-center gap-sm mb-1">
+        <h3><!-- 카드 A 제목 --></h3>
+        <span class="badge badge-primary">추천</span><!-- 필요 없으면 삭제 -->
+      </div>
+      <p><!-- 카드 A 설명 --></p>
+      <div class="flex flex-wrap gap-sm mt-2">
+        <span class="tag tag-primary"><!-- 특징 태그 --></span>
+        <span class="tag"><!-- 특징 태그 --></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="card-b" onclick="toggleSelect(this)">
+    <div class="card-image"><!-- 이미지 대체 텍스트 또는 mock UI --></div>
+    <div class="card-body">
+      <h3 class="mb-1"><!-- 카드 B 제목 --></h3>
+      <p><!-- 카드 B 설명 --></p>
+      <div class="flex flex-wrap gap-sm mt-2">
+        <span class="tag tag-success"><!-- 특징 태그 --></span>
+        <span class="tag"><!-- 특징 태그 --></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="card-c" onclick="toggleSelect(this)">
+    <div class="card-image"><!-- 이미지 대체 텍스트 또는 mock UI --></div>
+    <div class="card-body">
+      <h3 class="mb-1"><!-- 카드 C 제목 --></h3>
+      <p><!-- 카드 C 설명 --></p>
+      <div class="flex flex-wrap gap-sm mt-2">
+        <span class="tag tag-warning"><!-- 특징 태그 --></span>
+        <span class="tag"><!-- 특징 태그 --></span>
+      </div>
+    </div>
+  </div>
+
+</div>

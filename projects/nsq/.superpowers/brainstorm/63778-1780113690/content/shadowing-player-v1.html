@@ -1,0 +1,144 @@
+<h2>② 플레이어 — 몰입 모드 vs 문장 모드</h2>
+<p class="subtitle">두 모드 중 더 자연스러운 학습 경험을 선택해 주세요</p>
+
+<div class="options mb-3" data-multiselect="false">
+  <div class="option" data-choice="immersion" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content"><h3>몰입 모드 (Immersion)</h3><p>전체 트랜스크립트를 세로 스크롤로 보며 따라 읽기</p></div>
+  </div>
+  <div class="option" data-choice="sentence" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content"><h3>문장 모드 (Sentence)</h3><p>한 문장씩 집중해서 녹음·비교 반복 훈련</p></div>
+  </div>
+</div>
+
+<div class="split">
+
+  <!-- 안 A: 몰입 모드 -->
+  <div>
+    <div class="mockup">
+      <div class="mockup-header">안 A — 몰입 모드</div>
+      <div class="mockup-body">
+
+        <!-- 상단 재생바 -->
+        <div class="mock-nav mb-2">
+          <span>⏸ #300 · Is Optimism a Choice?</span>
+          <span class="mock-nav-item active">M</span>
+        </div>
+        <div class="flex items-center gap-sm mb-3">
+          <span class="mock-chip">12:34</span>
+          <div class="placeholder" style="flex:1;height:8px;padding:0"></div>
+          <span class="mock-chip">31:22</span>
+          <span class="mock-chip">1x</span>
+        </div>
+
+        <!-- 트랜스크립트 스크롤 -->
+        <div class="mock-list">
+          <div class="mock-list-item">
+            <div>
+              <span class="badge badge-neutral">STEPHEN</span>
+              <p class="mt-1">Angela, I have a question for you. Do you consider yourself an optimist?</p>
+              <p class="mt-1" style="filter:blur(3px);cursor:pointer">당신은 자신을 낙관주의자라고 생각하나요?</p>
+            </div>
+          </div>
+          <div class="mock-list-item" style="background:var(--primary-light,#eff6ff);border-left:3px solid var(--primary,#3b82f6)">
+            <div>
+              <span class="badge badge-primary">ANGELA ▶ 현재</span>
+              <p class="mt-1"><strong>I think I'm a <mark>realistic</mark> optimist, meaning that I do believe that things will work out,</strong></p>
+              <p class="mt-1">저는 제가 현실적인 낙관주의자라고 생각해요, 즉 상황이 잘 풀릴 거라고 믿지만...</p>
+            </div>
+          </div>
+          <div class="mock-list-item" style="opacity:0.6">
+            <div>
+              <span class="badge badge-neutral">ANGELA</span>
+              <p class="mt-1">but I'm not a starry-eyed optimist who thinks everything will always be fine.</p>
+              <p class="mt-1" style="filter:blur(3px)">하지만 저는 모든 것이 항상 괜찮을 것이라고 생각하는...</p>
+            </div>
+          </div>
+          <div class="mock-list-item" style="opacity:0.6">
+            <div>
+              <span class="badge badge-neutral">STEPHEN</span>
+              <p class="mt-1">That sounds like a healthy perspective. So where does that come from?</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-sm mt-3">
+          <div class="mock-button mock-button-outline" style="flex:1">💬 AI 챗 열기</div>
+          <div class="mock-button" style="flex:1">문장 모드로 전환</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 안 B: 문장 모드 -->
+  <div>
+    <div class="mockup">
+      <div class="mockup-header">안 B — 문장 모드</div>
+      <div class="mockup-body">
+
+        <!-- 상단 재생바 -->
+        <div class="mock-nav mb-2">
+          <span>⏸ #300</span>
+          <span class="mock-nav-item active">S</span>
+        </div>
+        <div class="flex items-center gap-sm mb-3">
+          <span class="mock-chip">12:34</span>
+          <div class="placeholder" style="flex:1;height:8px;padding:0"></div>
+          <span class="mock-chip">31:22</span>
+        </div>
+
+        <!-- 세그먼트 번호 -->
+        <div class="flex items-center gap-sm mb-2">
+          <span class="badge badge-neutral">ANGELA</span>
+          <span class="badge badge-primary">42 / 142</span>
+        </div>
+
+        <!-- 현재 문장 (크게) -->
+        <div class="callout callout-info mb-3">
+          <p style="font-size:1.1em;line-height:1.7">I think I'm a <strong>realistic</strong> optimist, meaning that I do believe that things will work out,</p>
+          <p class="mt-2" style="filter:blur(4px);cursor:pointer;font-size:0.9em">저는 제가 현실적인 낙관주의자라고 생각해요... (클릭해서 보기)</p>
+        </div>
+
+        <!-- 재생/녹음 컨트롤 -->
+        <div class="flex gap-sm mb-3">
+          <div class="mock-button" style="flex:1">▶ 원본 재생</div>
+          <div class="mock-button mock-button-outline" style="flex:1">🎤 녹음</div>
+        </div>
+
+        <!-- 녹음 후 비교 (상태: 녹음 완료) -->
+        <div class="callout callout-success mb-3">
+          <div class="flex items-center gap-sm mb-1">
+            <span class="badge badge-success">녹음 완료</span>
+          </div>
+          <div class="flex gap-sm">
+            <div class="mock-button mock-button-ghost" style="flex:1">▶ 내 녹음 듣기</div>
+            <div class="mock-button mock-button-ghost" style="flex:1">🔁 다시 녹음</div>
+          </div>
+        </div>
+
+        <!-- 이전/다음 -->
+        <div class="flex gap-sm">
+          <div class="mock-button mock-button-outline" style="flex:1">← P</div>
+          <div class="mock-button mock-button-ghost" style="flex:1">Ask AI 💬</div>
+          <div class="mock-button" style="flex:1">N →</div>
+        </div>
+
+        <!-- 단축키 힌트 -->
+        <div class="flex flex-wrap gap-sm mt-3">
+          <span class="mock-chip">Space 재생</span>
+          <span class="mock-chip">R 반복</span>
+          <span class="mock-chip">T 번역</span>
+          <span class="mock-chip">M 모드 전환</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="callout callout-info mt-2">
+  <strong>기본 모드로 쓰고 싶은 쪽을 위에서 선택해 주세요.</strong> 두 모드 모두 사용 가능하고 M 키로 전환됩니다.
+</div>

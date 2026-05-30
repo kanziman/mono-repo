@@ -1,0 +1,210 @@
+<h2 style="margin-bottom:4px">NSQ 영어 학습 앱 — 레이아웃 시안</h2>
+<p style="color:var(--text-muted);margin-bottom:24px;font-size:14px">전체 화면 흐름과 레이아웃 옵션을 선택해 주세요</p>
+
+<!-- ───── SCREEN 1: 에피소드 목록 ───── -->
+<h3 style="border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:16px">① 에피소드 목록 페이지</h3>
+<div class="split" style="gap:16px;margin-bottom:32px">
+  <div class="mockup" style="flex:1">
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;font-weight:600;letter-spacing:.5px">안 A — 카드 그리드</div>
+    <div class="mock-nav" style="margin-bottom:8px">NSQ English &nbsp;|&nbsp; Episodes</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="card" data-choice="ep-card-1" onclick="toggleSelect(this)" style="padding:10px;font-size:12px">
+        <div style="font-weight:700;margin-bottom:4px">#300 · 25min</div>
+        <div style="color:var(--text-muted);font-size:11px">Is Optimism a Choice?</div>
+        <div style="margin-top:6px;height:4px;background:var(--border);border-radius:2px"><div style="width:60%;height:4px;background:#3b82f6;border-radius:2px"></div></div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px">60% 완료</div>
+      </div>
+      <div class="card" data-choice="ep-card-2" onclick="toggleSelect(this)" style="padding:10px;font-size:12px">
+        <div style="font-weight:700;margin-bottom:4px">#299 · 32min</div>
+        <div style="color:var(--text-muted);font-size:11px">Should You Follow Your Passion?</div>
+        <div style="margin-top:6px;height:4px;background:var(--border);border-radius:2px"></div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px">미시작</div>
+      </div>
+      <div class="card" style="padding:10px;font-size:12px;opacity:.6">
+        <div style="font-weight:700;margin-bottom:4px">#298 · 28min</div>
+        <div style="color:var(--text-muted);font-size:11px">Do Violent Video Games...</div>
+      </div>
+      <div class="card" style="padding:10px;font-size:12px;opacity:.6">
+        <div style="font-weight:700;margin-bottom:4px">#297 · 30min</div>
+        <div style="color:var(--text-muted);font-size:11px">Are You Responsible for...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup" style="flex:1">
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;font-weight:600;letter-spacing:.5px">안 B — 리스트 (팟캐스트 스타일)</div>
+    <div class="mock-nav" style="margin-bottom:8px">NSQ English &nbsp;|&nbsp; Episodes</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div class="card" data-choice="ep-list-1" onclick="toggleSelect(this)" style="padding:10px 12px;display:flex;align-items:center;gap:10px;font-size:12px">
+        <div style="width:36px;height:36px;background:#3b82f6;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0">▶</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700">#300 · Is Optimism a Choice?</div>
+          <div style="color:var(--text-muted);font-size:11px">25 min · 60% 완료</div>
+          <div style="margin-top:4px;height:3px;background:var(--border);border-radius:2px"><div style="width:60%;height:3px;background:#3b82f6;border-radius:2px"></div></div>
+        </div>
+      </div>
+      <div class="card" style="padding:10px 12px;display:flex;align-items:center;gap:10px;font-size:12px">
+        <div style="width:36px;height:36px;background:var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">▶</div>
+        <div>
+          <div style="font-weight:700">#299 · Should You Follow Your Passion?</div>
+          <div style="color:var(--text-muted);font-size:11px">32 min · 미시작</div>
+        </div>
+      </div>
+      <div class="card" style="padding:10px 12px;display:flex;align-items:center;gap:10px;font-size:12px;opacity:.6">
+        <div style="width:36px;height:36px;background:var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">▶</div>
+        <div>
+          <div style="font-weight:700">#298 · Do Violent Video Games...</div>
+          <div style="color:var(--text-muted);font-size:11px">28 min · 미시작</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── SCREEN 2: 에피소드 플레이어 ───── -->
+<h3 style="border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:16px">② 에피소드 플레이어 + 트랜스크립트</h3>
+<div class="mockup" style="margin-bottom:32px">
+  <!-- 상단 오디오 플레이어 -->
+  <div style="background:var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:12px;margin-bottom:12px">
+    <div style="font-size:20px">⏸</div>
+    <div style="flex:1">
+      <div style="font-size:12px;font-weight:700;margin-bottom:4px">#300 · Is Optimism a Choice?</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:10px;color:var(--text-muted)">12:34</span>
+        <div style="flex:1;height:4px;background:#555;border-radius:2px;position:relative">
+          <div style="width:40%;height:4px;background:#3b82f6;border-radius:2px"></div>
+          <div style="position:absolute;top:-4px;left:40%;width:12px;height:12px;background:#3b82f6;border-radius:50%;transform:translateX(-50%)"></div>
+        </div>
+        <span style="font-size:10px;color:var(--text-muted)">31:22</span>
+        <div style="display:flex;gap:6px;font-size:11px">
+          <span style="padding:2px 6px;background:#3b82f620;color:#3b82f6;border-radius:4px;cursor:pointer">0.75x</span>
+          <span style="padding:2px 6px;background:#3b82f640;color:#3b82f6;border-radius:4px;cursor:pointer;font-weight:700">1x</span>
+          <span style="padding:2px 6px;background:#3b82f620;color:#3b82f6;border-radius:4px;cursor:pointer">1.25x</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 트랜스크립트 -->
+  <div style="font-size:12px;line-height:1.8;max-height:180px;overflow:hidden;position:relative">
+    <p style="color:var(--text-muted)"><span style="color:var(--text-muted);font-size:10px;margin-right:6px">STEPHEN</span>Angela, I have a question for you. Do you consider yourself an optimist?</p>
+    <p style="background:#3b82f615;border-left:3px solid #3b82f6;border-radius:4px;padding:4px 8px;margin:0">
+      <span style="color:#3b82f6;font-size:10px;margin-right:6px;font-weight:700">ANGELA ▶</span>
+      <span style="background:#3b82f630;border-radius:2px;padding:1px 2px">I think I'm a</span> <span style="background:#fbbf2440;border-radius:2px;padding:1px 2px;color:#fbbf24">realistic</span> optimist, meaning that I do believe that things will work out,
+    </p>
+    <p style="color:var(--text-muted)"><span style="color:var(--text-muted);font-size:10px;margin-right:6px">ANGELA</span>but I'm not a starry-eyed optimist who thinks everything will always be fine.</p>
+    <p style="color:var(--text-muted)"><span style="color:var(--text-muted);font-size:10px;margin-right:6px">STEPHEN</span>That sounds like a healthy perspective...</p>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,var(--bg))"></div>
+  </div>
+  <!-- 하단 모드 전환 -->
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <div class="mock-button" style="flex:1;text-align:center;background:#3b82f6;color:#fff;font-size:12px">🎤 쉐도잉 시작</div>
+    <div class="mock-button" style="flex:1;text-align:center;font-size:12px">💬 AI 챗</div>
+  </div>
+</div>
+
+<!-- ───── SCREEN 3: 쉐도잉 스튜디오 ───── -->
+<h3 style="border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:16px">③ 쉐도잉 스튜디오 — 평가 결과 레이아웃</h3>
+<div class="split" style="gap:16px;margin-bottom:32px">
+  <!-- 안 A: 점수 우선 -->
+  <div class="mockup" style="flex:1">
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;font-weight:600;letter-spacing:.5px">안 A — 점수 카드 우선</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;background:var(--border);border-radius:6px;padding:8px;line-height:1.6">
+      "I think I'm a <span style="color:#ef4444;text-decoration:underline">realistic</span> optimist"
+    </div>
+    <div class="cards" style="grid-template-columns:1fr 1fr;margin-bottom:10px">
+      <div class="card" style="padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:#22c55e">92</div>
+        <div style="font-size:10px;color:var(--text-muted)">Accuracy</div>
+      </div>
+      <div class="card" style="padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:#3b82f6">85</div>
+        <div style="font-size:10px;color:var(--text-muted)">Fluency</div>
+      </div>
+      <div class="card" style="padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:#f59e0b">78</div>
+        <div style="font-size:10px;color:var(--text-muted)">Prosody</div>
+      </div>
+      <div class="card" style="padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:#22c55e">100</div>
+        <div style="font-size:10px;color:var(--text-muted)">Completeness</div>
+      </div>
+    </div>
+    <div class="card" style="padding:10px;font-size:11px;line-height:1.6">
+      <span style="font-weight:700">GPT 피드백:</span> "realistic"의 발음을 [rɪˈælɪstɪk]으로 다시 연습해 보세요. 억양이 조금 평탄합니다.
+    </div>
+  </div>
+
+  <!-- 안 B: 텍스트 비교 우선 -->
+  <div class="mockup" style="flex:1">
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;font-weight:600;letter-spacing:.5px">안 B — 텍스트 diff 우선 + 점수 보조</div>
+    <div style="font-size:12px;margin-bottom:8px;background:var(--border);border-radius:6px;padding:8px;line-height:2">
+      <span style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:4px">원문</span>
+      I think I'm a <span style="background:#fbbf2440;border-radius:3px;padding:1px 4px;color:#fbbf24">realistic</span> optimist
+    </div>
+    <div style="font-size:12px;margin-bottom:10px;background:var(--border);border-radius:6px;padding:8px;line-height:2">
+      <span style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:4px">내 발음 (STT)</span>
+      I think I'm a <span style="background:#ef444430;border-radius:3px;padding:1px 4px;color:#ef4444">realistik</span> optimist
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      <div style="flex:1;text-align:center;background:var(--border);border-radius:6px;padding:6px 4px;font-size:11px">
+        <div style="font-weight:700;color:#22c55e">92</div><div style="font-size:9px;color:var(--text-muted)">Acc</div>
+      </div>
+      <div style="flex:1;text-align:center;background:var(--border);border-radius:6px;padding:6px 4px;font-size:11px">
+        <div style="font-weight:700;color:#3b82f6">85</div><div style="font-size:9px;color:var(--text-muted)">Flu</div>
+      </div>
+      <div style="flex:1;text-align:center;background:var(--border);border-radius:6px;padding:6px 4px;font-size:11px">
+        <div style="font-weight:700;color:#f59e0b">78</div><div style="font-size:9px;color:var(--text-muted)">Pro</div>
+      </div>
+      <div style="flex:1;text-align:center;background:var(--border);border-radius:6px;padding:6px 4px;font-size:11px">
+        <div style="font-weight:700;color:#22c55e">100</div><div style="font-size:9px;color:var(--text-muted)">Com</div>
+      </div>
+    </div>
+    <div class="card" style="padding:10px;font-size:11px;line-height:1.6">
+      <span style="font-weight:700">GPT 피드백:</span> "realistic"의 어말 /k/ 발음이 약합니다. 끝을 명확히 닫아 주세요.
+    </div>
+  </div>
+</div>
+
+<!-- ───── SCREEN 4: AI 챗 ───── -->
+<h3 style="border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:16px">④ AI 챗 — General Tutor</h3>
+<div class="mockup" style="margin-bottom:32px;max-width:480px">
+  <div style="display:flex;gap:8px;margin-bottom:12px">
+    <div style="padding:4px 12px;background:#3b82f6;color:#fff;border-radius:20px;font-size:11px;font-weight:700">General Tutor</div>
+    <div style="padding:4px 12px;background:var(--border);border-radius:20px;font-size:11px">Host: Angela</div>
+    <div style="padding:4px 12px;background:var(--border);border-radius:20px;font-size:11px">Host: Stephen</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+    <div style="align-self:flex-start;background:var(--border);border-radius:12px 12px 12px 2px;padding:8px 12px;font-size:12px;max-width:80%">
+      "realistic optimist"라는 표현이 자연스럽나요? 어떤 상황에서 쓰면 좋을까요?
+    </div>
+    <div style="align-self:flex-end;background:#3b82f6;color:#fff;border-radius:12px 12px 2px 12px;padding:8px 12px;font-size:12px;max-width:80%">
+      Great question! "Realistic optimist" is indeed used in everyday English. Angela herself uses this phrase to describe her balanced worldview...
+    </div>
+    <div style="align-self:flex-start;background:var(--border);border-radius:12px 12px 12px 2px;padding:8px 12px;font-size:12px;max-width:80%">
+      "starry-eyed optimist"는 어떤 뉘앙스인가요?
+    </div>
+  </div>
+  <div class="mock-input">메시지를 입력하세요...</div>
+</div>
+
+<!-- ───── 선택 항목 ───── -->
+<h3 style="border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:16px">선호하는 레이아웃을 선택해 주세요</h3>
+<div class="options" data-multiselect style="margin-bottom:8px">
+  <div class="option" data-choice="list-card" onclick="toggleSelect(this)">
+    <strong>에피소드 목록: 카드 그리드 (안 A)</strong>
+    <p style="font-size:12px;color:var(--text-muted);margin:4px 0 0">썸네일 중심, 시각적으로 풍부</p>
+  </div>
+  <div class="option" data-choice="list-row" onclick="toggleSelect(this)">
+    <strong>에피소드 목록: 리스트 (안 B)</strong>
+    <p style="font-size:12px;color:var(--text-muted);margin:4px 0 0">팟캐스트 앱 스타일, 텍스트 중심</p>
+  </div>
+  <div class="option" data-choice="score-card" onclick="toggleSelect(this)">
+    <strong>쉐도잉 결과: 점수 카드 우선 (안 A)</strong>
+    <p style="font-size:12px;color:var(--text-muted);margin:4px 0 0">숫자 점수가 크게 보임</p>
+  </div>
+  <div class="option" data-choice="text-diff" onclick="toggleSelect(this)">
+    <strong>쉐도잉 결과: 텍스트 diff 우선 (안 B)</strong>
+    <p style="font-size:12px;color:var(--text-muted);margin:4px 0 0">원문 vs 내 발음 비교가 먼저 보임</p>
+  </div>
+</div>
+<p style="font-size:12px;color:var(--text-muted)">여러 개 선택 가능합니다. 선택 후 피드백을 텍스트로도 알려주세요.</p>

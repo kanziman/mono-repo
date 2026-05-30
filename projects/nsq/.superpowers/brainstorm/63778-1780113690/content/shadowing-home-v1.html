@@ -1,0 +1,81 @@
+<h2>① 홈 — 에피소드 목록 + 임포트</h2>
+<p class="subtitle">YouTube URL을 붙여넣어 에피소드를 가져오고, 저장된 에피소드를 이어서 학습합니다</p>
+
+<div class="mockup mb-3">
+  <div class="mockup-header">
+    <div class="mock-nav">
+      <span class="mock-nav-brand">NSQ Shadowing</span>
+      <span class="mock-nav-item active">Episodes</span>
+    </div>
+  </div>
+  <div class="mockup-body">
+
+    <!-- YouTube Import -->
+    <div class="callout callout-info mb-3">
+      <strong>새 에피소드 가져오기</strong>
+      <div class="flex gap-sm mt-2">
+        <div class="mock-input" style="flex:1">https://youtube.com/watch?v=...</div>
+        <div class="mock-button">Import</div>
+      </div>
+    </div>
+
+    <!-- Episode List -->
+    <div class="cards" data-multiselect="false">
+
+      <div class="card" data-choice="ep1" onclick="toggleSelect(this)">
+        <div class="card-image">
+          <div class="placeholder">#300 Thumbnail</div>
+        </div>
+        <div class="card-body">
+          <div class="flex items-center gap-sm mb-1">
+            <h3>#300 · Is Optimism a Choice?</h3>
+            <span class="badge badge-primary">진행중</span>
+          </div>
+          <p>25 min · Angela Duckworth, Mike Maughan</p>
+          <div class="flex flex-wrap gap-sm mt-2">
+            <span class="tag tag-primary">60% 완료</span>
+            <span class="tag">세그먼트 142개</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-choice="ep2" onclick="toggleSelect(this)">
+        <div class="card-image">
+          <div class="placeholder">#299 Thumbnail</div>
+        </div>
+        <div class="card-body">
+          <div class="flex items-center gap-sm mb-1">
+            <h3>#299 · Should You Follow Your Passion?</h3>
+            <span class="badge badge-neutral">미시작</span>
+          </div>
+          <p>32 min · Angela Duckworth, Mike Maughan</p>
+          <div class="flex flex-wrap gap-sm mt-2">
+            <span class="tag">세그먼트 201개</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-choice="ep3" onclick="toggleSelect(this)">
+        <div class="card-image">
+          <div class="placeholder">#298 Thumbnail</div>
+        </div>
+        <div class="card-body">
+          <div class="flex items-center gap-sm mb-1">
+            <h3>#298 · Do Violent Video Games Lead to Real Violence?</h3>
+            <span class="badge badge-success">완료</span>
+          </div>
+          <p>28 min · Angela Duckworth, Mike Maughan</p>
+          <div class="flex flex-wrap gap-sm mt-2">
+            <span class="tag tag-success">완료</span>
+            <span class="tag">세그먼트 178개</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="callout callout-info">
+  <strong>홈 화면이 자연스러운가요?</strong> 위 카드를 클릭해 보고 의견을 알려주세요.
+</div>

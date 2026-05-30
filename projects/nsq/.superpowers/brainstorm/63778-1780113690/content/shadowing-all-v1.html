@@ -1,0 +1,361 @@
+<style>
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .tab-bar { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 0; }
+  .tab-btn {
+    padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+    border: none; background: none; color: var(--text-muted);
+    border-bottom: 2px solid transparent; margin-bottom: -2px;
+  }
+  .tab-btn.active { color: var(--primary, #3b82f6); border-bottom-color: var(--primary, #3b82f6); }
+</style>
+
+<h2>NSQ Shadowing App — 전체 화면 시안</h2>
+<p class="subtitle">탭을 눌러 각 화면을 확인하세요</p>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('home')">① 홈</button>
+  <button class="tab-btn" onclick="showTab('player')">② 플레이어 모드 비교</button>
+  <button class="tab-btn" onclick="showTab('tutor')">③ 플레이어 + AI 튜터</button>
+  <button class="tab-btn" onclick="showTab('import')">④ 임포트 진행</button>
+</div>
+
+<!-- ① 홈 -->
+<div id="screen-home" class="screen active">
+  <p class="subtitle mb-3">YouTube URL로 에피소드를 가져오고, 저장된 에피소드에서 이어서 학습합니다</p>
+
+  <div class="mockup mb-3">
+    <div class="mockup-header">
+      <div class="mock-nav">
+        <span class="mock-nav-brand">NSQ Shadowing</span>
+        <span class="mock-nav-item active">Episodes</span>
+      </div>
+    </div>
+    <div class="mockup-body">
+      <div class="callout callout-info mb-3">
+        <strong>새 에피소드 가져오기</strong>
+        <div class="flex gap-sm mt-2">
+          <div class="mock-input" style="flex:1">https://youtube.com/watch?v=...</div>
+          <div class="mock-button">Import</div>
+        </div>
+      </div>
+      <div class="cards" data-multiselect="false">
+        <div class="card" data-choice="ep1" onclick="toggleSelect(this)">
+          <div class="card-image"><div class="placeholder">#300 Thumbnail</div></div>
+          <div class="card-body">
+            <div class="flex items-center gap-sm mb-1">
+              <h3>#300 · Is Optimism a Choice?</h3>
+              <span class="badge badge-primary">진행중</span>
+            </div>
+            <p>25 min · Angela Duckworth, Mike Maughan</p>
+            <div class="flex flex-wrap gap-sm mt-2">
+              <span class="tag tag-primary">60% 완료</span>
+              <span class="tag">세그먼트 142개</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-choice="ep2" onclick="toggleSelect(this)">
+          <div class="card-image"><div class="placeholder">#299 Thumbnail</div></div>
+          <div class="card-body">
+            <div class="flex items-center gap-sm mb-1">
+              <h3>#299 · Should You Follow Your Passion?</h3>
+              <span class="badge badge-neutral">미시작</span>
+            </div>
+            <p>32 min · Angela Duckworth, Mike Maughan</p>
+            <div class="flex flex-wrap gap-sm mt-2">
+              <span class="tag">세그먼트 201개</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-choice="ep3" onclick="toggleSelect(this)">
+          <div class="card-image"><div class="placeholder">#298 Thumbnail</div></div>
+          <div class="card-body">
+            <div class="flex items-center gap-sm mb-1">
+              <h3>#298 · Do Violent Video Games Lead to Real Violence?</h3>
+              <span class="badge badge-success">완료</span>
+            </div>
+            <p>28 min · Angela Duckworth, Mike Maughan</p>
+            <div class="flex flex-wrap gap-sm mt-2">
+              <span class="tag tag-success">완료</span>
+              <span class="tag">세그먼트 178개</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout-info">카드를 클릭해 보고 레이아웃에 대한 의견을 알려주세요.</div>
+</div>
+
+<!-- ② 플레이어 모드 비교 -->
+<div id="screen-player" class="screen">
+  <p class="subtitle mb-3">기본 모드로 어느 쪽을 선호하시나요? (M 키로 언제든 전환 가능)</p>
+
+  <div class="options mb-3" data-multiselect="false">
+    <div class="option" data-choice="immersion" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content"><h3>몰입 모드 (Immersion)</h3><p>전체 트랜스크립트 세로 스크롤 + 자동 하이라이트</p></div>
+    </div>
+    <div class="option" data-choice="sentence" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content"><h3>문장 모드 (Sentence)</h3><p>한 문장씩 집중 — 녹음·비교 반복 훈련</p></div>
+    </div>
+  </div>
+
+  <div class="split">
+    <div>
+      <div class="mockup">
+        <div class="mockup-header">안 A — 몰입 모드</div>
+        <div class="mockup-body">
+          <div class="mock-nav mb-2">
+            <span>⏸ #300 · Is Optimism a Choice?</span>
+            <span class="mock-nav-item active">M</span>
+          </div>
+          <div class="flex items-center gap-sm mb-3">
+            <span class="mock-chip">12:34</span>
+            <div class="placeholder" style="flex:1;height:8px;padding:0"></div>
+            <span class="mock-chip">31:22</span>
+            <span class="mock-chip">1x</span>
+          </div>
+          <div class="mock-list">
+            <div class="mock-list-item">
+              <div>
+                <span class="badge badge-neutral">STEPHEN</span>
+                <p class="mt-1">Angela, I have a question for you. Do you consider yourself an optimist?</p>
+                <p class="mt-1" style="filter:blur(3px)">당신은 자신을 낙관주의자라고 생각하나요?</p>
+              </div>
+            </div>
+            <div class="mock-list-item" style="background:var(--primary-light,#eff6ff);border-left:3px solid var(--primary,#3b82f6)">
+              <div>
+                <span class="badge badge-primary">ANGELA ▶ 현재</span>
+                <p class="mt-1"><strong>I think I'm a <mark>realistic</mark> optimist, meaning that I do believe that things will work out,</strong></p>
+                <p class="mt-1" style="font-size:0.9em">저는 제가 현실적인 낙관주의자라고 생각해요...</p>
+              </div>
+            </div>
+            <div class="mock-list-item" style="opacity:0.5">
+              <div>
+                <span class="badge badge-neutral">ANGELA</span>
+                <p class="mt-1">but I'm not a starry-eyed optimist who thinks everything will always be fine.</p>
+                <p class="mt-1" style="filter:blur(3px);font-size:0.9em">하지만...</p>
+              </div>
+            </div>
+            <div class="mock-list-item" style="opacity:0.5">
+              <div>
+                <span class="badge badge-neutral">STEPHEN</span>
+                <p class="mt-1">That sounds like a healthy perspective.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-sm mt-3">
+            <div class="mock-button mock-button-outline" style="flex:1">💬 AI 챗</div>
+            <div class="mock-button" style="flex:1">문장 모드 전환</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="mockup">
+        <div class="mockup-header">안 B — 문장 모드</div>
+        <div class="mockup-body">
+          <div class="mock-nav mb-2">
+            <span>⏸ #300</span>
+            <span class="mock-nav-item active">S</span>
+          </div>
+          <div class="flex items-center gap-sm mb-3">
+            <span class="mock-chip">12:34</span>
+            <div class="placeholder" style="flex:1;height:8px;padding:0"></div>
+            <span class="mock-chip">31:22</span>
+          </div>
+          <div class="flex items-center gap-sm mb-2">
+            <span class="badge badge-neutral">ANGELA</span>
+            <span class="badge badge-primary">42 / 142</span>
+          </div>
+          <div class="callout callout-info mb-3">
+            <p style="font-size:1.05em;line-height:1.7">I think I'm a <strong>realistic</strong> optimist, meaning that I do believe that things will work out,</p>
+            <p class="mt-2" style="filter:blur(4px);font-size:0.9em;cursor:pointer">번역 보기 (T)</p>
+          </div>
+          <div class="flex gap-sm mb-2">
+            <div class="mock-button" style="flex:1">▶ 원본 재생</div>
+            <div class="mock-button mock-button-outline" style="flex:1">🎤 녹음</div>
+          </div>
+          <div class="callout callout-success mb-2">
+            <div class="flex gap-sm">
+              <div class="mock-button mock-button-ghost" style="flex:1">▶ 내 녹음</div>
+              <div class="mock-button mock-button-ghost" style="flex:1">🔁 재녹음</div>
+            </div>
+          </div>
+          <div class="flex gap-sm">
+            <div class="mock-button mock-button-outline" style="flex:1">← P</div>
+            <div class="mock-button mock-button-ghost" style="flex:1">Ask AI</div>
+            <div class="mock-button" style="flex:1">N →</div>
+          </div>
+          <div class="flex flex-wrap gap-sm mt-2">
+            <span class="mock-chip">Space 재생</span>
+            <span class="mock-chip">R 반복</span>
+            <span class="mock-chip">T 번역</span>
+            <span class="mock-chip">M 전환</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 플레이어 + AI 튜터 -->
+<div id="screen-tutor" class="screen">
+  <p class="subtitle mb-3">플레이어(좌) + AI 튜터 패널(우) 2열. 좁은 화면에서 탭 전환.</p>
+
+  <div class="mockup">
+    <div class="mockup-header">
+      <div class="mock-nav">
+        <span class="mock-nav-brand">NSQ Shadowing</span>
+        <span class="mock-nav-item">#300 · Is Optimism a Choice?</span>
+        <span class="mock-nav-item active">문장 모드</span>
+      </div>
+    </div>
+    <div class="mockup-body">
+      <div class="split gap-md">
+        <div style="flex:1.2">
+          <div class="flex items-center gap-sm mb-2">
+            <span class="mock-chip">⏸ 12:34 / 31:22</span>
+            <div class="placeholder" style="flex:1;height:6px;padding:0"></div>
+            <span class="mock-chip">1x</span>
+            <span class="mock-chip">M</span>
+          </div>
+          <div class="flex items-center gap-sm mb-2">
+            <span class="badge badge-neutral">ANGELA</span>
+            <span class="badge badge-primary">42 / 142</span>
+          </div>
+          <div class="callout callout-info mb-2">
+            <p style="font-size:1.05em;line-height:1.7">I think I'm a <strong>realistic</strong> optimist, meaning that I do believe that things will work out,</p>
+            <p class="mt-1" style="filter:blur(4px);font-size:0.9em">번역 (T)</p>
+          </div>
+          <div class="flex gap-sm mb-2">
+            <div class="mock-button" style="flex:1">▶ 원본 재생</div>
+            <div class="mock-button mock-button-outline" style="flex:1">🎤 녹음</div>
+          </div>
+          <div class="callout callout-success mb-2">
+            <div class="flex gap-sm">
+              <div class="mock-button mock-button-ghost" style="flex:1">▶ 내 녹음</div>
+              <div class="mock-button mock-button-ghost" style="flex:1">🔁 재녹음</div>
+            </div>
+          </div>
+          <div class="flex gap-sm">
+            <div class="mock-button mock-button-outline" style="flex:1">← P</div>
+            <div class="mock-button mock-button-ghost" style="flex:1">Ask AI</div>
+            <div class="mock-button" style="flex:1">N →</div>
+          </div>
+        </div>
+        <div style="flex:1">
+          <div class="mock-tabs mb-2">
+            <div class="mock-tab">Angela Bot</div>
+            <div class="mock-tab">Mike Bot</div>
+            <div class="mock-tab active">General Tutor</div>
+          </div>
+          <div class="mock-list mb-2">
+            <div class="mock-list-item">
+              <div class="mock-avatar">U</div>
+              <div><p>"realistic optimist"라는 표현 자연스러운가요?</p></div>
+            </div>
+            <div class="mock-list-item" style="background:var(--primary-light,#eff6ff)">
+              <div class="mock-avatar" style="background:var(--primary,#3b82f6);color:#fff">AI</div>
+              <div><p>Great question! "Realistic optimist" is indeed used in everyday English. Angela uses it to describe a balanced worldview — optimistic about outcomes, but grounded in reality...</p></div>
+            </div>
+            <div class="mock-list-item">
+              <div class="mock-avatar">U</div>
+              <div><p>"starry-eyed"는 어떤 뉘앙스예요?</p></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-sm mb-2">
+            <span class="mock-chip">💡 이 표현 설명해줘</span>
+            <span class="mock-chip">✍ 내 문장 교정해줘</span>
+            <span class="mock-chip">💬 이 주제로 토론하자</span>
+          </div>
+          <div class="flex gap-sm">
+            <div class="mock-input" style="flex:1">메시지 입력...</div>
+            <div class="mock-button">전송</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ 임포트 진행 -->
+<div id="screen-import" class="screen">
+  <p class="subtitle mb-3">YouTube URL 입력 후 단계별 진행 상태를 보여줍니다</p>
+
+  <div class="mockup">
+    <div class="mockup-header">임포트 중 — #301 The Science of Habit Formation</div>
+    <div class="mockup-body">
+      <div class="mock-list">
+        <div class="mock-list-item">
+          <span class="badge badge-success">✓</span>
+          <div class="flex items-center gap-sm" style="flex:1">
+            <span>오디오 다운로드</span>
+            <span class="badge badge-success" style="margin-left:auto">완료</span>
+          </div>
+        </div>
+        <div class="mock-list-item">
+          <span class="badge badge-success">✓</span>
+          <div class="flex items-center gap-sm" style="flex:1">
+            <span>자막(VTT) 파싱</span>
+            <span class="badge badge-success" style="margin-left:auto">완료</span>
+          </div>
+        </div>
+        <div class="mock-list-item">
+          <span class="badge badge-primary">…</span>
+          <div style="flex:1">
+            <div class="flex items-center gap-sm mb-1">
+              <span>한국어 번역 생성</span>
+              <span class="badge badge-primary" style="margin-left:auto">68%</span>
+            </div>
+            <div style="background:var(--border);border-radius:4px;height:8px">
+              <div style="width:68%;height:8px;background:var(--primary,#3b82f6);border-radius:4px"></div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-list-item" style="opacity:0.4">
+          <span class="badge badge-neutral">4</span>
+          <span>플레이어로 이동</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning mt-3">
+    <strong>에러 발생 시</strong> — 단계별 오류 메시지와 재시도 버튼이 표시됩니다
+  </div>
+  <div class="mockup mt-2">
+    <div class="mockup-header">임포트 실패 예시</div>
+    <div class="mockup-body">
+      <div class="mock-list">
+        <div class="mock-list-item">
+          <span class="badge badge-success">✓</span>
+          <div style="flex:1"><span>오디오 다운로드</span></div>
+        </div>
+        <div class="mock-list-item">
+          <span class="badge badge-error">✗</span>
+          <div style="flex:1">
+            <div class="flex items-center gap-sm">
+              <span>자막(VTT) 파싱</span>
+              <span class="badge badge-error" style="margin-left:auto">실패</span>
+            </div>
+            <p class="mt-1" style="font-size:0.85em;color:var(--text-muted)">자동 생성 자막만 있습니다. 정확도가 낮을 수 있습니다.</p>
+            <div class="mock-button mock-button-outline mt-1" style="display:inline-block;font-size:12px">자동 자막으로 재시도</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>

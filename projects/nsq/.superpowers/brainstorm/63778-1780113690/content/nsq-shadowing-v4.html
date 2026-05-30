@@ -1,0 +1,450 @@
+<style>
+  * { box-sizing: border-box; }
+
+  .tab-bar { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 2px solid #334155; }
+  .tab-btn {
+    padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+    border: none; background: none; color: #94a3b8;
+    border-bottom: 2px solid transparent; margin-bottom: -2px;
+  }
+  .tab-btn.active { color: #60a5fa; border-bottom-color: #60a5fa; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── Layout ── */
+  .two-col { display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+
+  /* ── Episode card ── */
+  .ep-card {
+    display: flex; gap: 12px; align-items: center;
+    padding: 12px 14px; border-radius: 8px;
+    background: #1e293b; border: 1px solid #334155; margin-bottom: 10px;
+  }
+  .ep-thumb {
+    width: 72px; height: 48px; border-radius: 6px; background: #334155;
+    display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .ep-title { font-weight: 600; font-size: 14px; color: #f1f5f9; margin-bottom: 4px; }
+  .ep-sub { font-size: 12px; color: #94a3b8; }
+  .ep-prog { margin-top: 6px; height: 3px; background: #334155; border-radius: 2px; }
+  .ep-prog-fill { height: 100%; background: #3b82f6; border-radius: 2px; }
+  .ep-btn {
+    padding: 6px 14px; border-radius: 6px; background: transparent;
+    border: 1px solid #3b82f6; color: #60a5fa; font-size: 12px; font-weight: 600;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* ── Import bar ── */
+  .import-bar {
+    display: flex; gap: 8px; margin-bottom: 24px;
+    padding: 10px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+  }
+  .url-input {
+    flex: 1; background: #0f172a; border: 1px solid #475569; border-radius: 6px;
+    padding: 9px 12px; color: #94a3b8; font-size: 13px;
+  }
+  .import-btn {
+    padding: 9px 18px; background: #3b82f6; color: #fff; border: none;
+    border-radius: 6px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap;
+  }
+
+  /* ── Player controls ── */
+  .player-controls {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; background: #1e293b; border: 1px solid #334155;
+    border-radius: 8px; margin-bottom: 12px;
+  }
+  .ctrl-btn {
+    padding: 6px 12px; border-radius: 5px; font-size: 12px; font-weight: 700;
+    background: #334155; color: #e2e8f0; cursor: pointer; border: none; white-space: nowrap;
+  }
+  .ctrl-btn.primary { background: #3b82f6; color: #fff; }
+  .ctrl-prog { flex: 1; height: 4px; background: #334155; border-radius: 2px; }
+  .ctrl-prog-fill { height: 100%; background: #3b82f6; border-radius: 2px; }
+  .ctrl-time { font-size: 11px; color: #94a3b8; white-space: nowrap; }
+  .mode-badge {
+    font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 4px; letter-spacing: 0.5px; flex-shrink: 0;
+  }
+  .badge-immersion { background: #1d4ed8; color: #bfdbfe; }
+  .badge-sentence   { background: #7c3aed; color: #ddd6fe; }
+
+  /* ── Segment list ── */
+  .seg-list {
+    overflow-y: auto; max-height: 360px;
+    border: 1px solid #334155; border-radius: 8px; padding: 6px;
+  }
+  .seg-item { padding: 10px 12px; border-radius: 6px; margin-bottom: 3px; border-left: 3px solid transparent; }
+  .seg-item.active { background: #1e3a5f; border-left-color: #3b82f6; }
+  .seg-ts { font-size: 10px; color: #64748b; margin-bottom: 4px; font-family: monospace; }
+  /* v4: 비활성 세그먼트 텍스트 밝게 (#cbd5e1 → #dde4ef) */
+  .seg-text { font-size: 13px; color: #dde4ef; line-height: 1.6; }
+  .seg-item.active .seg-text { color: #f8fafc; font-weight: 600; }
+  .seg-xlat {
+    font-size: 12px; color: #94a3b8; margin-top: 5px; cursor: pointer;
+    filter: blur(5px); transition: filter 0.2s; user-select: none; line-height: 1.5;
+  }
+  .seg-xlat.show { filter: none; }
+
+  /* ── v4: 화자 뱃지 ── */
+  .spk {
+    display: inline-block; font-size: 10px; font-weight: 800;
+    padding: 1px 7px; border-radius: 4px; margin-right: 6px;
+    vertical-align: middle; white-space: nowrap;
+  }
+  .spk-angela { background: #0c2f52; color: #7dd3fc; border: 1px solid #1e4a7a; }
+  .spk-mike   { background: #431407; color: #fdba74; border: 1px solid #7c2d12; }
+
+  /* ── Sentence card ── */
+  .sentence-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 32px 24px; text-align: center;
+    background: #1e293b; border: 1px solid #334155; border-radius: 10px; margin-bottom: 12px;
+    min-height: 280px;
+  }
+  .sent-idx { font-size: 11px; color: #64748b; margin-bottom: 14px; font-family: monospace; }
+  .sent-main { font-size: 19px; font-weight: 600; color: #f8fafc; line-height: 1.65; margin-bottom: 18px; max-width: 480px; }
+  .sent-xlat { font-size: 14px; color: #94a3b8; filter: blur(5px); cursor: pointer; transition: filter 0.2s; line-height: 1.6; }
+  .sent-xlat.show { filter: none; }
+  .sent-hint { font-size: 11px; color: #475569; margin-top: 6px; }
+  .sent-actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; justify-content: center; }
+  .sent-btn { padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
+  .sent-btn.primary { background: #3b82f6; color: #fff; }
+  .sent-btn.outline { background: transparent; border: 1px solid #475569; color: #cbd5e1; }
+  .sent-btn.ghost   { background: transparent; border: 1px solid #334155; color: #475569; }
+  .sent-nav { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+  .nav-btn { padding: 8px 18px; border-radius: 7px; font-size: 12px; font-weight: 600; background: #334155; color: #e2e8f0; cursor: pointer; border: none; }
+  .sent-counter { font-size: 13px; color: #64748b; }
+
+  /* ── AI Tutor ── */
+  .tutor-panel {
+    background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+    display: flex; flex-direction: column; height: 520px;
+  }
+  .tutor-hdr { padding: 12px 14px; border-bottom: 1px solid #334155; flex-shrink: 0; }
+  .tutor-title { font-size: 13px; font-weight: 700; color: #f8fafc; margin-bottom: 8px; }
+  .persona-tabs { display: flex; gap: 4px; }
+  .ptab {
+    flex: 1; text-align: center; padding: 6px 4px; font-size: 11px; font-weight: 700;
+    border-radius: 6px; cursor: pointer; border: 1px solid #334155; color: #94a3b8; background: transparent;
+  }
+  .ptab.active { background: #3b82f6; color: #fff; border-color: transparent; }
+  .tutor-body { flex: 1; overflow-y: auto; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+  .bubble { max-width: 88%; padding: 9px 12px; border-radius: 10px; font-size: 13px; line-height: 1.55; color: #e2e8f0; }
+  .bubble.ai   { background: #0f172a; align-self: flex-start; border-bottom-left-radius: 2px; }
+  .bubble.user { background: #1d4ed8; color: #dbeafe; align-self: flex-end; border-bottom-right-radius: 2px; }
+  .quick-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 14px; border-top: 1px solid #334155; flex-shrink: 0; }
+  .qchip {
+    font-size: 11px; padding: 5px 10px; border-radius: 20px;
+    background: #1e3a5f; color: #60a5fa; cursor: pointer; border: 1px solid #1d4ed8; white-space: nowrap;
+  }
+  .tutor-input-row { display: flex; gap: 6px; padding: 10px 14px; border-top: 1px solid #334155; flex-shrink: 0; }
+  .tutor-input {
+    flex: 1; padding: 8px 10px; border-radius: 6px; font-size: 12px;
+    background: #0f172a; border: 1px solid #334155; color: #e2e8f0; outline: none;
+  }
+  .tutor-send { padding: 8px 14px; border-radius: 6px; background: #3b82f6; color: #fff; font-weight: 700; font-size: 12px; cursor: pointer; border: none; }
+
+  /* ── Import steps ── */
+  .import-card {
+    background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px;
+  }
+  .step-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid #1e293b; }
+  .step-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .step-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .s-done   { background: #14532d; }
+  .s-active { background: #1e3a5f; }
+  .s-wait   { background: #0f172a; border: 1px solid #334155; }
+  .step-label { font-size: 14px; font-weight: 600; color: #f8fafc; margin-bottom: 3px; }
+  .step-sub   { font-size: 12px; color: #94a3b8; }
+  .prog-bar { height: 6px; background: #0f172a; border-radius: 3px; margin-top: 10px; }
+  .prog-fill { height: 100%; border-radius: 3px; background: #3b82f6; }
+
+  /* ── Misc ── */
+  .callout { padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-top: 12px; }
+  .callout-info { background: #1e3a5f; border: 1px solid #1d4ed8; color: #bfdbfe; }
+  .callout-warn { background: #431407; border: 1px solid #7c2d12; color: #fed7aa; }
+  .section-label { font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
+  .top-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .top-title { font-size: 14px; font-weight: 700; color: #f8fafc; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mode-switch-btn { padding: 5px 11px; border-radius: 5px; background: transparent; border: 1px solid #334155; color: #94a3b8; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+</style>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('home',this)">① 홈</button>
+  <button class="tab-btn" onclick="showTab('import',this)">② 임포트</button>
+  <button class="tab-btn" onclick="showTab('immersion',this)">③ 몰입 모드</button>
+  <button class="tab-btn" onclick="showTab('sentence',this)">④ 문장 모드</button>
+</div>
+
+<!-- ① HOME -->
+<div id="screen-home" class="screen active">
+  <h2 style="font-size:22px;font-weight:800;color:#f8fafc;margin-bottom:4px">NSQ Shadowing</h2>
+  <p style="color:#94a3b8;font-size:14px;margin-bottom:22px">No Stupid Questions 팟캐스트로 영어 쉐도잉 연습</p>
+
+  <div class="import-bar">
+    <div class="url-input">https://www.youtube.com/watch?v=...</div>
+    <button class="import-btn">▶ Import</button>
+  </div>
+
+  <div class="section-label">저장된 에피소드</div>
+
+  <div class="ep-card">
+    <div class="ep-thumb">🎙</div>
+    <div style="flex:1;min-width:0">
+      <div class="ep-title">Ep.302 — Does Thinking Make It So?</div>
+      <div class="ep-sub">1:12:44 &nbsp;·&nbsp; 마지막 재생: 18분 32초</div>
+      <div class="ep-prog"><div class="ep-prog-fill" style="width:26%"></div></div>
+    </div>
+    <button class="ep-btn">▶ 재생</button>
+  </div>
+  <div class="ep-card">
+    <div class="ep-thumb">🎙</div>
+    <div style="flex:1;min-width:0">
+      <div class="ep-title">Ep.298 — The Science of Habits</div>
+      <div class="ep-sub">58:21 &nbsp;·&nbsp; 완료 ✓</div>
+      <div class="ep-prog"><div class="ep-prog-fill" style="width:100%;background:#22c55e"></div></div>
+    </div>
+    <button class="ep-btn">▶ 재생</button>
+  </div>
+  <div class="ep-card">
+    <div class="ep-thumb">🎙</div>
+    <div style="flex:1;min-width:0">
+      <div class="ep-title">Ep.291 — Why Do We Procrastinate?</div>
+      <div class="ep-sub">1:04:09 &nbsp;·&nbsp; 아직 시작 안 함</div>
+      <div class="ep-prog"><div class="ep-prog-fill" style="width:0%"></div></div>
+    </div>
+    <button class="ep-btn">▶ 재생</button>
+  </div>
+
+  <div class="callout callout-info">
+    <strong>단축키</strong> &nbsp; Space 재생/정지 &nbsp;·&nbsp; 반복 R &nbsp;·&nbsp; 다음 N &nbsp;·&nbsp; 이전 P &nbsp;·&nbsp; 번역 토글 T &nbsp;·&nbsp; 모드 전환 M
+  </div>
+</div>
+
+<!-- ② IMPORT -->
+<div id="screen-import" class="screen">
+  <h2 style="font-size:20px;font-weight:800;color:#f8fafc;margin-bottom:6px">에피소드 임포트 중…</h2>
+  <p style="color:#f8fafc;font-size:14px;font-weight:700;margin-bottom:2px">Ep.302 — Does Thinking Make It So?</p>
+  <p style="color:#64748b;font-size:12px;margin-bottom:24px;font-family:monospace">youtube.com/watch?v=abc123XYZ01</p>
+
+  <div class="import-card">
+    <div class="step-row">
+      <div class="step-icon s-done">✅</div>
+      <div>
+        <div class="step-label">오디오 다운로드</div>
+        <div class="step-sub">audio.mp3 저장 완료 (87.4 MB)</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon s-done">✅</div>
+      <div>
+        <div class="step-label">자막 파싱</div>
+        <div class="step-sub">영어 수동 자막 발견 · 342개 세그먼트 추출 완료</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon s-active">⏳</div>
+      <div style="flex:1">
+        <div class="step-label">한국어 번역 생성</div>
+        <div class="step-sub" style="margin-bottom:2px">Google Gemini Flash · 청크 4 / 7 처리 중…</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+          <div class="prog-bar" style="flex:1"><div class="prog-fill" style="width:57%"></div></div>
+          <span style="font-size:14px;font-weight:800;color:#60a5fa;white-space:nowrap">57%</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-row" style="opacity:.4">
+      <div class="step-icon s-wait">4</div>
+      <div>
+        <div class="step-label">완료 → 플레이어로 이동</div>
+        <div class="step-sub">번역 완료 후 자동 이동</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-warn">
+    ⚠️ &nbsp;<strong>번역 완료 후 플레이어로 자동 이동합니다.</strong> 이 탭을 닫지 마세요.
+  </div>
+</div>
+
+<!-- ③ IMMERSION -->
+<div id="screen-immersion" class="screen">
+  <div class="two-col">
+    <div style="display:flex;flex-direction:column;">
+      <div class="top-bar">
+        <span class="top-title">Ep.302 — Does Thinking Make It So?</span>
+        <span class="mode-badge badge-immersion">몰입</span>
+        <button class="mode-switch-btn">모드 전환 M</button>
+      </div>
+      <div class="player-controls">
+        <button class="ctrl-btn">◀ 이전</button>
+        <button class="ctrl-btn primary">⏸ 정지</button>
+        <button class="ctrl-btn">다음 ▶</button>
+        <button class="ctrl-btn">반복 R</button>
+        <div class="ctrl-prog"><div class="ctrl-prog-fill" style="width:25%"></div></div>
+        <span class="ctrl-time">18:32 / 1:12:44</span>
+      </div>
+      <div class="seg-list">
+        <!-- #41 Mike -->
+        <div class="seg-item">
+          <div class="seg-ts">#41 · 18:10–18:18</div>
+          <div class="seg-text">
+            <span class="spk spk-mike">Mike</span>
+            And I think that's exactly what Angela is getting at, right?
+          </div>
+          <div class="seg-xlat show">그게 바로 Angela가 말하려는 요점이라고 생각해요, 맞죠?</div>
+        </div>
+        <!-- #42 Angela -->
+        <div class="seg-item">
+          <div class="seg-ts">#42 · 18:18–18:26</div>
+          <div class="seg-text">
+            <span class="spk spk-angela">Angela</span>
+            The belief that you can change is itself a powerful force for change.
+          </div>
+          <div class="seg-xlat">변할 수 있다는 믿음 자체가 변화의 강력한 원동력이 됩니다.</div>
+        </div>
+        <!-- #43 Angela — active -->
+        <div class="seg-item active">
+          <div class="seg-ts">#43 · 18:26–18:41 &nbsp;▶ 재생 중</div>
+          <div class="seg-text">
+            <span class="spk spk-angela">Angela</span>
+            So if you walk around telling yourself you're not a math person, you're probably going to stop trying.
+          </div>
+          <div class="seg-xlat show">그러니 스스로 수학을 못하는 사람이라고 되뇌이면, 결국 노력 자체를 포기하게 되죠.</div>
+        </div>
+        <!-- #44 Angela -->
+        <div class="seg-item">
+          <div class="seg-ts">#44 · 18:41–18:52</div>
+          <div class="seg-text">
+            <span class="spk spk-angela">Angela</span>
+            But if you believe effort matters, you'll keep going even when it's hard.
+          </div>
+          <div class="seg-xlat">노력이 중요하다고 믿는다면, 힘들어도 계속 나아가게 됩니다.</div>
+        </div>
+        <!-- #45 Mike -->
+        <div class="seg-item">
+          <div class="seg-ts">#45 · 18:52–19:05</div>
+          <div class="seg-text">
+            <span class="spk spk-mike">Mike</span>
+            That's the whole growth mindset argument in a nutshell.
+          </div>
+          <div class="seg-xlat">성장형 사고방식 논리를 한 문장으로 요약하면 바로 그거예요.</div>
+        </div>
+        <!-- #46 Angela -->
+        <div class="seg-item">
+          <div class="seg-ts">#46 · 19:05–19:17</div>
+          <div class="seg-text">
+            <span class="spk spk-angela">Angela</span>
+            Mike, have you ever caught yourself using a fixed mindset label on yourself?
+          </div>
+          <div class="seg-xlat">Mike, 스스로에게 고정형 사고방식 딱지를 붙인 적이 있나요?</div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#475569;margin-top:8px;text-align:center">번역 클릭 또는 T키로 개별 공개</p>
+    </div>
+
+    <div class="tutor-panel">
+      <div class="tutor-hdr">
+        <div class="tutor-title">🤖 AI Tutor</div>
+        <div class="persona-tabs">
+          <div class="ptab active">Angela Bot</div>
+          <div class="ptab">Mike Bot</div>
+          <div class="ptab">General</div>
+        </div>
+      </div>
+      <div class="tutor-body">
+        <div class="bubble ai">안녕하세요! Angela Duckworth입니다. 오늘 에피소드에서 궁금한 표현이 있으면 편하게 물어보세요 😊</div>
+        <div class="bubble user">"fixed mindset label"이 무슨 뜻이에요?</div>
+        <div class="bubble ai">"Fixed mindset label"은 자신에 대해 변하지 않는다고 규정짓는 딱지예요. 예를 들어 "나는 원래 수학을 못해"처럼요. Carol Dweck 연구에서 나온 개념이에요!</div>
+      </div>
+      <div class="quick-chips">
+        <div class="qchip">💡 이 표현 설명해줘</div>
+        <div class="qchip">✍ 내 문장 교정해줘</div>
+        <div class="qchip">💬 이 주제로 토론하자</div>
+      </div>
+      <div class="tutor-input-row">
+        <input class="tutor-input" placeholder="질문을 입력하세요…" />
+        <button class="tutor-send">전송</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ SENTENCE -->
+<div id="screen-sentence" class="screen">
+  <div class="two-col">
+    <div style="display:flex;flex-direction:column;">
+      <div class="top-bar">
+        <span class="top-title">Ep.302 — Does Thinking Make It So?</span>
+        <span class="mode-badge badge-sentence">문장</span>
+        <button class="mode-switch-btn">모드 전환 M</button>
+      </div>
+      <div class="player-controls">
+        <button class="ctrl-btn primary">⏸ 정지</button>
+        <button class="ctrl-btn">반복 R</button>
+        <div class="ctrl-prog"><div class="ctrl-prog-fill" style="width:36%"></div></div>
+        <span class="ctrl-time">18:32 / 1:12:44</span>
+      </div>
+
+      <div class="sentence-card">
+        <div class="sent-idx"># 43 &nbsp;/&nbsp; 342 세그먼트 &nbsp;·&nbsp; 18:26 – 18:41</div>
+        <div style="margin-bottom:12px"><span class="spk spk-angela" style="font-size:12px;padding:3px 10px">Angela</span></div>
+        <div class="sent-main">"So if you walk around telling yourself you're not a math person, you're probably going to stop trying."</div>
+        <div class="sent-xlat">그러니 스스로 수학을 못하는 사람이라고 되뇌이면, 결국 노력 자체를 포기하게 되죠.</div>
+        <div class="sent-hint">T키 또는 클릭으로 번역 공개</div>
+        <div class="sent-actions">
+          <button class="sent-btn primary">▶ 원본 재생</button>
+          <button class="sent-btn outline">🎙 녹음 시작</button>
+          <button class="sent-btn ghost" title="녹음 후 활성화">▶ 내 녹음</button>
+        </div>
+        <div class="sent-nav">
+          <button class="nav-btn">◀ 이전 P</button>
+          <span class="sent-counter">43 / 342</span>
+          <button class="nav-btn">다음 N ▶</button>
+        </div>
+      </div>
+
+      <div class="callout callout-info" style="display:flex;align-items:center;gap:12px">
+        <span style="flex:1">이 문장에 대해 AI에게 바로 물어보기</span>
+        <button style="padding:7px 14px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">🤖 Ask AI</button>
+      </div>
+    </div>
+
+    <div class="tutor-panel">
+      <div class="tutor-hdr">
+        <div class="tutor-title">🤖 AI Tutor</div>
+        <div class="persona-tabs">
+          <div class="ptab">Angela Bot</div>
+          <div class="ptab active">Mike Bot</div>
+          <div class="ptab">General</div>
+        </div>
+      </div>
+      <div class="tutor-body">
+        <div class="bubble ai">Hey! I'm Mike. What's on your mind about this episode? 🙌</div>
+        <div class="bubble user">Ask AI: "So if you walk around telling yourself you're not a math person…"</div>
+        <div class="bubble ai">Great line! This is about self-labeling — when we define ourselves by our limits. Those labels become self-fulfilling. Try rephrasing it in your own words?</div>
+      </div>
+      <div class="quick-chips">
+        <div class="qchip">💡 이 표현 설명해줘</div>
+        <div class="qchip">✍ 내 문장 교정해줘</div>
+        <div class="qchip">💬 이 주제로 토론하자</div>
+      </div>
+      <div class="tutor-input-row">
+        <input class="tutor-input" placeholder="질문을 입력하세요…" />
+        <button class="tutor-send">전송</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+document.querySelectorAll('.seg-xlat, .sent-xlat').forEach(el => {
+  el.addEventListener('click', () => el.classList.toggle('show'));
+});
+</script>
