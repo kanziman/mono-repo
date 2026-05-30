@@ -1,0 +1,21 @@
+{
+  "planName": "player-layout-fix",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "page.tsx TutorPanel 래퍼 폭 확장 (w-80 → w-[420px], flex flex-col, overflow-hidden)",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "TutorPanel.tsx 메시지 영역 유동 높이 (flex-1, ScrollArea h-64 → flex-1 min-h-0)",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "ImmersionMode.tsx 세그먼트 카드 시각 구분 (p-4 추가, border+bg 변경)",
+      "status": "done"
+    }
+  ]
+}

@@ -135,7 +135,7 @@ function PlayerContent() {
         </div>
 
         {/* Tutor panel - fixed right side */}
-        <div className="w-80 border-l border-line-normal-normal overflow-auto">
+        <div className="w-[420px] flex flex-col border-l border-line-normal-normal overflow-hidden flex-shrink-0">
           <TutorPanel videoId={videoId} />
         </div>
       </div>

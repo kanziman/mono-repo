@@ -18,7 +18,7 @@ export default function ImmersionMode({ audioRef }: ImmersionModeProps) {
   }, [currentIndex])
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 p-4">
       {segments.map((seg) => {
         const isActive = seg.index === currentIndex
 
@@ -49,7 +49,7 @@ export default function ImmersionMode({ audioRef }: ImmersionModeProps) {
               'rounded-xl p-4 cursor-pointer border transition-all',
               isActive
                 ? 'border-primary-normal bg-background-elevated-normal'
-                : 'border-transparent bg-background-normal-normal',
+                : 'border-line-normal-normal bg-background-elevated-normal',
             ].join(' ')}
           >
             {speakerBadge && <div className="mb-1">{speakerBadge}</div>}
