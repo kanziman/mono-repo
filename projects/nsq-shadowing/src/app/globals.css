@@ -1,0 +1,6 @@
+@import "../../../../design-system/globals.css";
+
+body {
+  background: var(--semantic-background-normal-normal);
+  color: var(--semantic-label-normal);
+}
