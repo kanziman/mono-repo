@@ -1,0 +1,21 @@
+{
+  "planName": "feedback-loop-layers",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "postinstall 심링크 스크립트 생성 (setup-symlinks.sh + package.json)",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "dev server 스모크 테스트 스크립트 생성 (smoke-test.sh)",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "zb-finish-branch 스킬에 스모크 테스트 단계(2-a) 추가",
+      "status": "done"
+    }
+  ]
+}
