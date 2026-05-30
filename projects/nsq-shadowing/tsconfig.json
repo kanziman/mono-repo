@@ -24,6 +24,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@ds": [
+        "../../design-system/components"
       ]
     },
     "target": "ES2017"
