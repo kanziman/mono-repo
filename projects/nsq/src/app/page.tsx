@@ -17,8 +17,6 @@ export default function Home() {
   const [urlError, setUrlError] = useState<string | undefined>(undefined)
   const [episodes, setEpisodes] = useState<EpisodeMeta[]>([])
   const [loading, setLoading] = useState(true)
-  const [importing, setImporting] = useState(false)
-
   useEffect(() => {
     fetch('/api/episodes')
       .then((res) => res.json())
@@ -29,38 +27,14 @@ export default function Home() {
       .catch(() => setLoading(false))
   }, [])
 
-  async function handleImport() {
+  function handleImport() {
     setUrlError(undefined)
     const videoId = extractVideoId(url)
     if (!videoId) {
       setUrlError('올바른 YouTube URL을 입력하세요')
       return
     }
-
-    setImporting(true)
-    try {
-      const res = await fetch('/api/import', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ videoId }),
-      })
-
-      if (res.status === 409) {
-        setUrlError('이미 임포트 중입니다')
-        return
-      }
-
-      if (res.ok) {
-        router.push('/import/' + videoId)
-        return
-      }
-
-      setUrlError('임포트 요청에 실패했습니다')
-    } catch {
-      setUrlError('임포트 요청에 실패했습니다')
-    } finally {
-      setImporting(false)
-    }
+    router.push('/import/' + videoId)
   }
 
   return (
@@ -89,8 +63,6 @@ export default function Home() {
               variant="solid"
               color="primary"
               onClick={handleImport}
-              loading={importing}
-              disabled={importing}
             >
               임포트
             </Button>
