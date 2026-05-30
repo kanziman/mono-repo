@@ -1,21 +1,21 @@
 # NSQ Shadowing App — Implementation Plan
 
-Date: 2026-05-30  
-Source Design: `projects/fervent/docs/design-docs/nsq-shadowing-design.md`  
+Date: 2026-05-30
+Source Design: `projects/fervent/docs/design-docs/nsq-shadowing-design.md`
 App Root: `projects/nsq-shadowing/`
 
 ---
 
 ## 개요
 
-YouTube "No Stupid Questions" 팟캐스트 영상 기반 영어 쉐도잉 로컬 웹앱.  
-Next.js 14 (App Router) + TypeScript + TailwindCSS 스택으로 구현.
+YouTube "No Stupid Questions" 팟캐스트 영상 기반 영어 쉐도잉 로컬 웹앱.
+Next.js 16 (App Router) + TypeScript + TailwindCSS 스택으로 구현.
 
 ---
 
 ## Task 1: 프로젝트 부트스트랩
 
-**목표**: Next.js 14 앱 초기화, 의존성 설치, 기본 설정 완료
+**목표**: Next.js 16 앱 초기화, 의존성 설치, 기본 설정 완료
 
 ### Step 1: 테스트 파일 작성 (실패 예정)
 
@@ -45,8 +45,8 @@ cd projects/nsq-shadowing && npx vitest run src/__tests__/setup.test.ts
 ### Step 3: 구현
 
 ```bash
-# Next.js 14 앱 생성 (App Router, TypeScript, TailwindCSS, ESLint 포함)
-cd projects && npx create-next-app@14 nsq-shadowing \
+# Next.js 16 앱 생성 (App Router, TypeScript, TailwindCSS, ESLint 포함)
+cd projects && npx create-next-app@16 nsq-shadowing \
   --typescript --tailwind --eslint --app --no-src-dir=false \
   --import-alias "@/*"
 
@@ -126,7 +126,7 @@ curl -L "https://github.com/orioncactus/pretendard/releases/latest/download/Pret
   -o src/fonts/PretendardVariable.woff2
 ```
 
-`projects/nsq-shadowing/tailwind.config.ts` 수정 — fontFamily 추가:
+`projects/nsq-shadowing/tailwind.config.mjs` 수정 — fontFamily 추가:
 
 ```ts
 import type { Config } from 'tailwindcss'
@@ -157,7 +157,7 @@ cd projects/nsq-shadowing && npx vitest run src/__tests__/setup.test.ts
 
 ```bash
 git add projects/nsq-shadowing/
-git commit -m "chore: bootstrap nsq-shadowing Next.js 14 app with TailwindCSS and vitest"
+git commit -m "chore: bootstrap nsq-shadowing Next.js 16 app with TailwindCSS and vitest"
 ```
 
 ---
@@ -1137,11 +1137,11 @@ export async function GET(
 import type { Message, Persona, Segment } from '@/types'
 
 const PERSONA_PROMPTS: Record<Persona, string> = {
-  angela: `You are Angela Duckworth Bot — a warm, intellectually curious tutor channeling Angela Duckworth's research on grit and perseverance. 
+  angela: `You are Angela Duckworth Bot — a warm, intellectually curious tutor channeling Angela Duckworth's research on grit and perseverance.
 Help the user understand English expressions from the No Stupid Questions podcast. Be encouraging and insightful.`,
-  mike: `You are Mike Maughan Bot — conversational, witty, and practical tutor. 
+  mike: `You are Mike Maughan Bot — conversational, witty, and practical tutor.
 Help the user practice English by explaining expressions, cultural context, and conversational nuance from the podcast.`,
-  general: `You are a friendly English language tutor specializing in podcast content. 
+  general: `You are a friendly English language tutor specializing in podcast content.
 Help the user understand, practice, and improve their English speaking skills.`,
 }
 

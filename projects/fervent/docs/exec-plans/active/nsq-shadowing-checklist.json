@@ -4,8 +4,8 @@
   "tasks": [
     {
       "id": "task-1",
-      "name": "프로젝트 부트스트랩 — Next.js 14 + TailwindCSS + Vitest + Pretendard 초기화",
-      "status": "in-progress"
+      "name": "프로젝트 부트스트랩 — Next.js 16 + TailwindCSS + Vitest + Pretendard 초기화",
+      "status": "done"
     },
     {
       "id": "task-2",

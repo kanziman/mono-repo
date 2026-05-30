@@ -1,7 +1,7 @@
-const sharedConfig = require("../../design-system/tailwind.config.ts").default;
+import sharedConfig from "../../design-system/tailwind.config.ts";
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   presets: [sharedConfig],
   darkMode: "class",
   content: [
@@ -17,3 +17,5 @@ module.exports = {
   },
   plugins: [],
 };
+
+export default config;
