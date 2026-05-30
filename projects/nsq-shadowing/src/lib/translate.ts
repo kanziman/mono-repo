@@ -24,19 +24,24 @@ export function buildTranslationPrompt(segments: Segment[]): string {
 }
 
 async function callOpenRouter(prompt: string): Promise<string[]> {
+  const apiKey = process.env.OPENROUTER_API_KEY
+  if (!apiKey) throw new Error('OPENROUTER_API_KEY environment variable is not set')
   const model = process.env.TRANSLATION_MODEL ?? 'google/gemini-flash-1.5'
   const res = await fetch(OPENROUTER_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model,
       messages: [{ role: 'user', content: prompt }],
     }),
   })
-  if (!res.ok) throw new Error(`OpenRouter API error: ${res.status}`)
+  if (!res.ok) {
+    const body = await res.text()
+    throw new Error(`OpenRouter API error: ${res.status} ${body}`)
+  }
   const data = await res.json() as { choices: { message: { content: string } }[] }
   const content = data.choices[0].message.content.trim()
   const jsonMatch = content.match(/\[[\s\S]*\]/)
@@ -49,7 +54,7 @@ export async function translateChunk(
   chunkIndex: number,
   checkpointDir: string
 ): Promise<string[]> {
-  const checkpointPath = path.join(checkpointDir, `translate_chunk_${chunkIndex}`)
+  const checkpointPath = path.join(checkpointDir, `translate_chunk_${chunkIndex}.json`)
 
   if (fs.existsSync(checkpointPath)) {
     return JSON.parse(fs.readFileSync(checkpointPath, 'utf-8')) as string[]
