@@ -117,6 +117,15 @@ function PlayerContent() {
     onM: () => dispatch({ type: 'TOGGLE_MODE' }),
   })
 
+  const handleRepeat = () => {
+    const seg = state.segments[state.currentIndex]
+    if (seg && audioRef.current) {
+      audioRef.current.currentTime = seg.start
+      audioRef.current.play().catch(() => { })
+      dispatch({ type: 'SET_PLAYING', payload: true })
+    }
+  }
+
   function formatTime(s: number) {
     const m = Math.floor(s / 60)
     const sec = Math.floor(s % 60)

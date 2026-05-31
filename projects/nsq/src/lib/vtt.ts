@@ -51,12 +51,40 @@ export function vttToSegments(vtt: string): Segment[] {
     }
   }
 
-  // Remove consecutive duplicate text segments
+  // Deduplicate rolling-window VTT subtitles.
+  // YouTube auto-subs produce a 2-line sliding window, e.g.:
+  //   ["A B C D", "A B C D E F", "D E F", "D E F G H I", ...]
+  // Two passes:
+  //   1. Containment: if prev contains curr → skip; if curr contains prev → replace prev
+  //   2. Suffix-prefix: if last ≥4 words of prev == first ≥4 words of curr → skip curr
+  function normalize(t: string): string {
+    return t.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim()
+  }
+
+  function suffixPrefixOverlap(prevWords: string[], currWords: string[], minOverlap = 4): boolean {
+    const max = Math.min(prevWords.length, currWords.length)
+    for (let n = max; n >= minOverlap; n--) {
+      if (prevWords.slice(-n).join(' ') === currWords.slice(0, n).join(' ')) return true
+    }
+    return false
+  }
+
   const deduped: Segment[] = []
   for (const seg of raw) {
-    if (deduped.length === 0 || deduped[deduped.length - 1].text !== seg.text) {
+    if (deduped.length === 0) {
       deduped.push(seg)
+      continue
     }
+    const prev = deduped[deduped.length - 1]
+    const pn = normalize(prev.text)
+    const cn = normalize(seg.text)
+
+    if (pn === cn) continue
+    if (pn.includes(cn)) continue
+    if (cn.includes(pn)) { deduped[deduped.length - 1] = seg; continue }
+    if (suffixPrefixOverlap(pn.split(' '), cn.split(' '))) continue
+
+    deduped.push(seg)
   }
 
   return deduped.map((seg, idx) => ({ ...seg, index: idx }))

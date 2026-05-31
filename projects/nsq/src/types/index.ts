@@ -23,6 +23,18 @@ export type Persona = 'angela' | 'mike' | 'general'
 
 export type ImportStep = 'download' | 'subtitle' | 'translate'
 
+export type StepStatus = 'pending' | 'in_progress' | 'done' | 'error'
+
+export interface IncompleteEpisodeEntry {
+  videoId: string
+  complete: false
+  steps: { download: StepStatus; subtitle: StepStatus; translate: StepStatus }
+  error: string | null
+  startedAt: string
+}
+
+export type EpisodeEntry = (EpisodeMeta & { complete: true }) | IncompleteEpisodeEntry
+
 export interface ImportProgress {
   step: ImportStep
   progress: number

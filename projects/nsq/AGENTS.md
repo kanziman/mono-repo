@@ -21,6 +21,16 @@ This file maps agent behavior for the NSQ project. Keep details in `docs/` when 
 * Preserve Tailwind base numeric spacing semantics. Use `ds-*` spacing utilities only when exact design-system pixel tokens are required.
 * When editing shared Tailwind config or design-system primitives, run browser visual checks that measure rendered dimensions for affected controls.
 
+### Frontend Design Priority
+
+UI/UX 구현, 리팩토링, 리뷰 시 다음 우선순위를 적용한다.
+
+1. `../../design-system/` — 프로젝트의 최상위 기준. 토큰, 컴포넌트, Tailwind 설정을 우선 사용한다.
+2. `frontend-design` — `design-system/`에 없는 레이아웃/상호작용 판단을 보완한다.
+3. `web-design-guidelines` — 최종 UI 품질, 접근성, 사용성 리뷰 체크리스트로 사용한다.
+
+충돌 시 항상 더 높은 우선순위의 기준을 따른다.
+
 ### Monorepo Symlink Setup (필수)
 
 Turbopack root가 mono-repo root(`../..`)이므로, design-system peer deps를 mono-repo root `node_modules/`에서 찾는다.

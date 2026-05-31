@@ -106,7 +106,7 @@ export async function translateAllSegments(
 
   // Clean up checkpoints
   for (let i = 0; i < chunks.length; i++) {
-    const p = path.join(checkpointDir, `translate_chunk_${i}`)
+    const p = path.join(checkpointDir, `translate_chunk_${i}.json`)
     if (fs.existsSync(p)) fs.unlinkSync(p)
   }
 

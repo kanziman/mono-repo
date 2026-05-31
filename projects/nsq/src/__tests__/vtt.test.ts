@@ -57,4 +57,28 @@ describe('vttToSegments', () => {
     const segments = vttToSegments(SAMPLE_VTT)
     segments.forEach((seg) => expect(seg.translation).toBe(''))
   })
+
+  it('포함 관계인 연속 세그먼트를 제거한다 (롤링 윈도우 VTT)', () => {
+    const rolling = `WEBVTT
+
+00:00:01.000 --> 00:00:02.000
+Hello how are you
+
+00:00:02.000 --> 00:00:04.000
+Hello how are you doing today
+
+00:00:04.000 --> 00:00:06.000
+doing today
+
+00:00:06.000 --> 00:00:08.000
+doing today nice to meet you
+`
+    const segments = vttToSegments(rolling)
+    // "Hello how are you" 는 "Hello how are you doing today"에 포함 → 교체됨
+    // "doing today"는 "Hello how are you doing today"에 포함 → 제거됨
+    // "doing today nice to meet you"는 포함관계 없음 → 유지됨
+    expect(segments).toHaveLength(2)
+    expect(segments[0].text).toBe('Hello how are you doing today')
+    expect(segments[1].text).toBe('doing today nice to meet you')
+  })
 })

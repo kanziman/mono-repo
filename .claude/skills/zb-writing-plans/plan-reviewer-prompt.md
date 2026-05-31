@@ -15,6 +15,14 @@ Use this prompt template when dispatching a plan reviewer subagent to check comp
 2. **체크리스트 JSON 규격 검증**: JSON 파일이 `planName`, `status`, `tasks` (id, name, status 포함) 필드를 스키마에 맞게 보유하고 있는가?
 3. **모호성 및 플레이스홀더 검사**: 계획서 본문에 `TODO`, `TBD`, `추후 채워 넣음` 등의 미완성 내용이 없는가?
 4. **TDD 흐름의 명확성**: 각 태스크별로 실패 테스트 작성 -> 실패 검증 -> 최소 구현 -> 성공 검증 -> 커밋 단계가 구체적인 코드 예시 및 실제 셸 명령어와 함께 기술되었는가?
+5. **Source artifact traceability**: 사용자가 mockup/prototype/screenshot/design option을 선택한 경우 계획서가 정확한 artifact path와 selected option을 명시하고, 구현 범위를 exact reproduction, scoped subset, intentional deviation 중 하나로 고정했는가?
+6. **Visual contract completeness**: UI/UX/product 작업의 layout regions, dimensions, states, theme behavior, responsive targets가 측정 가능하며, expected screenshots 또는 browser checks가 specific routes에 연결되어 있는가?
+7. **Verification matrix**: 모든 visual/product requirement가 implementation files와 verification evidence에 매핑되어 있고, UI 작업이 포함된 경우 checklist JSON에 visual parity/review tasks가 포함되어 있는가?
+
+## Reject if
+- 계획서가 "improve UI", "match design", "adjust layout" 또는 유사한 모호한 표현만 사용한다.
+- 선택된 visual artifact가 존재하지만 visual contract로 변환되지 않았다.
+- UI 작업을 tests alone으로 완료 처리할 수 있다.
 
 ## 출력 형식
 
