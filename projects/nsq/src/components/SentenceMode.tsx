@@ -1,12 +1,19 @@
 'use client'
 
 import React, { useRef, useState, useEffect } from 'react'
-import { Button } from '@ds'
+import { Button, Badge } from '@ds'
 import { usePlayer } from '@/context/PlayerContext'
 
 interface SentenceModeProps {
   audioRef: React.RefObject<HTMLAudioElement>
   videoId: string
+}
+
+function formatTs(s: number | undefined) {
+  if (s == null || isNaN(s)) return '--:--'
+  const m = Math.floor(s / 60)
+  const sec = Math.floor(s % 60)
+  return `${m}:${sec.toString().padStart(2, '0')}`
 }
 
 const isRecordingSupported =
@@ -16,6 +23,8 @@ export default function SentenceMode({ audioRef, videoId: _videoId }: SentenceMo
   const { state, dispatch } = usePlayer()
   const { segments, currentIndex, showTranslation } = state
   const seg = segments[currentIndex]
+  const prevSeg = segments[currentIndex - 1]
+  const nextSeg = segments[currentIndex + 1]
 
   const [isRecording, setIsRecording] = useState(false)
   const [recordedUrl, setRecordedUrl] = useState<string | null>(null)
