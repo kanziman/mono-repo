@@ -92,53 +92,54 @@ export default function TutorPanel({ videoId }: TutorPanelProps) {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-background-normal-normal">
       {/* Header: title + persona tabs */}
-      <div className="px-3 pt-3 pb-2 border-b border-[#334155] flex-shrink-0">
-        <p className="text-[13px] font-bold text-[#f8fafc] mb-2">🤖 AI Tutor</p>
-        <div className="flex gap-1">
+      <div className="px-4 py-4 border-b border-line-normal-normal flex-shrink-0 flex flex-col gap-3">
+        <p className="text-body2 font-bold text-label-normal">🤖 AI Tutor</p>
+        <div className="flex gap-1 bg-background-normal-alternative border border-line-solid-normal p-1 rounded-lg">
           {(['angela', 'mike', 'general'] as Persona[]).map((p) => (
-            <button
+            <Button
               key={p}
-              onClick={() => dispatch({ type: 'SET_PERSONA', payload: p })}
+              variant={persona === p ? 'solid' : 'outlined'}
+              color={persona === p ? 'primary' : 'assistive'}
+              size="small"
               className={[
-                'flex-1 text-center py-1.5 text-[11px] font-bold rounded cursor-pointer border transition-colors',
-                persona === p
-                  ? 'bg-[#3b82f6] text-white border-transparent'
-                  : 'bg-transparent text-[#94a3b8] border-[#334155] hover:border-[#475569]',
+                'flex-1 text-center font-bold transition-all',
+                persona === p ? '' : 'border-transparent text-label-alternative'
               ].join(' ')}
+              onClick={() => dispatch({ type: 'SET_PERSONA', payload: p })}
             >
               {p === 'angela' ? 'Angela Bot' : p === 'mike' ? 'Mike Bot' : 'General'}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
       {/* Message list */}
-      <ScrollArea className="flex-1 min-h-0">
+      <ScrollArea className="flex-1 min-h-0 bg-background-normal-alternative">
         {messages.length === 0 ? (
-          <div className="flex items-center justify-center py-12">
-            <p className="text-label-alternative text-sm text-center leading-relaxed">
-              세그먼트를 클릭하거나<br />아래 버튼을 눌러<br />AI 튜터와 대화해보세요
+          <div className="flex items-center justify-center py-20 px-6">
+            <p className="text-label-assistive text-body2 text-center leading-relaxed">
+              세그먼트를 클릭하거나<br />아래 버튼을 눌러<br />AI 튜터와 대화해보세요.
             </p>
           </div>
         ) : (
-          <div className="flex flex-col gap-2 px-3 pr-2">
+          <div className="flex flex-col gap-3 px-4 py-4 pr-3">
             {messages.map((msg, i) => (
               <div
                 key={i}
-                className={['flex', msg.role === 'user' ? 'justify-end' : 'justify-start'].join(' ')}
+                className={['flex w-full', msg.role === 'user' ? 'justify-end' : 'justify-start'].join(' ')}
               >
-                <span
+                <div
                   className={[
-                    'rounded-xl px-3 py-2 max-w-[80%] text-sm',
+                    'rounded-2xl px-4 py-2.5 max-w-[85%] text-body2 leading-relaxed shadow-normal-xsmall transition-all',
                     msg.role === 'user'
-                      ? 'bg-primary-normal text-static-white'
-                      : 'bg-background-elevated-normal text-label-normal',
+                      ? 'bg-primary-normal text-white border border-transparent'
+                      : 'bg-background-elevated-normal text-label-normal border border-line-normal-normal',
                   ].join(' ')}
                 >
                   {msg.content}
-                </span>
+                </div>
               </div>
             ))}
           </div>
@@ -147,7 +148,7 @@ export default function TutorPanel({ videoId }: TutorPanelProps) {
       </ScrollArea>
 
       {/* Quick action chips */}
-      <div className="flex flex-wrap gap-2 px-3 pb-1">
+      <div className="flex flex-wrap gap-2 px-4 py-3 bg-background-normal-normal border-t border-line-normal-normal flex-shrink-0">
         <Chip
           selected={false}
           onClick={() =>
@@ -173,7 +174,7 @@ export default function TutorPanel({ videoId }: TutorPanelProps) {
       </div>
 
       {/* Input area */}
-      <div className="flex gap-2 items-center px-3 pb-3">
+      <div className="flex gap-2 items-center px-4 pb-4 pt-2 bg-background-normal-normal flex-shrink-0">
         <div className="flex-1">
           <TextField
             value={input}
@@ -181,6 +182,7 @@ export default function TutorPanel({ videoId }: TutorPanelProps) {
             onKeyDown={handleKeyDown}
             disabled={isStreaming}
             placeholder="메시지 입력..."
+            className="w-full"
           />
         </div>
         <Button
@@ -188,6 +190,7 @@ export default function TutorPanel({ videoId }: TutorPanelProps) {
           color="primary"
           onClick={() => sendMessage(input)}
           disabled={isStreaming || !input.trim()}
+          className="flex-shrink-0 h-10 px-4"
         >
           전송
         </Button>

@@ -6,7 +6,7 @@
 
 현재 구현 중이거나 검증이 진행 중인 계획서입니다.
 
-없음
+- [ ] [nsq-import-resume-progress-plan.md](active/nsq-import-resume-progress-plan.md) — 2026-05-31 시작 | 미완성 에피소드 재개 + 다운로드·자막 진행률 표시 | todo
 
 ## 🏁 완료된 계획 (Completed Plans)
 
@@ -21,3 +21,5 @@
 | 2026-05-31 | **[nsq-ui-visual-parity-plan.md](completed/nsq-ui-visual-parity-plan.md)** | Playwright 스크린샷 하네스 구축, Home/Player v5·Option A 시각 정합성, 시맨틱 토큰 전환, 브라우저 증거 캡처 완료 | `[x] 완료` |
 | 2026-05-31 | **[nsq-ui-import-player-fix-plan.md](completed/nsq-ui-import-player-fix-plan.md)** | Import bar raw input 정렬 수정, Player controls bar + mode badge 추가, segment list 컨테이너 스타일, TutorPanel 타이틀 | `[x] 완료` |
 | 2026-05-31 | **[design-system-tailwind-base-spacing-plan.md](completed/design-system-tailwind-base-spacing-plan.md)** | Tailwind numeric spacing 기본 스케일 복구, `ds-*` spacing 토큰 네임스페이스, base-key collision audit, Button 치수 회귀 테스트 | `[x] 완료` |
+| 2026-05-31 | **[nsq-inline-import-redesign-plan.md](completed/nsq-inline-import-redesign-plan.md)** | UI 버그 3종 수정, 인라인 임포트 진행카드, 유튜브 썸네일 다운로드, 재개 가능 임포트(import-state.json + import.log) | `[x] 완료` |
+| 2026-05-31 | **[player-solid-dark-plan.md](completed/player-solid-dark-plan.md)** | Player 페이지 솔리드 다크 테마 개편 완료 | `[x] 완료` |

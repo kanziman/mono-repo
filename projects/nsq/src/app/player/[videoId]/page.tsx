@@ -65,7 +65,7 @@ function PlayerContent() {
     const audio = audioRef.current
     if (!audio) return
     if (state.isPlaying) {
-      audio.play().catch(() => {})
+      audio.play().catch(() => { })
     } else {
       audio.pause()
     }
@@ -107,7 +107,7 @@ function PlayerContent() {
       const seg = state.segments[state.currentIndex]
       if (seg && audioRef.current) {
         audioRef.current.currentTime = seg.start
-        audioRef.current.play().catch(() => {})
+        audioRef.current.play().catch(() => { })
         dispatch({ type: 'SET_PLAYING', payload: true })
       }
     },
@@ -125,59 +125,131 @@ function PlayerContent() {
 
   return (
     <div className="flex flex-col h-screen bg-background-normal-normal">
-      {/* Header */}
-      <header className="flex items-center gap-2 px-4 py-[10px] bg-[#1e293b] border-b border-[#334155]">
-        <span className="flex-1 min-w-0 text-sm font-bold text-[#f8fafc] truncate">
-          {meta?.title ?? '로딩 중...'}
-        </span>
-        <span className={[
-          'text-[11px] font-extrabold px-[10px] py-[3px] rounded flex-shrink-0',
-          state.mode === 'immersion'
-            ? 'bg-[#1d4ed8] text-[#bfdbfe]'
-            : 'bg-[#7c3aed] text-[#ddd6fe]',
-        ].join(' ')}>
-          {state.mode === 'immersion' ? '몰입' : '문장'}
-        </span>
-        <Button variant="outlined" color="assistive" size="small" onClick={() => dispatch({ type: 'TOGGLE_MODE' })}>
-          모드 전환
-        </Button>
-      </header>
-
-      {/* Player controls bar */}
-      <div className="flex items-center gap-2 px-4 py-2 bg-[#1e293b] border-b border-[#334155] flex-shrink-0">
-        <button
-          className="px-3 py-1.5 rounded text-xs font-bold bg-[#334155] text-[#e2e8f0] hover:bg-[#475569] transition-colors whitespace-nowrap"
-          onClick={() => dispatch({ type: 'PREV' })}
-        >◀ 이전</button>
-        <button
-          className="px-3 py-1.5 rounded text-xs font-bold bg-[#3b82f6] text-white hover:bg-[#2563eb] transition-colors whitespace-nowrap"
-          onClick={() => dispatch({ type: 'TOGGLE_PLAY' })}
-        >{state.isPlaying ? '⏸ 정지' : '▶ 재생'}</button>
-        <button
-          className="px-3 py-1.5 rounded text-xs font-bold bg-[#334155] text-[#e2e8f0] hover:bg-[#475569] transition-colors whitespace-nowrap"
-          onClick={() => dispatch({ type: 'NEXT' })}
-        >다음 ▶</button>
-        <button
-          className="px-3 py-1.5 rounded text-xs font-bold bg-[#334155] text-[#e2e8f0] hover:bg-[#475569] transition-colors whitespace-nowrap"
-          onClick={() => {
-            const seg = state.segments[state.currentIndex]
-            if (seg && audioRef.current) {
-              audioRef.current.currentTime = seg.start
-              audioRef.current.play().catch(() => {})
-              dispatch({ type: 'SET_PLAYING', payload: true })
-            }
-          }}
-        >반복 R</button>
-        <div className="flex-1 h-1 bg-[#334155] rounded mx-1 overflow-hidden">
-          <div
-            className="h-full bg-[#3b82f6] rounded"
-            style={{ width: duration > 0 ? `${(currentTime / duration) * 100}%` : '0%' }}
-          />
+      {/* Redesigned Solid Dark Header compliant with Design System */}
+      <header className="bg-background-elevated-normal border-b border-line-normal-normal flex-shrink-0 flex items-center justify-between px-6 py-4 z-10 shadow-normal-small">
+        {/* Left Side: Back Navigation & Episode Title */}
+        <div className="flex flex-col gap-1 max-w-[40%]">
+          <button 
+            onClick={() => router.push('/')} 
+            className="flex items-center gap-1.5 text-caption1 text-label-assistive hover:text-primary-normal transition-colors"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            대시보드로 돌아가기
+          </button>
+          <span className="text-headline1 text-label-normal font-bold truncate">
+            {meta?.title ?? '로딩 중...'}
+          </span>
         </div>
-        <span className="text-[11px] text-[#94a3b8] whitespace-nowrap font-mono flex-shrink-0">
-          {formatTime(currentTime)} / {formatTime(duration)}
-        </span>
-      </div>
+
+        {/* Center: Inline Audio Controls & Progress Bar */}
+        <div className="flex items-center gap-3 bg-background-normal-normal border border-line-solid-normal px-4 py-1.5 rounded-full shadow-normal-small">
+          <Button
+            variant="outlined"
+            color="assistive"
+            size="small"
+            iconOnly
+            className="rounded-full !w-8 !h-8 border-transparent"
+            onClick={() => dispatch({ type: 'PREV' })}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="19 20 9 12 19 4 19 20"></polygon>
+              <line x1="5" y1="19" x2="5" y2="5"></line>
+            </svg>
+          </Button>
+          
+          <Button
+            variant="solid"
+            color="primary"
+            size="small"
+            iconOnly
+            className="rounded-full !w-9 !h-9 shadow-normal-medium"
+            onClick={() => dispatch({ type: 'TOGGLE_PLAY' })}
+          >
+            {state.isPlaying ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            )}
+          </Button>
+          
+          <Button
+            variant="outlined"
+            color="assistive"
+            size="small"
+            iconOnly
+            className="rounded-full !w-8 !h-8 border-transparent"
+            onClick={() => dispatch({ type: 'NEXT' })}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="5 4 15 12 5 20 5 4"></polygon>
+              <line x1="19" y1="5" x2="19" y2="19"></line>
+            </svg>
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="assistive"
+            size="small"
+            iconOnly
+            className="rounded-full !w-8 !h-8 border-transparent"
+            onClick={handleRepeat}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+            </svg>
+          </Button>
+
+          <div className="flex flex-col gap-1 w-[200px]">
+            <div className="h-1 bg-fill-normal rounded-full overflow-hidden">
+              <div
+                className="h-full bg-primary-normal rounded-full transition-all duration-100"
+                style={{ width: duration > 0 ? `${(currentTime / duration) * 100}%` : '0%' }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-[10px] text-label-assistive font-mono">
+              <span>{formatTime(currentTime)}</span>
+              {state.segments.length > 0 && (
+                <span className="text-primary-normal font-semibold">
+                  {state.currentIndex + 1} / {state.segments.length}
+                </span>
+              )}
+              <span>{formatTime(duration)}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side: Mode Switcher */}
+        <div className="header-right">
+          <div className="flex gap-1 bg-background-normal-alternative border border-line-solid-normal p-1 rounded-lg">
+            <Button
+              variant={state.mode === 'immersion' ? 'solid' : 'outlined'}
+              color={state.mode === 'immersion' ? 'primary' : 'assistive'}
+              size="small"
+              className={state.mode === 'immersion' ? '' : 'border-transparent text-label-alternative'}
+              onClick={() => { if (state.mode !== 'immersion') dispatch({ type: 'TOGGLE_MODE' }) }}
+            >
+              몰입 모드
+            </Button>
+            <Button
+              variant={state.mode === 'sentence' ? 'solid' : 'outlined'}
+              color={state.mode === 'sentence' ? 'primary' : 'assistive'}
+              size="small"
+              className={state.mode === 'sentence' ? '' : 'border-transparent text-label-alternative'}
+              onClick={() => { if (state.mode !== 'sentence') dispatch({ type: 'TOGGLE_MODE' }) }}
+            >
+              문장 모드
+            </Button>
+          </div>
+        </div>
+      </header>
 
       {/* Main content area */}
       <div className="flex flex-1 overflow-hidden">

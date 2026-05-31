@@ -24,7 +24,7 @@ export default function ImmersionMode({ audioRef }: ImmersionModeProps) {
   }, [currentIndex])
 
   return (
-    <div className="bg-[#1e293b] border border-[#334155] rounded-lg p-1.5 m-4 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 180px)' }}>
+    <div className="flex flex-col gap-3 p-4">
       {segments.map((seg) => {
         const isActive = seg.index === currentIndex
 
@@ -40,38 +40,57 @@ export default function ImmersionMode({ audioRef }: ImmersionModeProps) {
           dispatch({ type: 'TOGGLE_TRANSLATION', payload: seg.index })
         }
 
-        const speakerLabel = seg.text.startsWith('Angela')
-          ? <span className="inline-block text-[10px] font-extrabold px-[7px] py-[1px] rounded mr-1.5 align-middle bg-[#0c2f52] text-[#7dd3fc] border border-[#1e4a7a]">Angela</span>
-          : seg.text.startsWith('Mike')
-          ? <span className="inline-block text-[10px] font-extrabold px-[7px] py-[1px] rounded mr-1.5 align-middle bg-[#431407] text-[#fdba74] border border-[#7c2d12]">Mike</span>
-          : null
-
         return (
           <div
             key={seg.index}
             ref={(el) => { itemRefs.current[seg.index] = el }}
             onClick={handleSegmentClick}
             className={[
-              'px-3 py-2.5 rounded mb-0.5 cursor-pointer transition-colors border-l-[3px]',
+              'cursor-pointer transition-all border rounded-xl p-5 relative overflow-hidden',
               isActive
-                ? 'bg-[#1e3a5f] border-l-[#3b82f6]'
-                : 'bg-transparent border-l-transparent hover:bg-[#1a2744]',
+                ? 'bg-primary-normal/5 border-primary-normal shadow-normal-medium'
+                : 'bg-background-elevated-normal border-line-normal-normal hover:border-primary-normal/30 shadow-normal-xsmall hover:shadow-normal-small',
             ].join(' ')}
           >
-            <div className="text-[10px] text-[#64748b] font-mono mb-1">
-              #{seg.index + 1} · {formatTs(seg.start)}–{formatTs(seg.end)}
-              {isActive && <span className="ml-2">▶ 재생 중</span>}
+            {/* Active left highlight bar */}
+            {isActive && (
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary-normal rounded-r" />
+            )}
+
+            <div className="flex items-center gap-2 mb-2">
+              <span className={[
+                'text-caption1 font-mono font-bold tabular-nums px-2 py-0.5 rounded',
+                isActive ? 'bg-primary-normal/10 text-primary-normal' : 'bg-fill-normal text-label-assistive',
+              ].join(' ')}>
+                #{seg.index + 1}
+              </span>
+              <span className="text-caption1 font-mono text-label-assistive">
+                {formatTs(seg.start)} – {formatTs(seg.end)}
+              </span>
+              {isActive && (
+                <span className="flex items-center gap-1.5 text-caption1 text-status-positive font-semibold ml-auto">
+                  <span className="w-1.5 h-1.5 rounded-full bg-status-positive animate-pulse" />
+                  재생 중
+                </span>
+              )}
             </div>
-            <p className={isActive ? 'text-[#f8fafc] font-semibold text-sm leading-relaxed' : 'text-[#e2e8f0] text-sm leading-relaxed'}>
-              {speakerLabel}{seg.text}
+
+            <p className={[
+              'leading-relaxed',
+              isActive
+                ? 'text-headline2 text-label-normal font-semibold'
+                : 'text-body1 text-label-normal',
+            ].join(' ')}>
+              <SpeakerBadge text={seg.text} />
+              {seg.text}
             </p>
             <p
               onClick={handleTranslationClick}
               className={[
-                'text-[12px] mt-1 cursor-pointer leading-relaxed transition-all select-none',
+                'text-body2 mt-2 cursor-pointer leading-relaxed transition-all select-none',
                 showTranslation[seg.index]
-                  ? 'text-[#7dd3fc]'
-                  : 'text-[#94a3b8] blur-sm hover:blur-none',
+                  ? 'text-primary-normal blur-none font-medium'
+                  : 'text-label-assistive blur-sm hover:blur-none',
               ].join(' ')}
             >
               {seg.translation}

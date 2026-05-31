@@ -1,0 +1,31 @@
+{
+  "planName": "player-solid-dark",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Redesign the Player Page Layout Header",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "Redesign Immersion Mode Segment List",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "Redesign Sentence Mode & Recorder Panel",
+      "status": "done"
+    },
+    {
+      "id": "task-4",
+      "name": "Redesign AI Tutor Panel",
+      "status": "done"
+    },
+    {
+      "id": "task-5",
+      "name": "AGENTS.md Updates and Visual Regression Test Validation",
+      "status": "done"
+    }
+  ]
+}

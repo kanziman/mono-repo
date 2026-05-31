@@ -41,6 +41,7 @@ ln -sf "$NSQ/react-day-picker" "$MONO/react-day-picker"
 ### 📐 설계 및 제품 스펙 (Design & Spec)
 * **[docs/GOAL.md](docs/GOAL.md)**: 앱 전체 기능 요건, 핵심 유저 플로우(유튜브 임포트, 재생 화면, AI 튜터 채팅).
 * **[docs/DESIGN.md](docs/DESIGN.md)**: 폴더 구조, Context API 상태 관리, HTTP Range 오디오 스트리밍, Next.js 라우팅 패턴 설계.
+* **[docs/design-docs/player-solid-dark-design.md](docs/design-docs/player-solid-dark-design.md)**: Player 페이지 솔리드 다크 테마(Solid Dark Theme) 설계 사양서.
 * **[../../design-system/DESIGN.md](../../design-system/DESIGN.md)**: 공통 디자인 시스템 컴포넌트 사용 가이드라인 및 시맨틱 디자인 토큰 명세.
 
 ### 🛡️ 안정성 및 보안 (Reliability & Security)
