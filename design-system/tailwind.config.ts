@@ -8,7 +8,15 @@ const config: Config = {
     './app/**/*.{ts,tsx}',
   ],
   theme: {
+    // Keep Tailwind's numeric spacing scale intact. Design-system pixel spacing
+    // lives under ds-* keys so h-8, p-4, and gap-10 retain Tailwind base
+    // semantics. Intentional base-key extensions below are audited by
+    // projects/nsq/src/__tests__/design-system-tailwind-config.test.ts.
     extend: {
+      // Intentional Tailwind base-key extensions:
+      // - colors: semantic design tokens
+      // - fontSize/fontFamily: design typography system
+      // - borderRadius/boxShadow/zIndex/motion: shared component primitives
       colors: {
         primary: {
           normal:  'var(--semantic-primary-normal)',
@@ -156,23 +164,23 @@ const config: Config = {
       },
 
       spacing: {
-        0:  'var(--spacing-0)',
-        2:  'var(--spacing-2)',
-        4:  'var(--spacing-4)',
-        6:  'var(--spacing-6)',
-        8:  'var(--spacing-8)',
-        10: 'var(--spacing-10)',
-        12: 'var(--spacing-12)',
-        16: 'var(--spacing-16)',
-        20: 'var(--spacing-20)',
-        24: 'var(--spacing-24)',
-        32: 'var(--spacing-32)',
-        40: 'var(--spacing-40)',
-        48: 'var(--spacing-48)',
-        56: 'var(--spacing-56)',
-        64: 'var(--spacing-64)',
-        72: 'var(--spacing-72)',
-        80: 'var(--spacing-80)',
+        'ds-0':  'var(--spacing-0)',
+        'ds-2':  'var(--spacing-2)',
+        'ds-4':  'var(--spacing-4)',
+        'ds-6':  'var(--spacing-6)',
+        'ds-8':  'var(--spacing-8)',
+        'ds-10': 'var(--spacing-10)',
+        'ds-12': 'var(--spacing-12)',
+        'ds-16': 'var(--spacing-16)',
+        'ds-20': 'var(--spacing-20)',
+        'ds-24': 'var(--spacing-24)',
+        'ds-32': 'var(--spacing-32)',
+        'ds-40': 'var(--spacing-40)',
+        'ds-48': 'var(--spacing-48)',
+        'ds-56': 'var(--spacing-56)',
+        'ds-64': 'var(--spacing-64)',
+        'ds-72': 'var(--spacing-72)',
+        'ds-80': 'var(--spacing-80)',
       },
     },
   },

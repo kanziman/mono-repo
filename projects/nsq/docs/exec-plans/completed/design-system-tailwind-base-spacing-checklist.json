@@ -1,0 +1,41 @@
+{
+  "planName": "design-system-tailwind-base-spacing",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Add failing Tailwind spacing contract tests",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "Restore Tailwind base numeric spacing and add ds-* token namespace",
+      "status": "done"
+    },
+    {
+      "id": "task-2-5",
+      "name": "Document intentional Tailwind base-key overrides in code",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "Add browser regression for actual button dimensions",
+      "status": "done"
+    },
+    {
+      "id": "task-4",
+      "name": "Audit Tailwind base key collisions and update spacing assumptions",
+      "status": "done"
+    },
+    {
+      "id": "task-5",
+      "name": "Update design-system documentation and AGENTS guidance",
+      "status": "done"
+    },
+    {
+      "id": "task-6",
+      "name": "Final verification and evidence recording",
+      "status": "done"
+    }
+  ]
+}

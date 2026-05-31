@@ -79,6 +79,7 @@ export default function Home() {
             <Button
               variant="solid"
               color="primary"
+              className="min-w-[72px]"
               onClick={handleImport}
             >
               임포트
