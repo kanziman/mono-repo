@@ -18,6 +18,8 @@ This file maps agent behavior for the NSQ project. Keep details in `docs/` when 
 * Read `../../design-system/DESIGN.md` before changing shared styles or tokens.
 * Do not duplicate design tokens inside this project.
 * Use Pretendard, semantic color tokens, and `next-themes` class-based dark mode.
+* Preserve Tailwind base numeric spacing semantics. Use `ds-*` spacing utilities only when exact design-system pixel tokens are required.
+* When editing shared Tailwind config or design-system primitives, run browser visual checks that measure rendered dimensions for affected controls.
 
 ### Monorepo Symlink Setup (필수)
 

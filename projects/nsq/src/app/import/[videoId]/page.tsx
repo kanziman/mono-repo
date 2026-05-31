@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
 import type { ImportProgress, ImportStep } from '@/types'
 
@@ -114,9 +115,9 @@ export default function ImportPage() {
           <div className="rounded-xl border border-status-negative bg-status-negative/10 p-4 flex flex-col gap-3">
             <p className="text-status-negative font-medium">오류가 발생했습니다</p>
             <p className="text-status-negative/80 text-sm">{error}</p>
-            <a href="/" className="text-primary-normal underline text-sm">
+            <Link href="/" className="text-primary-normal underline text-sm">
               홈으로 돌아가기
-            </a>
+            </Link>
           </div>
         ) : done ? (
           <div className="text-label-normal text-center py-8">

@@ -20,3 +20,4 @@
 | 2026-05-31 | **[zb-writing-plans-visual-traceability-plan.md](completed/zb-writing-plans-visual-traceability-plan.md)** | `zb-writing-plans`에 Source Artifact Ledger, Visual Contract, Verification Matrix, 리뷰어 reject 기준 추가 | `[x] 완료` |
 | 2026-05-31 | **[nsq-ui-visual-parity-plan.md](completed/nsq-ui-visual-parity-plan.md)** | Playwright 스크린샷 하네스 구축, Home/Player v5·Option A 시각 정합성, 시맨틱 토큰 전환, 브라우저 증거 캡처 완료 | `[x] 완료` |
 | 2026-05-31 | **[nsq-ui-import-player-fix-plan.md](completed/nsq-ui-import-player-fix-plan.md)** | Import bar raw input 정렬 수정, Player controls bar + mode badge 추가, segment list 컨테이너 스타일, TutorPanel 타이틀 | `[x] 완료` |
+| 2026-05-31 | **[design-system-tailwind-base-spacing-plan.md](completed/design-system-tailwind-base-spacing-plan.md)** | Tailwind numeric spacing 기본 스케일 복구, `ds-*` spacing 토큰 네임스페이스, base-key collision audit, Button 치수 회귀 테스트 | `[x] 완료` |

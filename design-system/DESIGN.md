@@ -124,6 +124,17 @@ Atomic Design 원칙과 의미론적(Semantic) 토큰 구조를 채택하여 Lig
 | `spacing[72]` | 72px | — |
 | `spacing[80]` | 80px | 대형 섹션 여백 |
 
+#### Tailwind Utility Contract
+
+Tailwind numeric spacing utilities keep Tailwind's base semantics. Do not redefine numeric keys such as `4`, `8`, `10`, or `12` in `theme.extend.spacing`.
+
+| Use case | Utility example | Meaning |
+|---|---|---|
+| Tailwind base spacing | `h-8`, `p-4`, `gap-10` | Tailwind default scale (`h-8` = 2rem = 32px) |
+| Exact design-system spacing token | `h-ds-8`, `p-ds-12`, `gap-ds-24` | CSS token value (`ds-8` = `var(--spacing-8)` = 8px) |
+
+Do not read `h-8`, `w-8`, `gap-8`, or `p-8` as `spacing[8] = 8px`. Numeric Tailwind utilities are reserved for Tailwind base behavior. Use the `ds-*` namespace when an exact design-system pixel token is required.
+
 ---
 
 ### 2.4. 반응형 브레이크포인트 (Breakpoints)
