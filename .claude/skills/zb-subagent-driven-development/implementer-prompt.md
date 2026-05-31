@@ -30,17 +30,46 @@
 *   **규율**: 프로젝트 디자인 가이드라인을 따르고 불필요한 기능(nice-to-have)을 덧붙이지 않았는가?
 *   **테스트**: 테스트가 실제 비즈니스 로직의 동작을 견고하게 검증하는가?
 
+## 🎨 UI 태스크 시각 검증 (React 컴포넌트·페이지·CSS 변경 시 필수)
+
+이 태스크가 React 컴포넌트, 페이지 레이아웃, CSS 변경, 또는 브라우저에서 렌더링되는 결과물을 포함한다면 아래를 반드시 수행하십시오:
+
+1. `npm run dev` 기동 후 브라우저에서 해당 route 직접 확인
+
+2. Playwright로 스크린샷 캡처:
+
+   ```bash
+   npx playwright screenshot --browser chromium --viewport-size 1440,900 \
+     http://localhost:3000/[route] /tmp/[task-id]-desktop.png
+   ```
+
+3. 계획서의 **Visual Contract**와 1:1 대조:
+   - 다크 배경 적용 여부
+   - 레이아웃 치수 (너비·높이·간격)
+   - 활성/비활성 상태 색상
+   - 컨트롤 요소 표시 여부
+
+4. 불일치 항목은 **수정 후 재캡처** — "스크린샷 첨부했지만 다름"으로 DONE 보고 금지
+
+> `vitest` 통과는 논리 검증이다. 시각 검증은 별도다. 두 가지를 모두 완료해야 DONE을 보고할 수 있다.
+
 ## 🚨 중단 및 에스컬레이션 조건 (Halt Conditions)
+
 작업 중 아래 상황에 직면하면 즉시 작업을 중단하고 상태를 `BLOCKED` 또는 `NEEDS_CONTEXT`로 보고하십시오.
+
 - 계획에 명시되지 않은 다각적 아키텍처 의사결정이 필요할 때
 - 의존성이 꼬여 제공된 파일 정보만으로는 흐름 파악이 불가능할 때
 - 잘못된 전제 조건이나 설계 오류를 코드 단에서 발견했을 때
 
 ## 📝 보고 형식 (Report Format)
+
 작업 완료 시 다음 형식으로 결과를 보고하십시오.
+
 - **상태 (Status)**: DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT
 - **구현 내용 요약**:
 - **테스트 수행 방법 및 결과**:
 - **수정/생성된 파일 목록**:
+- **Visual Evidence (UI 태스크)**: `[screenshot path]` 또는 `N/A (UI 태스크 아님)`
+  _(UI 태스크에서 이 필드가 비어 있거나 pending이면 Status를 DONE으로 보고할 수 없습니다)_
 - **우려 및 추가 검토 필요 사항 (DONE_WITH_CONCERNS 시 기술)**:
 ```
