@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, TextField, Skeleton } from '@ds'
+import { Button, Skeleton } from '@ds'
 import type { EpisodeMeta } from '@/types'
 import { extractVideoId } from '@/lib/youtube'
 
@@ -63,20 +63,19 @@ export default function Home() {
         </div>
 
         {/* Import bar */}
-        <div className="flex gap-2 p-3 bg-background-elevated-normal border border-line-solid-normal rounded-xl mb-6 items-start">
-          <div className="flex-1">
-            <TextField
-              label=""
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2 px-3 py-[10px] bg-[#1e293b] border border-[#334155] rounded-[10px]">
+            <input
+              type="text"
+              className="flex-1 bg-[#0f172a] border border-[#475569] rounded-md px-3 py-[9px] text-sm text-[#94a3b8] placeholder-[#475569] focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
               placeholder="YouTube URL 입력..."
               value={url}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e) => {
                 setUrl(e.target.value)
                 setUrlError(undefined)
               }}
-              errorText={urlError}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleImport() }}
             />
-          </div>
-          <div className="pt-1">
             <Button
               variant="solid"
               color="primary"
@@ -85,6 +84,9 @@ export default function Home() {
               임포트
             </Button>
           </div>
+          {urlError && (
+            <p className="text-sm text-red-400 px-1">{urlError}</p>
+          )}
         </div>
 
         {/* Episode list */}
