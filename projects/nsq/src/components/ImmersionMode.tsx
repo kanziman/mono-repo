@@ -49,7 +49,7 @@ export default function ImmersionMode({ audioRef }: ImmersionModeProps) {
         const handleSegmentClick = () => {
           dispatch({ type: 'SET_INDEX', payload: seg.index })
           audioRef.current!.currentTime = seg.start
-          audioRef.current!.play()
+          audioRef.current!.play().catch(() => {})
           dispatch({ type: 'SET_PLAYING', payload: true })
         }
 

@@ -53,5 +53,10 @@ const pngBytes = Buffer.from(
 fs.writeFileSync(path.join(EPISODE_DIR, 'thumbnail.jpg'), pngBytes)
 console.log('✓ thumbnail.jpg written')
 
+// --- audio.m4a ---
+// Write a dummy empty audio file to satisfy /api/audio request
+fs.writeFileSync(path.join(EPISODE_DIR, 'audio.m4a'), Buffer.alloc(0))
+console.log('✓ audio.m4a written')
+
 console.log(`\nFixture seeded at: ${EPISODE_DIR}`)
 console.log(`Video ID: ${VIDEO_ID}`)

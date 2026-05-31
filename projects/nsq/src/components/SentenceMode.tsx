@@ -42,7 +42,7 @@ export default function SentenceMode({ audioRef, videoId: _videoId }: SentenceMo
 
   const playOriginal = () => {
     audioRef.current!.currentTime = seg.start
-    audioRef.current!.play()
+    audioRef.current!.play().catch(() => {})
     dispatch({ type: 'SET_PLAYING', payload: true })
   }
 
