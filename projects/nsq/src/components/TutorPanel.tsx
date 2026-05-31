@@ -93,17 +93,25 @@ export default function TutorPanel({ videoId }: TutorPanelProps) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Persona tabs */}
-      <div className="flex gap-2 px-3 pt-3 pb-2">
-        {(['angela', 'mike', 'general'] as Persona[]).map((p) => (
-          <Chip
-            key={p}
-            selected={persona === p}
-            onClick={() => dispatch({ type: 'SET_PERSONA', payload: p })}
-          >
-            {p === 'angela' ? 'Angela Bot' : p === 'mike' ? 'Mike Bot' : 'General'}
-          </Chip>
-        ))}
+      {/* Header: title + persona tabs */}
+      <div className="px-3 pt-3 pb-2 border-b border-[#334155] flex-shrink-0">
+        <p className="text-[13px] font-bold text-[#f8fafc] mb-2">🤖 AI Tutor</p>
+        <div className="flex gap-1">
+          {(['angela', 'mike', 'general'] as Persona[]).map((p) => (
+            <button
+              key={p}
+              onClick={() => dispatch({ type: 'SET_PERSONA', payload: p })}
+              className={[
+                'flex-1 text-center py-1.5 text-[11px] font-bold rounded cursor-pointer border transition-colors',
+                persona === p
+                  ? 'bg-[#3b82f6] text-white border-transparent'
+                  : 'bg-transparent text-[#94a3b8] border-[#334155] hover:border-[#475569]',
+              ].join(' ')}
+            >
+              {p === 'angela' ? 'Angela Bot' : p === 'mike' ? 'Mike Bot' : 'General'}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Message list */}
