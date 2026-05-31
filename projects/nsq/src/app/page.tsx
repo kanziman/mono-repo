@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Skeleton } from '@ds'
+import { Button, Skeleton, Icon } from '@ds'
+import { useTheme } from 'next-themes'
 import type { EpisodeEntry, ImportStep } from '@/types'
 import type { ImportProgress } from '@/types'
 import { extractVideoId } from '@/lib/youtube'
@@ -34,6 +35,8 @@ function EpisodeThumb({ videoId }: { videoId: string }) {
 
 export default function Home() {
   const router = useRouter()
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
   const [url, setUrl] = useState('')
   const [urlError, setUrlError] = useState<string | undefined>(undefined)
   const [episodes, setEpisodes] = useState<EpisodeEntry[]>([])
@@ -59,6 +62,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    setMounted(true)
     fetch('/api/episodes')
       .then((res) => res.json())
       .then((data: EpisodeEntry[]) => {
@@ -133,9 +137,20 @@ export default function Home() {
       <div className="mx-auto max-w-2xl flex flex-col gap-10">
 
         {/* Header */}
-        <div className="flex flex-col gap-2">
-          <h1 className="text-title2 text-label-normal font-bold">NSQ Shadowing</h1>
-          <p className="text-body2 text-label-alternative">YouTube 에피소드를 임포트해 영어 쉐도잉을 연습하세요.</p>
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-title2 text-label-normal font-bold">NSQ Shadowing</h1>
+            <p className="text-body2 text-label-alternative">YouTube 에피소드를 임포트해 영어 쉐도잉을 연습하세요.</p>
+          </div>
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="flex items-center justify-center w-10 h-10 rounded-xl bg-background-elevated-normal border border-line-normal-normal hover:border-primary-normal/40 text-label-normal hover:text-primary-normal transition-colors"
+              aria-label="테마 전환"
+            >
+              <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={20} />
+            </button>
+          )}
         </div>
 
         {/* Glassmorphic import box */}

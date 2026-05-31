@@ -8,7 +8,8 @@ import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import ImmersionMode from '@/components/ImmersionMode'
 import SentenceMode from '@/components/SentenceMode'
 import TutorPanel from '@/components/TutorPanel'
-import { Button } from '@ds'
+import { Button, Icon } from '@ds'
+import { useTheme } from 'next-themes'
 import type { EpisodeMeta } from '@/types'
 
 export default function PlayerPage() {
@@ -23,6 +24,8 @@ function PlayerContent() {
   const params = useParams()
   const videoId = typeof params.videoId === 'string' ? params.videoId : ''
   const router = useRouter()
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
   const { state, dispatch } = usePlayer()
   const [meta, setMeta] = useState<EpisodeMeta | null>(null)
@@ -31,6 +34,7 @@ function PlayerContent() {
 
   // Mount: fetch episode data
   useEffect(() => {
+    setMounted(true)
     fetch('/api/episodes/' + videoId)
       .then(res => res.ok ? res.json() : Promise.reject('Not found'))
       .then(({ meta: m, segments }) => {
@@ -235,8 +239,8 @@ function PlayerContent() {
           </div>
         </div>
 
-        {/* Right Side: Mode Switcher */}
-        <div className="header-right">
+        {/* Right Side: Mode Switcher & Theme Toggle */}
+        <div className="header-right flex items-center gap-3">
           <div className="flex gap-1 bg-background-normal-alternative border border-line-solid-normal p-1 rounded-lg">
             <Button
               variant={state.mode === 'immersion' ? 'solid' : 'outlined'}
@@ -257,6 +261,15 @@ function PlayerContent() {
               문장 모드
             </Button>
           </div>
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="flex items-center justify-center w-10 h-10 rounded-xl bg-background-elevated-normal border border-line-normal-normal hover:border-primary-normal/40 text-label-normal hover:text-primary-normal transition-colors"
+              aria-label="테마 전환"
+            >
+              <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={20} />
+            </button>
+          )}
         </div>
       </header>
 

@@ -6,7 +6,9 @@
 
 현재 구현 중이거나 검증이 진행 중인 계획서입니다.
 
-없음
+| 시작일 | 계획서 링크 | 진행 상태 |
+| :--- | :--- | :--- |
+| 2026-05-31 | **[nsq-sentence-speaker-plan.md](active/nsq-sentence-speaker-plan.md)** | `[ ] todo` |
 
 ## 🏁 완료된 계획 (Completed Plans)
 

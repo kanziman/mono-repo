@@ -1,0 +1,31 @@
+{
+  "planName": "nsq-sentence-speaker",
+  "status": "todo",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Segment 타입에 speaker 필드 추가 (src/types/index.ts)",
+      "status": "todo"
+    },
+    {
+      "id": "task-2",
+      "name": "vttToSentences 구현 및 테스트 (src/lib/vtt.ts + vtt.test.ts)",
+      "status": "todo"
+    },
+    {
+      "id": "task-3",
+      "name": "번역 파이프라인 speaker 추론 추가 (src/lib/translate.ts + translate.test.ts)",
+      "status": "todo"
+    },
+    {
+      "id": "task-4",
+      "name": "import route vttToSentences 교체 (src/app/api/import/route.ts)",
+      "status": "todo"
+    },
+    {
+      "id": "task-5",
+      "name": "SpeakerBadge prop 변경 및 시각 검증 (src/components/ImmersionMode.tsx)",
+      "status": "todo"
+    }
+  ]
+}
