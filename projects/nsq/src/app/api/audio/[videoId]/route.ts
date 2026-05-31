@@ -28,10 +28,17 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid videoId' }, { status: 400 })
   }
 
-  const audioPath = path.join(EPISODES_BASE, videoId, 'audio.m4a')
+  let audioPath = path.join(EPISODES_BASE, videoId, 'audio.m4a')
+  let contentType = 'audio/mp4'
 
   if (!fs.existsSync(audioPath)) {
-    return NextResponse.json({ error: 'Audio not found' }, { status: 404 })
+    const mp3Path = path.join(EPISODES_BASE, videoId, 'audio.mp3')
+    if (fs.existsSync(mp3Path)) {
+      audioPath = mp3Path
+      contentType = 'audio/mpeg'
+    } else {
+      return NextResponse.json({ error: 'Audio not found' }, { status: 404 })
+    }
   }
 
   const fileSize = fs.statSync(audioPath).size
@@ -49,7 +56,7 @@ export async function GET(
         'Content-Range': `bytes ${start}-${end}/${fileSize}`,
         'Accept-Ranges': 'bytes',
         'Content-Length': String(end - start + 1),
-        'Content-Type': 'audio/mp4',
+        'Content-Type': contentType,
       },
     })
   }
@@ -62,7 +69,7 @@ export async function GET(
     headers: {
       'Accept-Ranges': 'bytes',
       'Content-Length': String(fileSize),
-      'Content-Type': 'audio/mp4',
+      'Content-Type': contentType,
     },
   })
 }
