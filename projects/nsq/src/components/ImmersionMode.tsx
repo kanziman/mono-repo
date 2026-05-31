@@ -3,7 +3,8 @@
 import React, { useRef, useEffect } from 'react'
 import { usePlayer } from '@/context/PlayerContext'
 
-function formatTs(s: number) {
+function formatTs(s: number | undefined) {
+  if (s == null || isNaN(s)) return '--:--'
   const m = Math.floor(s / 60)
   const sec = Math.floor(s % 60)
   return `${m}:${sec.toString().padStart(2, '0')}`
