@@ -26,6 +26,8 @@ function PlayerContent() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const { state, dispatch } = usePlayer()
   const [meta, setMeta] = useState<EpisodeMeta | null>(null)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
 
   // Mount: fetch episode data
   useEffect(() => {
@@ -69,20 +71,26 @@ function PlayerContent() {
     }
   }, [state.isPlaying])
 
-  // Audio events → dispatch
+  // Audio events → dispatch + time/duration tracking
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
     const onPlay = () => dispatch({ type: 'SET_PLAYING', payload: true })
     const onPause = () => dispatch({ type: 'SET_PLAYING', payload: false })
     const onEnded = () => dispatch({ type: 'SET_PLAYING', payload: false })
+    const onTimeUpdate = () => setCurrentTime(audio.currentTime)
+    const onDurationChange = () => setDuration(audio.duration || 0)
     audio.addEventListener('play', onPlay)
     audio.addEventListener('pause', onPause)
     audio.addEventListener('ended', onEnded)
+    audio.addEventListener('timeupdate', onTimeUpdate)
+    audio.addEventListener('durationchange', onDurationChange)
     return () => {
       audio.removeEventListener('play', onPlay)
       audio.removeEventListener('pause', onPause)
       audio.removeEventListener('ended', onEnded)
+      audio.removeEventListener('timeupdate', onTimeUpdate)
+      audio.removeEventListener('durationchange', onDurationChange)
     }
   }, [])
 
@@ -109,20 +117,67 @@ function PlayerContent() {
     onM: () => dispatch({ type: 'TOGGLE_MODE' }),
   })
 
+  function formatTime(s: number) {
+    const m = Math.floor(s / 60)
+    const sec = Math.floor(s % 60)
+    return `${m}:${sec.toString().padStart(2, '0')}`
+  }
+
   return (
     <div className="flex flex-col h-screen bg-background-normal-normal">
       {/* Header */}
-      <header className="flex items-center justify-between px-4 py-3 bg-background-normal-normal border-b border-line-normal-normal">
-        <div>
-          <span className="text-label-normal">{meta?.title ?? '로딩 중...'}</span>
-          <span className="text-label-alternative ml-2 text-sm">
-            {state.currentIndex + 1} / {state.segments.length}
-          </span>
-        </div>
+      <header className="flex items-center gap-2 px-4 py-[10px] bg-[#1e293b] border-b border-[#334155]">
+        <span className="flex-1 min-w-0 text-sm font-bold text-[#f8fafc] truncate">
+          {meta?.title ?? '로딩 중...'}
+        </span>
+        <span className={[
+          'text-[11px] font-extrabold px-[10px] py-[3px] rounded flex-shrink-0',
+          state.mode === 'immersion'
+            ? 'bg-[#1d4ed8] text-[#bfdbfe]'
+            : 'bg-[#7c3aed] text-[#ddd6fe]',
+        ].join(' ')}>
+          {state.mode === 'immersion' ? '몰입' : '문장'}
+        </span>
         <Button variant="outlined" color="assistive" size="small" onClick={() => dispatch({ type: 'TOGGLE_MODE' })}>
-          {state.mode === 'immersion' ? '문장 모드' : '몰입 모드'}
+          모드 전환
         </Button>
       </header>
+
+      {/* Player controls bar */}
+      <div className="flex items-center gap-2 px-4 py-2 bg-[#1e293b] border-b border-[#334155] flex-shrink-0">
+        <button
+          className="px-3 py-1.5 rounded text-xs font-bold bg-[#334155] text-[#e2e8f0] hover:bg-[#475569] transition-colors whitespace-nowrap"
+          onClick={() => dispatch({ type: 'PREV' })}
+        >◀ 이전</button>
+        <button
+          className="px-3 py-1.5 rounded text-xs font-bold bg-[#3b82f6] text-white hover:bg-[#2563eb] transition-colors whitespace-nowrap"
+          onClick={() => dispatch({ type: 'TOGGLE_PLAY' })}
+        >{state.isPlaying ? '⏸ 정지' : '▶ 재생'}</button>
+        <button
+          className="px-3 py-1.5 rounded text-xs font-bold bg-[#334155] text-[#e2e8f0] hover:bg-[#475569] transition-colors whitespace-nowrap"
+          onClick={() => dispatch({ type: 'NEXT' })}
+        >다음 ▶</button>
+        <button
+          className="px-3 py-1.5 rounded text-xs font-bold bg-[#334155] text-[#e2e8f0] hover:bg-[#475569] transition-colors whitespace-nowrap"
+          onClick={() => {
+            const seg = state.segments[state.currentIndex]
+            if (seg && audioRef.current) {
+              audioRef.current.currentTime = seg.start
+              audioRef.current.play().catch(() => {})
+              dispatch({ type: 'SET_PLAYING', payload: true })
+            }
+          }}
+        >반복 R</button>
+        <div className="flex-1 h-1 bg-[#334155] rounded mx-1 overflow-hidden">
+          <div
+            className="h-full bg-[#3b82f6] rounded"
+            style={{ width: duration > 0 ? `${(currentTime / duration) * 100}%` : '0%' }}
+          />
+        </div>
+        <span className="text-[11px] text-[#94a3b8] whitespace-nowrap font-mono flex-shrink-0">
+          {formatTime(currentTime)} / {formatTime(duration)}
+        </span>
+      </div>
 
       {/* Main content area */}
       <div className="flex flex-1 overflow-hidden">
