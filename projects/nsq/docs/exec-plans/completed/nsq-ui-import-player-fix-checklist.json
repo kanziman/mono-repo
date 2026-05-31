@@ -1,0 +1,36 @@
+{
+  "planName": "nsq-ui-import-player-fix",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Home: Fix Import Bar — replace TextField with raw input, items-center, remove pt-1",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "Player: Add mode badge (몰입/문장) to header",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "Player: Add player controls bar (이전/재생/다음/반복 + progress + time)",
+      "status": "done"
+    },
+    {
+      "id": "task-4",
+      "name": "ImmersionMode: Segment list bordered container + card style to match v5",
+      "status": "done"
+    },
+    {
+      "id": "task-5",
+      "name": "TutorPanel: Add 🤖 AI Tutor header title above persona tabs",
+      "status": "done"
+    },
+    {
+      "id": "task-6",
+      "name": "Visual parity review — browser screenshot + evidence for all 7 Verification Matrix rows",
+      "status": "done"
+    }
+  ]
+}

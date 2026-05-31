@@ -1,0 +1,41 @@
+{
+  "planName": "zb-writing-plans-visual-traceability",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Add skill pressure tests before editing",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "Harden zb-writing-plans source artifact traceability rules",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "Add required UI/product plan template sections and verification matrix",
+      "status": "done"
+    },
+    {
+      "id": "task-4",
+      "name": "Harden plan reviewer prompt with visual traceability rejection criteria",
+      "status": "done"
+    },
+    {
+      "id": "task-5",
+      "name": "Add regression fixture showing bad vs good NSQ visual planning excerpts",
+      "status": "done"
+    },
+    {
+      "id": "task-6",
+      "name": "Verify .agents and .claude skill synchronization and placeholder-free docs",
+      "status": "done"
+    },
+    {
+      "id": "task-7",
+      "name": "Update AGENTS.md files with visual traceability planning requirement",
+      "status": "done"
+    }
+  ]
+}
