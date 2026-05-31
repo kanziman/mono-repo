@@ -10,6 +10,24 @@ function formatTs(s: number | undefined) {
   return `${m}:${sec.toString().padStart(2, '0')}`
 }
 
+function SpeakerBadge({ text }: { text: string }) {
+  if (text.startsWith('Angela')) {
+    return (
+      <span className="inline-block text-[10px] font-extrabold px-[7px] py-[1px] rounded mr-1.5 align-middle bg-primary-normal/10 text-primary-normal border border-primary-normal/20">
+        Angela
+      </span>
+    )
+  }
+  if (text.startsWith('Mike')) {
+    return (
+      <span className="inline-block text-[10px] font-extrabold px-[7px] py-[1px] rounded mr-1.5 align-middle bg-status-warning/10 text-status-warning border border-status-warning/20">
+        Mike
+      </span>
+    )
+  }
+  return null
+}
+
 interface ImmersionModeProps {
   audioRef: React.RefObject<HTMLAudioElement>
 }
