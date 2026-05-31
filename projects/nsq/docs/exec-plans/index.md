@@ -6,7 +6,7 @@
 
 현재 구현 중이거나 검증이 진행 중인 계획서입니다.
 
-- [ ] [nsq-import-resume-progress-plan.md](active/nsq-import-resume-progress-plan.md) — 2026-05-31 시작 | 미완성 에피소드 재개 + 다운로드·자막 진행률 표시 | todo
+없음
 
 ## 🏁 완료된 계획 (Completed Plans)
 
@@ -23,3 +23,4 @@
 | 2026-05-31 | **[design-system-tailwind-base-spacing-plan.md](completed/design-system-tailwind-base-spacing-plan.md)** | Tailwind numeric spacing 기본 스케일 복구, `ds-*` spacing 토큰 네임스페이스, base-key collision audit, Button 치수 회귀 테스트 | `[x] 완료` |
 | 2026-05-31 | **[nsq-inline-import-redesign-plan.md](completed/nsq-inline-import-redesign-plan.md)** | UI 버그 3종 수정, 인라인 임포트 진행카드, 유튜브 썸네일 다운로드, 재개 가능 임포트(import-state.json + import.log) | `[x] 완료` |
 | 2026-05-31 | **[player-solid-dark-plan.md](completed/player-solid-dark-plan.md)** | Player 페이지 솔리드 다크 테마 개편 완료 | `[x] 완료` |
+| 2026-05-31 | **[nsq-import-resume-progress-plan.md](completed/nsq-import-resume-progress-plan.md)** | 미완성 에피소드 대시보드 표시 + 단계별 재시작 버튼, yt-dlp 다운로드 실시간 진행률, 자막 simulated progress, indeterminate pulse UI | `[x] 완료` |

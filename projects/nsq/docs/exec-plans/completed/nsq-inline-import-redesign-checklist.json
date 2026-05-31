@@ -1,0 +1,42 @@
+{
+  "plan": "nsq-inline-import-redesign",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "title": "Bug 2: TutorPanel flex-shrink-0",
+      "file": "projects/nsq/src/components/TutorPanel.tsx",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "title": "Bug 3: 플레이어 버튼 solid+assistive, 배지 primary",
+      "file": "projects/nsq/src/app/player/[videoId]/page.tsx",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "title": "Feature 5: ytdlp.ts downloadThumbnail 추가",
+      "file": "projects/nsq/src/lib/ytdlp.ts",
+      "status": "done"
+    },
+    {
+      "id": "task-4",
+      "title": "Feature 6a: translate.ts cleanup 버그 수정",
+      "file": "projects/nsq/src/lib/translate.ts",
+      "status": "done"
+    },
+    {
+      "id": "task-5",
+      "title": "Feature 6b: import/route.ts 재개 로직 + 상태 파일 + 로그",
+      "file": "projects/nsq/src/app/api/import/route.ts",
+      "status": "done"
+    },
+    {
+      "id": "task-6",
+      "title": "Feature 4: page.tsx 인라인 임포트 + 리스트 레이아웃",
+      "file": "projects/nsq/src/app/page.tsx",
+      "status": "done"
+    }
+  ]
+}

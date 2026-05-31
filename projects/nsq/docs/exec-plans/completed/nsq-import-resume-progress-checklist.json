@@ -1,0 +1,41 @@
+{
+  "planName": "nsq-import-resume-progress",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "types/index.ts — StepStatus, IncompleteEpisodeEntry, EpisodeEntry 타입 추가",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "api/episodes/route.ts — 미완성 에피소드(import-state.json) 반환 포함",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "api/import/route.ts — fromStep 파라미터 수신 및 단계 초기화 로직",
+      "status": "done"
+    },
+    {
+      "id": "task-4",
+      "name": "lib/ytdlp.ts — parseYtDlpProgress 추출, downloadAudio/downloadSubtitle 콜백 추가",
+      "status": "done"
+    },
+    {
+      "id": "task-5",
+      "name": "api/import/route.ts — 다운로드 실제 진행률 + 자막 simulated progress 연결",
+      "status": "done"
+    },
+    {
+      "id": "task-6",
+      "name": "page.tsx — EpisodeEntry[] 타입, 미완성 카드, fromStep 호출, indeterminate UI",
+      "status": "done"
+    },
+    {
+      "id": "task-7",
+      "name": "__tests__/ytdlp-progress.test.ts — parseYtDlpProgress 유닛 테스트 작성 및 통과",
+      "status": "done"
+    }
+  ]
+}
