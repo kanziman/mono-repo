@@ -10,22 +10,19 @@ function formatTs(s: number | undefined) {
   return `${m}:${sec.toString().padStart(2, '0')}`
 }
 
-function SpeakerBadge({ text }: { text: string }) {
-  if (text.startsWith('Angela')) {
-    return (
-      <span className="inline-block text-[10px] font-extrabold px-[7px] py-[1px] rounded mr-1.5 align-middle bg-primary-normal/10 text-primary-normal border border-primary-normal/20">
-        Angela
-      </span>
-    )
-  }
-  if (text.startsWith('Mike')) {
-    return (
-      <span className="inline-block text-[10px] font-extrabold px-[7px] py-[1px] rounded mr-1.5 align-middle bg-status-warning/10 text-status-warning border border-status-warning/20">
-        Mike
-      </span>
-    )
-  }
-  return null
+const SPEAKER_STYLE: Record<string, string> = {
+  Angela: 'bg-primary-normal/10 text-primary-normal border-primary-normal/20',
+  Steven: 'bg-status-warning/10 text-status-warning border-status-warning/20',
+}
+
+function SpeakerBadge({ speaker }: { speaker?: string }) {
+  if (!speaker || speaker === 'Unknown') return null
+  const cls = SPEAKER_STYLE[speaker] ?? 'bg-fill-normal text-label-assistive border-line-normal-normal/20'
+  return (
+    <span className={`inline-block text-[10px] font-extrabold px-[7px] py-[1px] rounded mr-1.5 align-middle border ${cls}`}>
+      {speaker}
+    </span>
+  )
 }
 
 interface ImmersionModeProps {
@@ -99,7 +96,7 @@ export default function ImmersionMode({ audioRef }: ImmersionModeProps) {
                 ? 'text-headline2 text-label-normal font-semibold'
                 : 'text-body1 text-label-normal',
             ].join(' ')}>
-              <SpeakerBadge text={seg.text} />
+              <SpeakerBadge speaker={seg.speaker} />
               {seg.text}
             </p>
             <p

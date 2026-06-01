@@ -8,7 +8,6 @@
 
 | 시작일 | 계획서 링크 | 진행 상태 |
 | :--- | :--- | :--- |
-| 2026-05-31 | **[nsq-sentence-speaker-plan.md](active/nsq-sentence-speaker-plan.md)** | `[ ] todo` |
 
 ## 🏁 완료된 계획 (Completed Plans)
 
@@ -16,6 +15,7 @@
 
 | 완료 날짜 | 계획서 링크 | 핵심 변경 요약 | 상태 |
 | :--- | :--- | :--- | :--- |
+| 2026-05-31 | **[nsq-sentence-speaker-plan.md](completed/nsq-sentence-speaker-plan.md)** | VTT 문장 단위 재세그멘테이션(`vttToSentences`), LLM 화자 추론(Angela/Steven/Unknown), `SpeakerBadge` speaker prop 전환 | `[x] 완료` |
 | 2026-05-30 | **[nsq-shadowing-plan.md](completed/nsq-shadowing-plan.md)** | Next.js 14 앱 부트스트랩, 유튜브 다운로드, 번역 및 AI 튜터 통합 완료 | `[x] 완료` |
 | 2026-05-30 | **[feedback-loop-layers-plan.md](completed/feedback-loop-layers-plan.md)** | 임포트 오류 및 빌드 타임 의존성 에러 감지를 위한 피드백 루프 설정 | `[x] 완료` |
 | 2026-05-30 | **[player-layout-fix-plan.md](completed/player-layout-fix-plan.md)** | TutorPanel 420px 확장, 메시지 영역 flex-1, 세그먼트 카드 border+bg 구분 | `[x] 완료` |

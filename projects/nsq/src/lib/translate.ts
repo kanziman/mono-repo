@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import type { Segment } from '@/types'
 
-const CHUNK_SIZE = 50
+const CHUNK_SIZE = 30
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
 export function chunkSegments(segments: Segment[], size = CHUNK_SIZE): Segment[][] {
@@ -23,7 +23,45 @@ export function buildTranslationPrompt(segments: Segment[]): string {
   )
 }
 
-async function callOpenRouter(prompt: string): Promise<string[]> {
+export function buildSentenceTranslationPrompt(segments: Segment[]): string {
+  const lines = segments.map((s, i) => `${i + 1}. ${s.text}`).join('\n')
+  return (
+    `This is a transcript from "No Stupid Questions" podcast.\n` +
+    `Two regular hosts (Angela Duckworth, Steven Dubner) plus one guest per episode.\n` +
+    `Identify the speaker for each line using context clues (self-introductions, name mentions).\n` +
+    `Use the actual name when identifiable; use "Unknown" otherwise.\n\n` +
+    `Translate each line to Korean.\n` +
+    `Output JSON array ONLY — no explanation:\n` +
+    `[{"translation":"한국어","speaker":"Angela"}, ...]\n\n` +
+    lines
+  )
+}
+
+const KNOWN_SPEAKERS = new Set(['Angela', 'Steven', 'Unknown'])
+
+export function normalizeSpeaker(raw: string, guestName?: string): string {
+  if (KNOWN_SPEAKERS.has(raw)) return raw
+  if (guestName && raw.toLowerCase().includes(guestName.toLowerCase())) return guestName
+  return 'Unknown'
+}
+
+export type SpeakerTranslation = { translation: string; speaker: string }
+
+export function parseSpeakerResponse(content: string, count: number): SpeakerTranslation[] {
+  const empty = (): SpeakerTranslation => ({ translation: '', speaker: 'Unknown' })
+  try {
+    const jsonMatch = content.match(/\[[\s\S]*\]/)
+    if (!jsonMatch) return Array(count).fill(null).map(empty)
+    const parsed = JSON.parse(jsonMatch[0]) as SpeakerTranslation[]
+    const result = parsed.slice(0, count)
+    while (result.length < count) result.push(empty())
+    return result
+  } catch {
+    return Array(count).fill(null).map(empty)
+  }
+}
+
+async function callOpenRouterRaw(prompt: string): Promise<string> {
   const apiKey = process.env.OPENROUTER_API_KEY
   if (!apiKey) throw new Error('OPENROUTER_API_KEY environment variable is not set')
   const model = process.env.TRANSLATION_MODEL ?? 'google/gemini-flash-1.5'
@@ -43,46 +81,37 @@ async function callOpenRouter(prompt: string): Promise<string[]> {
     throw new Error(`OpenRouter API error: ${res.status} ${body}`)
   }
   const data = await res.json() as { choices: { message: { content: string } }[] }
-  const content = data.choices[0].message.content.trim()
-  const jsonMatch = content.match(/\[[\s\S]*\]/)
-  if (!jsonMatch) throw new Error('No JSON array in translation response')
-  return JSON.parse(jsonMatch[0]) as string[]
+  return data.choices[0].message.content.trim()
 }
 
 export async function translateChunk(
   segments: Segment[],
   chunkIndex: number,
   checkpointDir: string
-): Promise<string[]> {
+): Promise<SpeakerTranslation[]> {
   const checkpointPath = path.join(checkpointDir, `translate_chunk_${chunkIndex}.json`)
 
   if (fs.existsSync(checkpointPath)) {
-    return JSON.parse(fs.readFileSync(checkpointPath, 'utf-8')) as string[]
+    return JSON.parse(fs.readFileSync(checkpointPath, 'utf-8')) as SpeakerTranslation[]
   }
 
-  const prompt = buildTranslationPrompt(segments)
-  let translations: string[]
+  const prompt = buildSentenceTranslationPrompt(segments)
+  let items: SpeakerTranslation[]
 
   try {
-    translations = await callOpenRouter(prompt)
+    const content = await callOpenRouterRaw(prompt)
+    items = parseSpeakerResponse(content, segments.length)
   } catch {
-    // 1 retry
     try {
-      translations = await callOpenRouter(prompt)
+      const content = await callOpenRouterRaw(prompt)
+      items = parseSpeakerResponse(content, segments.length)
     } catch {
-      translations = Array(segments.length).fill('')
+      items = Array(segments.length).fill(null).map(() => ({ translation: '', speaker: 'Unknown' }))
     }
   }
 
-  // Normalize length
-  if (translations.length < segments.length) {
-    translations = [...translations, ...Array(segments.length - translations.length).fill('')]
-  } else if (translations.length > segments.length) {
-    translations = translations.slice(0, segments.length)
-  }
-
-  fs.writeFileSync(checkpointPath, JSON.stringify(translations), 'utf-8')
-  return translations
+  fs.writeFileSync(checkpointPath, JSON.stringify(items), 'utf-8')
+  return items
 }
 
 export async function translateAllSegments(
@@ -95,16 +124,19 @@ export async function translateAllSegments(
   let done = 0
 
   for (let i = 0; i < chunks.length; i++) {
-    const translations = await translateChunk(chunks[i], i, checkpointDir)
+    const items = await translateChunk(chunks[i], i, checkpointDir)
     const offset = i * CHUNK_SIZE
-    translations.forEach((t, j) => {
-      result[offset + j] = { ...result[offset + j], translation: t }
+    items.forEach((item, j) => {
+      result[offset + j] = {
+        ...result[offset + j],
+        translation: item.translation,
+        speaker: item.speaker,
+      }
     })
     done += chunks[i].length
     onProgress?.(done, segments.length)
   }
 
-  // Clean up checkpoints
   for (let i = 0; i < chunks.length; i++) {
     const p = path.join(checkpointDir, `translate_chunk_${i}.json`)
     if (fs.existsSync(p)) fs.unlinkSync(p)

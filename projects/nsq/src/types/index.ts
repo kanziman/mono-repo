@@ -4,6 +4,7 @@ export interface Segment {
   end: number
   text: string
   translation: string
+  speaker?: string
 }
 
 export interface EpisodeMeta {

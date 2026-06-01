@@ -89,3 +89,30 @@ export function vttToSegments(vtt: string): Segment[] {
 
   return deduped.map((seg, idx) => ({ ...seg, index: idx }))
 }
+
+export function vttToSentences(vtt: string, gapThreshold = 1.5): Segment[] {
+  const raw = vttToSegments(vtt)
+  const sentences: Omit<Segment, 'index'>[] = []
+  let current: Omit<Segment, 'index'> | null = null
+
+  for (const seg of raw) {
+    if (!current) {
+      current = { start: seg.start, end: seg.end, text: seg.text, translation: '' }
+      continue
+    }
+
+    const gap = seg.start - current.end  // gap < 0 = VTT overlap → keep merging
+    const endsPunct = /[.?!]\s*$/.test(current.text)
+    const tooLong = current.text.split(/\s+/).length > 50
+
+    if (gap >= gapThreshold || endsPunct || tooLong) {
+      sentences.push(current)
+      current = { start: seg.start, end: seg.end, text: seg.text, translation: '' }
+    } else {
+      current = { ...current, end: seg.end, text: current.text + ' ' + seg.text }
+    }
+  }
+
+  if (current) sentences.push(current)
+  return sentences.map((s, i) => ({ ...s, index: i }))
+}
