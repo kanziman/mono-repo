@@ -6,7 +6,7 @@ import path from 'path'
 import { validateVideoId } from '@/lib/validate'
 import { ensureEpisodeDir } from '@/lib/paths'
 import { downloadAudio, downloadSubtitle, downloadThumbnail, getVideoTitle } from '@/lib/ytdlp'
-import { vttToSegments } from '@/lib/vtt'
+import { vttToSentences } from '@/lib/vtt'
 import { translateAllSegments } from '@/lib/translate'
 import type { EpisodeMeta, ImportStep } from '@/types'
 
@@ -116,14 +116,14 @@ export async function POST(req: NextRequest) {
         }
 
         // Step 2: subtitle
-        let segments: ReturnType<typeof vttToSegments>
+        let segments: ReturnType<typeof vttToSentences>
         if (state.steps.subtitle === 'done') {
           enqueue({ step: 'subtitle', progress: 100, done: false })
           appendLog(episodeDir, 'subtitle: skipped (already done)')
           // Load cached subtitle to get segments for translate step
           const vttFile = fs.readdirSync(episodeDir).find((f) => f.startsWith('subtitle.') && f.endsWith('.vtt'))
           if (!vttFile) throw new Error('Subtitle file not found despite subtitle step marked done')
-          segments = vttToSegments(fs.readFileSync(path.join(episodeDir, vttFile), 'utf-8'))
+          segments = vttToSentences(fs.readFileSync(path.join(episodeDir, vttFile), 'utf-8'))
         } else {
           enqueue({ step: 'subtitle', progress: 0, done: false })
           state.steps.subtitle = 'in_progress'
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
           const vttContent = await downloadSubtitle(videoUrl, episodeDir, () => {
             enqueue({ step: 'subtitle', progress: 60, done: false })
           })
-          segments = vttToSegments(vttContent)
+          segments = vttToSentences(vttContent)
 
           state.steps.subtitle = 'done'
           saveState(episodeDir, state)
