@@ -1,0 +1,41 @@
+{
+  "planName": "design-system-refactoring",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Add failed test for new semantic tokens",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "Add CSS variables to globals.css and map them in tailwind.config.ts",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "Refactor Button.tsx component to use semantic hover tokens",
+      "status": "done"
+    },
+    {
+      "id": "task-4",
+      "name": "Split DESIGN.md and create foundations.md, components.md, accessibility-usage.md",
+      "status": "done"
+    },
+    {
+      "id": "task-5",
+      "name": "Grep and update DESIGN.md markdown link references across the codebase",
+      "status": "done"
+    },
+    {
+      "id": "task-6",
+      "name": "Verify tests and visually inspect design system pages",
+      "status": "done"
+    },
+    {
+      "id": "task-7",
+      "name": "Update AGENTS.md document map",
+      "status": "done"
+    }
+  ]
+}
