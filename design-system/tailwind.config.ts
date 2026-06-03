@@ -69,6 +69,10 @@ const config: Config = {
           purple:       'var(--semantic-accent-background-purple)',
           pink:         'var(--semantic-accent-background-pink)',
         },
+        'primary-outlined-hover': 'var(--semantic-primary-outlined-hover-bg)',
+        'assistive-outlined-hover': 'var(--semantic-assistive-outlined-hover-bg)',
+        'positive-outlined-hover': 'var(--semantic-positive-outlined-hover-bg)',
+        'negative-outlined-hover': 'var(--semantic-negative-outlined-hover-bg)',
       },
 
       fontFamily: {

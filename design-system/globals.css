@@ -73,6 +73,12 @@
   --semantic-inverse-primary: var(--blue-60);
   --semantic-inverse-background: var(--coolNeutral-15);
 
+  /* Outlined variant hover backgrounds */
+  --semantic-primary-outlined-hover-bg: rgba(0, 102, 255, 0.04);
+  --semantic-assistive-outlined-hover-bg: rgba(112, 115, 124, 0.08);
+  --semantic-positive-outlined-hover-bg: rgba(18, 213, 137, 0.04);
+  --semantic-negative-outlined-hover-bg: rgba(255, 66, 66, 0.04);
+
   /* Spacing */
   --spacing-0: 0px;
   --spacing-2: 2px;
@@ -209,6 +215,12 @@
 
     --semantic-inverse-primary: var(--blue-50);
     --semantic-inverse-background: var(--common-100);
+
+    /* Outlined variant hover backgrounds */
+    --semantic-primary-outlined-hover-bg: rgba(51, 133, 255, 0.08);
+    --semantic-assistive-outlined-hover-bg: rgba(112, 115, 124, 0.22);
+    --semantic-positive-outlined-hover-bg: rgba(47, 229, 154, 0.08);
+    --semantic-negative-outlined-hover-bg: rgba(255, 99, 99, 0.08);
 
     /* Accent Background Colors (Dark) */
     --semantic-accent-background-red-orange: #FF8533;
