@@ -96,7 +96,7 @@ graph TD
 2. **설계 (`zb-brainstorming`)**: 시각화(`zb-visualize`) 동반 설계 시안 작성 및 승인.
 3. **계획 수립 (`zb-writing-plans`)**: `*-plan.md` 및 `*-checklist.json` 작성, `exec-plans/index.md` 활성화 등록. 선택된 디자인 산출물이 요청에 포함되면 실행 전에 반드시 사용하고, UI/제품 계획은 `Source Artifact Ledger`, `Scope Lock`, `Visual Contract`, browser visual evidence로 브레인스토밍/목업 산출물을 보존한다.
 4. **격리 환경 (`zb-worktrees`)**: 작업용 git worktree 격리 작업 공간 선택적 생성.
-5. **실행 & 구현 (`zb-executing-plans` / `zb-subagent-driven-development`)**: `zb-TDD` 규칙에 맞춰 구현 및 리뷰어 검증. (실패 시 `zb-debugging` 발동)
+5. **실행 & 구현 (`zb-executing-plans` / `zb-subagent-driven-development`)**: `zb-TDD` 규칙에 맞춰 구현 및 리뷰어 검증. (UI/스타일 변경 작업 시 [design-system](.claude/skills/design-system/SKILL.md) 스킬 원칙을 강제하며, 실패 시 `zb-debugging` 발동)
 6. **지식 문서화 (`zb-learn`)**: 에러 해결 지식을 `docs/solutions/`에 기록.
 7. **마감 (`zb-finish-branch`)**: `AGENTS.md` 최신화 검토 및 로컬 머지/PR 생성.
 

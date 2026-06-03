@@ -71,7 +71,8 @@ UI/UX 구현, 리팩토링, 리뷰 시 다음 우선순위를 적용한다.
 * **설계 & 브레인스토밍**: 실제 코드 작성 및 계획 수립 전에 **[zb-brainstorming](../../.claude/skills/zb-brainstorming/SKILL.md)** 스킬을 통해 설계를 완료하고 승인을 받으십시오.
 * **실행 계획 수립**: 구현 시작 전에 **[zb-writing-plans](../../.claude/skills/zb-writing-plans/SKILL.md)** 스킬을 통해 `docs/exec-plans/active/[plan-name]-plan.md` 및 체크리스트 JSON 파일을 작성하십시오. 선택된 디자인 산출물이 요청에 포함되면 실행 전에 반드시 사용하고, UI/제품 계획은 `Source Artifact Ledger`, `Scope Lock`, `Visual Contract`, browser visual evidence로 브레인스토밍/목업 산출물을 보존하십시오.
 * **개발 및 검증**: 계획 실행 시 **[zb-subagent-driven-development](../../.claude/skills/zb-subagent-driven-development/SKILL.md)** 스킬을 활성화하여 격리된 서브에이전트 제어와 TDD 기반 구현 및 사후 품질 검증을 수행하십시오.
-* **브랜치 마무리**: 구현 완료 후 **[zb-finish-branch](../../.claude/skills/zb-finish-branch/SKILL.md)** 스킬을 사용하여 브랜치를 정리하고 PR을 작성하십시오.
+* **디자인 및 스타일 통제**: UI 구성요소 추가나 스타일 변경 시 **[design-system](../../.claude/skills/design-system/SKILL.md)** 스킬을 활성화하여 규격 준수 여부(하드코딩 색상/인라인 스타일 방지)를 확인하고 검증하십시오.
 * **디버깅**: 에러나 테스트 실패 시 **[zb-debugging](../../.claude/skills/zb-debugging/SKILL.md)** 스킬을 사용하여 근본 원인을 분석하십시오.
+* **브랜치 마무리**: 구현 완료 후 **[zb-finish-branch](../../.claude/skills/zb-finish-branch/SKILL.md)** 스킬을 사용하여 브랜치를 정리하고 PR을 작성하십시오.
 * **커밋 및 브랜치 규칙**: [.claude/guides/pr-conventions.md](.claude/guides/pr-conventions.md) 및 [.claude/guides/testing.md](.claude/guides/testing.md)를 준수하십시오.
 * **완료된 실행 계획**: `docs/exec-plans/completed/`를 참조하십시오.
