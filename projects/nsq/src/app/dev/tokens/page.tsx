@@ -31,7 +31,8 @@ export default function TokensPage() {
 
   // Avoid hydration mismatch
   useEffect(() => {
-    setMounted(true)
+    const timer = setTimeout(() => setMounted(true), 0)
+    return () => clearTimeout(timer)
   }, [])
 
   return (
@@ -68,7 +69,7 @@ export default function TokensPage() {
         <h2 className="text-label-normal text-lg font-semibold mb-4">ThemeProvider Check</h2>
         <p className="text-label-alternative text-sm">
           If dark mode is active, the <code className="text-primary-normal">{'<html>'}</code> element
-          should have <code className="text-primary-normal">class="dark"</code>.
+          should have <code className="text-primary-normal">{'class="dark"'}</code>.
           Open DevTools → Elements and verify.
         </p>
       </div>

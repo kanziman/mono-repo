@@ -32,9 +32,14 @@ function PlayerContent() {
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
 
+  // Hydration mismatch guard
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0)
+    return () => clearTimeout(timer)
+  }, [])
+
   // Mount: fetch episode data
   useEffect(() => {
-    setMounted(true)
     fetch('/api/episodes/' + videoId)
       .then(res => res.ok ? res.json() : Promise.reject('Not found'))
       .then(({ meta: m, segments }) => {

@@ -62,7 +62,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    setMounted(true)
+    const timer = setTimeout(() => setMounted(true), 0)
     fetch('/api/episodes')
       .then((res) => res.json())
       .then((data: EpisodeEntry[]) => {
@@ -70,6 +70,7 @@ export default function Home() {
         setLoading(false)
       })
       .catch(() => setLoading(false))
+    return () => clearTimeout(timer)
   }, [])
 
   async function startImportSSE(videoId: string, fromStep?: ImportStep) {

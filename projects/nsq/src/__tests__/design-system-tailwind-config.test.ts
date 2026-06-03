@@ -45,7 +45,7 @@ describe('design-system Tailwind base-key collision audit', () => {
 
 describe('design-system Tailwind semantic colors mapping', () => {
   it('defines the new semantic hover colors', () => {
-    const colors = resolved.theme.colors as any
+    const colors = resolved.theme.colors as Record<string, string>
     expect(colors['primary-outlined-hover']).toBe('var(--semantic-primary-outlined-hover-bg)')
     expect(colors['assistive-outlined-hover']).toBe('var(--semantic-assistive-outlined-hover-bg)')
     expect(colors['positive-outlined-hover']).toBe('var(--semantic-positive-outlined-hover-bg)')
