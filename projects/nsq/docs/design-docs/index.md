@@ -9,3 +9,4 @@ This folder contains the technical design specifications and architectural decis
 * [Player Layout Fix — Design Document](player-layout-fix-design.md) *(Draft, 2026-05-30)*
 * [Player Solid Dark Theme — Design Document](player-solid-dark-design.md) *(Approved, 2026-05-31)*
 * [Sentence-Level Segmentation + Speaker ID — Design Document](sentence-speaker-segmentation-design.md) *(Approved, 2026-05-31)*
+* [Design System Refactoring — Design Document](design-system-improvement-design.md) *(Draft, 2026-06-03)*
