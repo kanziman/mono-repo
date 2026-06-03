@@ -21,6 +21,10 @@
 * **접근성 (Accessibility)**: WCAG AA 대비율 준수 가이드, 포커스 링 표준화, 최소 터치 영역, ARIA 레이블 등
 * **적용 가이드 (Usage Guide)**: 폰트 CDN 연동, `next-themes` Provider 세팅 방법, CSS 변수 및 Tailwind CSS 결합 코드 예시
 
+### 4. [Do & Don't Guidelines (권장 및 금지 사항)](docs/do.md)
+* **[Do (권장 사항)](docs/do.md)**: 시맨틱 디자인 토큰 적극 활용 가이드, 공통 프리미티브 컴포넌트 재사용 원칙 등
+* **[Don't (금지/지양 사항)](docs/dont.md)**: 하드코딩된 Tailwind 색상 클래스 방지, 인라인 스타일 지양, 중복 아토믹 컴포넌트 구현 차단 등
+
 ---
 
 *최종 업데이트: 2026-06-03 (명세 문서 3분할 및 인덱스화)*
