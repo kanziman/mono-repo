@@ -14,12 +14,22 @@ This file maps agent behavior for the NSQ project. Keep details in `docs/` when 
 
 ## Design System
 
-* Import shared tokens and components from `../../design-system/`.
-* Read `../../design-system/DESIGN.md` before changing shared styles or tokens.
+* Import shared tokens and components via `@ds` alias (resolves to `../../design-system/components`).
+* Read `../../design-system/DESIGN.md` (or its split docs under `../../design-system/docs/`) before changing shared styles or tokens.
 * Do not duplicate design tokens inside this project.
 * Use Pretendard, semantic color tokens, and `next-themes` class-based dark mode.
 * Preserve Tailwind base numeric spacing semantics. Use `ds-*` spacing utilities only when exact design-system pixel tokens are required.
 * When editing shared Tailwind config or design-system primitives, run browser visual checks that measure rendered dimensions for affected controls.
+
+### npm Workspace Setup
+
+design-system은 `@repo/design-system` workspace 패키지로 등록되어 있습니다.
+의존성 관리는 **mono-repo 루트에서 `npm install`** 한 번으로 완료됩니다. 수동 심볼릭 링크 작업 불필요.
+
+```bash
+# mono-repo/ 루트에서
+npm install
+```
 
 ### Frontend Design Priority
 
@@ -31,19 +41,6 @@ UI/UX 구현, 리팩토링, 리뷰 시 다음 우선순위를 적용한다.
 
 충돌 시 항상 더 높은 우선순위의 기준을 따른다.
 
-### Monorepo Symlink Setup (필수)
-
-Turbopack root가 mono-repo root(`../..`)이므로, design-system peer deps를 mono-repo root `node_modules/`에서 찾는다.
-`npm install` 이후 또는 `node_modules` 초기화 시 반드시 아래 심링크를 생성해야 `npm run dev`가 정상 동작한다:
-
-```bash
-NSQ="$(pwd)/node_modules"   # projects/nsq/ 에서 실행
-MONO="$(pwd)/../../node_modules"
-ln -sf "$NSQ/@radix-ui"        "$MONO/@radix-ui"
-ln -sf "$NSQ/next-themes"      "$MONO/next-themes"
-ln -sf "$NSQ/react-day-picker" "$MONO/react-day-picker"
-```
-
 ## 🗺️ Documentation Map (Lazy-Load Index)
 
 토큰 및 컨텍스트 낭비를 방지하기 위해, 에이전트는 이 지도를 먼저 읽고 필요한 문서만 지연 로딩(Lazy-Load)하여 참조해야 합니다.
@@ -52,7 +49,7 @@ ln -sf "$NSQ/react-day-picker" "$MONO/react-day-picker"
 * **[docs/GOAL.md](docs/GOAL.md)**: 앱 전체 기능 요건, 핵심 유저 플로우(유튜브 임포트, 재생 화면, AI 튜터 채팅).
 * **[docs/DESIGN.md](docs/DESIGN.md)**: 폴더 구조, Context API 상태 관리, HTTP Range 오디오 스트리밍, Next.js 라우팅 패턴 설계.
 * **[docs/design-docs/player-solid-dark-design.md](docs/design-docs/player-solid-dark-design.md)**: Player 페이지 솔리드 다크 테마(Solid Dark Theme) 설계 사양서.
-* **[../../design-system/DESIGN.md](../../design-system/DESIGN.md)**: 공통 디자인 시스템 컴포넌트 사용 가이드라인 및 시맨틱 디자인 토큰 명세.
+* **[../../design-system/DESIGN.md](../../design-system/DESIGN.md)**: 공통 디자인 시스템 명세 인덱스 (세부 명세: [foundations](../../design-system/docs/foundations.md) \| [components](../../design-system/docs/components.md) \| [accessibility-usage](../../design-system/docs/accessibility-usage.md)).
 
 ### 🛡️ 안정성 및 보안 (Reliability & Security)
 * **[docs/RELIABILITY.md](docs/RELIABILITY.md)**: 외부 API(OpenRouter 등) 호출 회복력 패턴 (타임아웃 5초 상한, 지수 백오프, 서킷 브레이커).
