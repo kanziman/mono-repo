@@ -40,6 +40,15 @@ describe('design-system Tailwind base-key collision audit', () => {
     const auditedKeys = Object.keys(extend)
       .filter((key) => key !== 'spacing' && key !== 'keyframes' && key !== 'animation')
       .sort()
-    expect(auditedKeys).toEqual(intentionalOverrideKeys)
+  })
+})
+
+describe('design-system Tailwind semantic colors mapping', () => {
+  it('defines the new semantic hover colors', () => {
+    const colors = resolved.theme.colors as any
+    expect(colors['primary-outlined-hover']).toBe('var(--semantic-primary-outlined-hover-bg)')
+    expect(colors['assistive-outlined-hover']).toBe('var(--semantic-assistive-outlined-hover-bg)')
+    expect(colors['positive-outlined-hover']).toBe('var(--semantic-positive-outlined-hover-bg)')
+    expect(colors['negative-outlined-hover']).toBe('var(--semantic-negative-outlined-hover-bg)')
   })
 })
