@@ -41,10 +41,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       else if (color === 'positive') colorClasses = 'bg-status-positive text-white enabled:hover:opacity-90 disabled:bg-interaction-disable disabled:text-label-disable border-transparent';
       else if (color === 'negative') colorClasses = 'bg-status-negative text-white enabled:hover:opacity-90 disabled:bg-interaction-disable disabled:text-label-disable border-transparent';
     } else if (variant === 'outlined') {
-      if (color === 'primary') colorClasses = 'bg-transparent text-primary-normal border-primary-normal enabled:hover:bg-[rgba(0,102,255,0.04)] disabled:text-label-disable disabled:border-line-normal-normal';
-      else if (color === 'assistive') colorClasses = 'bg-transparent text-label-normal border-line-normal-normal enabled:hover:bg-fill-normal disabled:text-label-disable disabled:border-line-normal-normal';
-      else if (color === 'positive') colorClasses = 'bg-transparent text-status-positive border-status-positive enabled:hover:bg-[rgba(18,213,137,0.04)] disabled:text-label-disable disabled:border-line-normal-normal';
-      else if (color === 'negative') colorClasses = 'bg-transparent text-status-negative border-status-negative enabled:hover:bg-[rgba(255,66,66,0.04)] disabled:text-label-disable disabled:border-line-normal-normal';
+      if (color === 'primary') colorClasses = 'bg-transparent text-primary-normal border-primary-normal enabled:hover:bg-primary-outlined-hover disabled:text-label-disable disabled:border-line-normal-normal';
+      else if (color === 'assistive') colorClasses = 'bg-transparent text-label-normal border-line-normal-normal enabled:hover:bg-assistive-outlined-hover disabled:text-label-disable disabled:border-line-normal-normal';
+      else if (color === 'positive') colorClasses = 'bg-transparent text-status-positive border-status-positive enabled:hover:bg-positive-outlined-hover disabled:text-label-disable disabled:border-line-normal-normal';
+      else if (color === 'negative') colorClasses = 'bg-transparent text-status-negative border-status-negative enabled:hover:bg-negative-outlined-hover disabled:text-label-disable disabled:border-line-normal-normal';
     }
 
     const classNames = [
