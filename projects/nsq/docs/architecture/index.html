@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NSQ Architecture — Mermaid Diagrams</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3a;
+      --text: #e2e8f0;
+      --text-dim: #64748b;
+      --accent: #6366f1;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --radius: 12px;
+      --font: 'Pretendard', 'Apple SD Gothic Neo', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 28px 40px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #a5b4fc, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header .meta {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    nav {
+      padding: 10px 40px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(15, 17, 23, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-dim);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text);
+      border-color: var(--border);
+      background: var(--surface);
+    }
+
+    main {
+      /* No max-width — diagrams need full viewport */
+      padding: 32px 40px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      max-width: 720px;
+    }
+
+    .diagram-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .diagram-card-header {
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .diagram-card-header .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot.green { background: var(--green); }
+    .dot.amber { background: var(--amber); }
+    .dot.red { background: var(--red); }
+    .dot.blue { background: var(--accent); }
+
+    .diagram-card-header .title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    /* Full-width scrollable diagram container */
+    .diagram-body {
+      padding: 28px 20px;
+      overflow-x: auto;
+      overflow-y: visible;
+      /* Allow diagrams to render at natural size */
+    }
+
+    .diagram-body .mermaid {
+      display: block;
+      /* Let Mermaid determine its own width */
+      min-width: min-content;
+    }
+
+    /* Force Mermaid SVGs to be large enough */
+    .diagram-body .mermaid svg {
+      width: 100% !important;
+      min-width: 800px;
+      height: auto !important;
+      min-height: 400px;
+    }
+
+    /* For sequence diagrams, need more height */
+    .diagram-body.tall .mermaid svg {
+      min-height: 600px;
+    }
+
+    /* Stats row */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .stats { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+
+    .stat-card .value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--accent);
+    }
+
+    .stat-card .label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .legend-swatch {
+      width: 24px;
+      height: 8px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>NSQ Architecture</h1>
+    <p class="meta">Next.js · React 19 · TypeScript · App Router · Context + useReducer</p>
+  </div>
+</header>
+
+<nav>
+  <a href="#components" class="active">컴포넌트 의존성</a>
+  <a href="#state">상태 흐름</a>
+  <a href="#api">API 레이어</a>
+  <a href="#data-flow">E2E 흐름</a>
+</nav>
+
+<main>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card"><div class="value">3</div><div class="label">UI Components</div></div>
+    <div class="stat-card"><div class="value">5</div><div class="label">API Routes</div></div>
+    <div class="stat-card"><div class="value">2</div><div class="label">Custom Hooks</div></div>
+    <div class="stat-card"><div class="value">8</div><div class="label">Lib Utilities</div></div>
+    <div class="stat-card"><div class="value">1</div><div class="label">Context (Reducer)</div></div>
+    <div class="stat-card"><div class="value">2</div><div class="label">SSE Streams</div></div>
+  </div>
+
+  <!-- SECTION 1: Component Dependencies -->
+  <section id="components">
+    <div class="section-header">
+      <span class="section-label">01 / 04</span>
+      <h2 class="section-title">컴포넌트 의존성 그래프</h2>
+      <p class="section-desc">App Router 계층 구조 및 각 컴포넌트의 의존 모듈. PlayerContext가 ImmersionMode · SentenceMode · TutorPanel의 공유 상태 허브.</p>
+    </div>
+
+    <div class="diagram-card">
+      <div class="diagram-card-header">
+        <span class="dot green"></span><span class="dot amber"></span><span class="dot red"></span>
+        <span class="title">component-dependency-graph.mermaid</span>
+      </div>
+      <div class="diagram-body">
+        <div class="mermaid">
+%%{init: {'flowchart': {'nodeSpacing': 60, 'rankSpacing': 80}}}%%
+graph LR
+    subgraph APP["App Router  (app/)"]
+        LA["layout.tsx\nRootLayout"]
+        PR["providers.tsx\nThemeProvider"]
+        HM["page.tsx\nHome"]
+        PL["player/[id]\nPlayerPage"]
+        IM["import/[id]\nImportPage"]
+    end
+
+    subgraph CTX["Context Layer"]
+        PC["PlayerContext.tsx\nPlayerProvider\nusePlayer()"]
+    end
+
+    subgraph COMP["Client Components  (components/)"]
+        IMC["ImmersionMode.tsx"]
+        SMC["SentenceMode.tsx"]
+        TPC["TutorPanel.tsx"]
+    end
+
+    subgraph HOOKS["Hooks  (hooks/)"]
+        KS["useKeyboardShortcuts"]
+        PP["usePositionPersistence"]
+    end
+
+    subgraph LIB["Lib  (lib/)"]
+        YT["youtube.ts"]
+        VTT["vtt.ts"]
+        TR["translate.ts"]
+        TU["tutor.ts"]
+        AU["audio.ts"]
+        VA["validate.ts"]
+        YD["ytdlp.ts"]
+    end
+
+    subgraph EXT["External / Shared"]
+        DSC["@ds\nDesign System\nRadix + Tailwind"]
+        NT["next-themes"]
+        TY["types/index.ts"]
+    end
+
+    LA --> PR
+    PR --> HM
+    PR --> PL
+    PR --> IM
+
+    PL --> PC
+    PC --> IMC
+    PC --> SMC
+    PC --> TPC
+
+    PL --> KS
+    PL --> PP
+
+    HM --> YT
+    HM --> DSC
+    HM --> NT
+
+    IMC --> PC
+    SMC --> PC
+    TPC --> PC
+    TPC --> TU
+
+    IMC --> DSC
+    SMC --> DSC
+    TPC --> DSC
+
+    PC --> TY
+    IMC --> TY
+    SMC --> TY
+    TPC --> TY
+
+    style APP fill:#1e2030,stroke:#3b4261,color:#c8d3f5
+    style CTX fill:#2d1f35,stroke:#ff9e64,color:#ff9e64
+    style COMP fill:#1f2d35,stroke:#7dcfff,color:#7dcfff
+    style HOOKS fill:#1f3525,stroke:#9ece6a,color:#9ece6a
+    style LIB fill:#2d2535,stroke:#bb9af7,color:#bb9af7
+    style EXT fill:#1f3035,stroke:#73daca,color:#73daca
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:#3b4261"></div><span>App Router Pages</span></div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#ff9e64"></div><span>Context / State</span></div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#7dcfff"></div><span>Client Components</span></div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#9ece6a"></div><span>Custom Hooks</span></div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#bb9af7"></div><span>Lib Utilities</span></div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#73daca"></div><span>External / Shared</span></div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: State Flow -->
+  <section id="state">
+    <div class="section-header">
+      <span class="section-label">02 / 04</span>
+      <h2 class="section-title">상태 흐름도 — PlayerContext useReducer</h2>
+      <p class="section-desc">PlayerContext의 useReducer 상태 전이와 세 컴포넌트에서 발생하는 dispatch 액션 매핑.</p>
+    </div>
+
+    <div class="diagram-card">
+      <div class="diagram-card-header">
+        <span class="dot blue"></span><span class="dot amber"></span>
+        <span class="title">player-state-machine.mermaid</span>
+      </div>
+      <div class="diagram-body">
+        <div class="mermaid">
+stateDiagram-v2
+    direction LR
+
+    [*] --> Idle : PlayerProvider mount
+
+    Idle --> Loading : fetchEpisode()
+    Loading --> Ready : SET_SEGMENTS dispatch
+    Loading --> Error : fetch failed
+    Error --> Idle : retry
+
+    state Ready {
+        direction LR
+        [*] --> Paused
+        Paused --> Playing : TOGGLE_PLAY
+        Playing --> Paused : TOGGLE_PLAY
+
+        state Playing {
+            direction LR
+            [*] --> CurrentSeg
+            CurrentSeg --> NextSeg : audio ended
+            NextSeg --> CurrentSeg : SET_INDEX(+1)
+        }
+    }
+
+    state ModeSwitch {
+        direction LR
+        Immersion --> Sentence : SET_MODE
+        Sentence --> Immersion : SET_MODE
+    }
+
+    Ready --> ModeSwitch
+    ModeSwitch --> Ready
+
+    Ready --> [*] : unmount
+        </div>
+      </div>
+    </div>
+
+    <div class="diagram-card" style="margin-top:12px">
+      <div class="diagram-card-header">
+        <span class="dot blue"></span>
+        <span class="title">reducer-dispatch-mapping.mermaid</span>
+      </div>
+      <div class="diagram-body">
+        <div class="mermaid">
+%%{init: {'flowchart': {'nodeSpacing': 50, 'rankSpacing': 90}}}%%
+flowchart LR
+    subgraph SRC["Action Sources"]
+        C1["PlayerPage\n(fetch·keyboard)"]
+        C2["ImmersionMode\n(click·audio events)"]
+        C3["SentenceMode\n(next·prev·click)"]
+        C4["TutorPanel\n(persona select)"]
+    end
+
+    subgraph DISP["dispatch()  —  Reducer"]
+        A1["SET_SEGMENTS"]
+        A2["SET_INDEX"]
+        A3["TOGGLE_PLAY"]
+        A4["SET_MODE"]
+        A5["TOGGLE_TRANSLATION"]
+        A6["SET_PERSONA"]
+    end
+
+    subgraph STATE["PlayerState"]
+        S1["segments: Segment[]"]
+        S2["currentIndex: number"]
+        S3["isPlaying: boolean"]
+        S4["mode: 'immersion'|'sentence'"]
+        S5["showTranslation: boolean[]"]
+        S6["persona: Persona"]
+    end
+
+    C1 -->|"SET_SEGMENTS\nTOGGLE_PLAY"| A1
+    C1 -->|"TOGGLE_PLAY"| A3
+    C2 -->|"SET_INDEX\nTOGGLE_PLAY\nTOGGLE_TRANSLATION"| A2
+    C3 -->|"SET_INDEX\nTOGGLE_PLAY\nTOGGLE_TRANSLATION"| A2
+    C4 -->|"SET_PERSONA"| A6
+
+    A1 --> S1
+    A2 --> S2
+    A3 --> S3
+    A4 --> S4
+    A5 --> S5
+    A6 --> S6
+
+    style SRC fill:#1e2030,stroke:#9ece6a,color:#e0def4
+    style DISP fill:#2d1f35,stroke:#ff9e64,color:#e0def4
+    style STATE fill:#1f2d35,stroke:#7dcfff,color:#e0def4
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: API Layer -->
+  <section id="api">
+    <div class="section-header">
+      <span class="section-label">03 / 04</span>
+      <h2 class="section-title">API 레이어 아키텍처</h2>
+      <p class="section-desc">Next.js Route Handlers로 구성된 5개 엔드포인트. import·tutor 두 엔드포인트는 SSE(text/event-stream) 스트리밍.</p>
+    </div>
+
+    <div class="diagram-card">
+      <div class="diagram-card-header">
+        <span class="dot green"></span>
+        <span class="title">api-architecture.mermaid</span>
+      </div>
+      <div class="diagram-body">
+        <div class="mermaid">
+%%{init: {'flowchart': {'nodeSpacing': 50, 'rankSpacing': 100}}}%%
+flowchart TB
+    CL["🌐 Browser / Client"]
+
+    subgraph API["Next.js API Routes  (app/api/)"]
+        EP["GET /api/episodes\n→ EpisodeEntry[]"]
+        EPD["GET /api/episodes/:videoId\n→ Segment[] + EpisodeMeta"]
+        AU["GET /api/audio/:videoId\n→ MP3 Stream (HTTP Range)"]
+        IM["POST /api/import\n→ SSE: yt-dlp progress"]
+        TC["POST /api/tutor/chat\n→ SSE: LLM stream"]
+        TH["GET /api/thumbnail/:videoId\n→ YouTube proxy"]
+    end
+
+    subgraph FS["FileSystem  (~/.shadowing/)"]
+        FSE["episodes/{videoId}/\n  *.mp3\n  *.vtt\n  metadata.json"]
+    end
+
+    subgraph EXT["External Services"]
+        YTDLP["yt-dlp\nsubprocess"]
+        LLM["LLM API"]
+        YTIMG["YouTube CDN"]
+    end
+
+    CL -->|"JSON"| EP
+    CL -->|"JSON"| EPD
+    CL -->|"audio/mpeg range"| AU
+    CL -->|"text/event-stream"| IM
+    CL -->|"text/event-stream"| TC
+    CL -->|"image/jpeg"| TH
+
+    EP --> FS
+    EPD --> FS
+    AU --> FS
+    IM --> YTDLP
+    YTDLP --> FS
+    TC --> LLM
+    TH --> YTIMG
+
+    style API fill:#1e2030,stroke:#7dcfff,color:#e0def4
+    style FS fill:#1f3525,stroke:#9ece6a,color:#e0def4
+    style EXT fill:#2d1f35,stroke:#ff9e64,color:#e0def4
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: E2E Data Flow -->
+  <section id="data-flow">
+    <div class="section-header">
+      <span class="section-label">04 / 04</span>
+      <h2 class="section-title">End-to-End 데이터 흐름</h2>
+      <p class="section-desc">Import 워크플로우 → Player 워크플로우 → Tutor 워크플로우의 세 가지 주요 데이터 경로.</p>
+    </div>
+
+    <div class="diagram-card">
+      <div class="diagram-card-header">
+        <span class="dot amber"></span>
+        <span class="title">e2e-sequence.mermaid</span>
+      </div>
+      <div class="diagram-body tall">
+        <div class="mermaid">
+sequenceDiagram
+    actor User
+    participant Home
+    participant ImportPage
+    participant PlayerPage
+    participant PlayerCtx as PlayerContext
+    participant API
+    participant FS as FileSystem
+    participant LLM
+
+    rect rgb(30, 32, 48)
+        Note over User, LLM: 1. Import Workflow
+        User->>Home: YouTube URL 입력
+        Home->>Home: extractVideoId(url)
+        Home->>ImportPage: navigate /import/:videoId
+        ImportPage->>API: POST /api/import (SSE)
+        API->>FS: yt-dlp 실행 → mp3 + vtt 저장
+        API-->>ImportPage: progress events (0~100%)
+        ImportPage->>Home: 완료 → navigate /
+    end
+
+    rect rgb(25, 35, 30)
+        Note over User, LLM: 2. Player Workflow
+        User->>Home: 에피소드 선택
+        Home->>PlayerPage: navigate /player/:videoId
+        PlayerPage->>PlayerCtx: PlayerProvider mount
+        PlayerPage->>API: GET /api/episodes/:videoId
+        API->>FS: metadata.json + vtt 읽기
+        API-->>PlayerPage: Segment[] + EpisodeMeta
+        PlayerPage->>PlayerCtx: dispatch SET_SEGMENTS
+        User->>PlayerPage: 재생 버튼
+        PlayerPage->>PlayerCtx: dispatch TOGGLE_PLAY
+        PlayerPage->>API: GET /api/audio/:videoId (range)
+        API-->>PlayerPage: MP3 스트림
+    end
+
+    rect rgb(45, 31, 53)
+        Note over User, LLM: 3. Tutor Workflow
+        User->>TutorPanel: 질문 입력
+        TutorPanel->>API: POST /api/tutor/chat (SSE)
+        API->>LLM: 현재 세그먼트 컨텍스트 + 질문
+        LLM-->>API: 스트리밍 응답
+        API-->>TutorPanel: text/event-stream chunks
+    end
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#1a1d27',
+      primaryColor: '#2a2d3a',
+      primaryTextColor: '#c8d3f5',
+      primaryBorderColor: '#444b6a',
+      lineColor: '#565f89',
+      secondaryColor: '#1f2335',
+      tertiaryColor: '#1e2030',
+      edgeLabelBackground: '#1a1d27',
+      clusterBkg: '#1e2030',
+      clusterBorder: '#3b4261',
+      titleColor: '#c8d3f5',
+      nodeTextColor: '#c8d3f5',
+      stateLabelColor: '#c8d3f5',
+      labelBoxBkgColor: '#1e2030',
+      labelBoxBorderColor: '#3b4261',
+      actorBkg: '#1e2030',
+      actorBorder: '#565f89',
+      actorTextColor: '#c8d3f5',
+      actorLineColor: '#565f89',
+      signalColor: '#7aa2f7',
+      signalTextColor: '#c8d3f5',
+      noteBkgColor: '#1f2335',
+      noteTextColor: '#c8d3f5',
+      activationBkgColor: '#2d1f35',
+      loopTextColor: '#c8d3f5',
+    },
+    flowchart: { curve: 'basis', padding: 24 },
+    sequence: {
+      diagramMarginX: 24,
+      diagramMarginY: 24,
+      actorMargin: 80,
+      noteMargin: 12,
+      messageMargin: 40,
+      useMaxWidth: false,
+    },
+    securityLevel: 'loose',
+  });
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.25 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

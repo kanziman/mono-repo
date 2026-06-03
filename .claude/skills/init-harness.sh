@@ -180,6 +180,20 @@ EOF
 )
 create_file_if_not_exist "${TARGET_DIR}/package.json" "$package_json"
 
+# Create eslint.config.js (required for lint-staged auto-detection at monorepo root)
+eslint_config=$(cat << 'EOF'
+import js from '@eslint/js'
+
+export default [
+  js.configs.recommended,
+  {
+    rules: {},
+  },
+]
+EOF
+)
+create_file_if_not_exist "${TARGET_DIR}/eslint.config.mjs" "$eslint_config"
+
 
 # Create .claude/guides/pr-conventions.md
 pr_conventions=$(cat << 'EOF'
@@ -383,4 +397,10 @@ create_file_if_not_exist "${TARGET_DIR}/docs/references/.gitkeep" "$gitkeep_cont
 create_file_if_not_exist "${TARGET_DIR}/docs/generated/.gitkeep" "$gitkeep_content"
 create_file_if_not_exist "${TARGET_DIR}/tests/.gitkeep" "$gitkeep_content"
 
+echo ""
 echo "=== Standardized Project Structure Setup Completed for: $PROJECT_NAME ==="
+echo ""
+echo "Next steps:"
+echo "  1. Add 'projects/${PROJECT_NAME}' to the root package.json 'workspaces' array."
+echo "  2. Run 'npm install' from the mono-repo root to register the new workspace."
+echo "  3. Verify lint-staged picks up the project: staged .ts/.tsx files will be linted automatically."

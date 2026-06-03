@@ -43,6 +43,19 @@ description: 구현 완료 후 통합 단계에서 프로젝트 테스트를 검
    - 현재 변경사항 중 명령어(`package.json` 스크립트)가 변경되었거나, `docs/` 하위에 새 문서가 생성되었거나, 프로젝트 설정에 변화가 있었는지 점검합니다.
    - 변화가 있다면 프로젝트 및 모노레포의 `AGENTS.md` 파일 내 가이드 및 문서 지도(Documentation Map)를 최신화합니다.
    - `AGENTS.md` 파일 크기가 100라인을 초과하지 않는지 확인합니다 (100라인 규격 유지).
+3-c. `[ ]` **아키텍처 문서 업데이트 여부 확인**:
+   - `projects/[프로젝트명]/docs/architecture/index.html` 파일이 존재하는지 확인합니다.
+   - 존재할 경우, `AskUserQuestion`으로 사용자에게 묻습니다:
+
+     ```text
+     질문: "이번 변경으로 컴포넌트 구조나 의존성이 바뀌었나요? projects/[프로젝트명]/docs/architecture/index.html을 업데이트할까요?"
+     옵션:
+       - 예, 아키텍처 문서 업데이트 → zb-visualize-architecture 스킬 실행
+       - 아니요, 건너뜁니다
+     ```
+   - Yes → **[zb-visualize-architecture](../../.claude/skills/zb-visualize-architecture/SKILL.md)** 스킬 실행 후 계속 진행
+   - No / 존재하지 않음 → 바로 4번으로 진행
+   - 이 질문은 non-blocking — 거절해도 브랜치 종료 흐름에 영향 없음
 4. `[ ]` **의사결정 옵션 제시**: 사용자에게 아래의 4가지 선택지를 명확히 제시합니다.
    ```text
    구현 및 검증이 완료되었습니다. 어떻게 진행할까요?

@@ -1,0 +1,28 @@
+{
+  "name": "@repo/design-system",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    ".": "./components/index.ts",
+    "./tailwind": "./tailwind.config.ts",
+    "./globals.css": "./globals.css"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
+    "next-themes": ">=0.4.0",
+    "react-day-picker": ">=8.0.0",
+    "@radix-ui/react-accordion": ">=1.0.0",
+    "@radix-ui/react-avatar": ">=1.0.0",
+    "@radix-ui/react-checkbox": ">=1.0.0",
+    "@radix-ui/react-dialog": ">=1.0.0",
+    "@radix-ui/react-popover": ">=1.0.0",
+    "@radix-ui/react-radio-group": ">=1.0.0",
+    "@radix-ui/react-scroll-area": ">=1.0.0",
+    "@radix-ui/react-select": ">=2.0.0",
+    "@radix-ui/react-slider": ">=1.0.0",
+    "@radix-ui/react-switch": ">=1.0.0",
+    "@radix-ui/react-toast": ">=1.0.0",
+    "@radix-ui/react-tooltip": ">=1.0.0"
+  }
+}

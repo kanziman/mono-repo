@@ -1,10 +1,22 @@
 import path from 'path'
+import { readFileSync, existsSync } from 'fs'
 
-const nsqRoot = path.join(process.cwd(), 'projects/nsq')
+const rootPkg = JSON.parse(readFileSync('./package.json', 'utf8'))
+const workspaces = rootPkg.workspaces ?? []
 
-export default {
-  'projects/nsq/**/*.{ts,tsx}': (files) => {
-    const rel = files.map((f) => `"${path.relative(nsqRoot, f)}"`).join(' ')
-    return [`cd projects/nsq && npx eslint --fix --max-warnings=0 ${rel}`]
-  },
+const config = {}
+
+for (const ws of workspaces) {
+  const hasEslint = ['eslint.config.mjs', 'eslint.config.js', 'eslint.config.cjs'].some((f) =>
+    existsSync(path.join(ws, f))
+  )
+
+  if (hasEslint) {
+    config[`${ws}/**/*.{ts,tsx}`] = (files) => {
+      const rel = files.map((f) => `"${path.relative(ws, f)}"`).join(' ')
+      return [`cd ${ws} && npx eslint --fix --max-warnings=0 ${rel}`]
+    }
+  }
 }
+
+export default config
