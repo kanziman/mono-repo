@@ -1,0 +1,36 @@
+{
+  "planName": "design-system-rules-enforcement",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Create do.md & dont.md guidelines and update main DESIGN.md links",
+      "status": "done"
+    },
+    {
+      "id": "task-2",
+      "name": "Create agent skill for design system compliance",
+      "status": "done"
+    },
+    {
+      "id": "task-3",
+      "name": "Update AGENTS.md files with the new skill mapping",
+      "status": "done"
+    },
+    {
+      "id": "task-4",
+      "name": "Implement custom ESLint rule (no-hardcoded-colors) in eslint.config.mjs and verify TDD failure",
+      "status": "done"
+    },
+    {
+      "id": "task-5",
+      "name": "Verify lint pass and clean up any test mockups",
+      "status": "done"
+    },
+    {
+      "id": "task-6",
+      "name": "Complete execution plan and update index.md",
+      "status": "done"
+    }
+  ]
+}

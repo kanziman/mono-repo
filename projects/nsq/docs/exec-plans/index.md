@@ -15,6 +15,7 @@
 
 | 완료 날짜 | 계획서 링크 | 핵심 변경 요약 | 상태 |
 | :--- | :--- | :--- | :--- |
+| 2026-06-03 | **[design-system-rules-enforcement-plan.md](completed/design-system-rules-enforcement-plan.md)** | do.md/dont.md 가이드 문서 생성, 에이전트 지침 스킬화(.agents/skills/design-system), ESLint Flat Config 내 인라인 커스텀 규칙(design-system/no-hardcoded-colors)을 통한 posttooluse 및 lint-staged 시점의 색상/스타일 강제 검증 구현 완료 | `[x] 완료` |
 | 2026-06-03 | **[design-system-refactoring-plan.md](completed/design-system-refactoring-plan.md)** | Button 내의 하드코딩 투명도(rgba)를 시맨틱 호버 토큰으로 리팩토링 및 globals.css/tailwind.config에 변수 매핑, DESIGN.md 문서를 카테고리별 3개 파일로 분리 및 레포 링크 전수 교체 | `[x] 완료` |
 | 2026-05-31 | **[nsq-sentence-speaker-plan.md](completed/nsq-sentence-speaker-plan.md)** | VTT 문장 단위 재세그멘테이션(`vttToSentences`), LLM 화자 추론(Angela/Steven/Unknown), `SpeakerBadge` speaker prop 전환 | `[x] 완료` |
 | 2026-05-30 | **[nsq-shadowing-plan.md](completed/nsq-shadowing-plan.md)** | Next.js 14 앱 부트스트랩, 유튜브 다운로드, 번역 및 AI 튜터 통합 완료 | `[x] 완료` |
