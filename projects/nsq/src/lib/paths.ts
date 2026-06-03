@@ -1,8 +1,7 @@
-import os from 'os'
 import fs from 'fs'
 import path from 'path'
 
-export const SHADOWING_BASE = path.join(os.homedir(), '.shadowing')
+export const SHADOWING_BASE = path.join(process.cwd(), '.shadowing')
 export const EPISODES_BASE = path.join(SHADOWING_BASE, 'episodes')
 
 const VIDEO_ID_REGEX = /^[a-zA-Z0-9_-]{11}$/

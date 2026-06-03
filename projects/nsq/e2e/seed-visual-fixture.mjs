@@ -8,11 +8,11 @@
 
 import fs from 'fs'
 import path from 'path'
-import os from 'os'
 
 const VIDEO_ID = 'visualdemo1'
-const EPISODES_BASE = path.join(os.homedir(), '.shadowing', 'episodes')
+const EPISODES_BASE = path.join(process.cwd(), '.shadowing', 'episodes')
 const EPISODE_DIR = path.join(EPISODES_BASE, VIDEO_ID)
+
 
 // Ensure the episode directory exists
 fs.mkdirSync(EPISODE_DIR, { recursive: true })

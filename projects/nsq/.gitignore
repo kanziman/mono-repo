@@ -37,3 +37,7 @@ yarn-error.log*
 # playwright
 /playwright-report/
 /test-results/
+
+# local storage
+/.shadowing
+
