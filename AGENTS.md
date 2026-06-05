@@ -13,7 +13,8 @@ mono-repo/
 │   ├── tailwind.config.ts  # Shared Tailwind configuration
 │   └── DESIGN.md           # Design tokens, typography, color system docs
 └── projects/               # Individual product workspaces
-    └── nsq/                # Project: NSQ Shadowing
+    ├── nsq/                # Project: NSQ Shadowing
+    └── SIA/                # Project: SIA (Self Improving A.I.)
 ```
 
 ## Design System
@@ -69,6 +70,7 @@ lint-staged는 루트 `package.json`의 `workspaces` 배열과 각 프로젝트�
 | Project | Agent Map                                                |
 | ------- | -------------------------------------------------------- |
 | nsq     | [projects/nsq/AGENTS.md](projects/nsq/AGENTS.md) |
+| SIA     | [projects/SIA/AGENTS.md](projects/SIA/AGENTS.md)         |
 
 ## 🔄 모노레포 공통 개발 워크플로우 (zb- 스킬셋)
 
