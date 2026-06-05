@@ -1,0 +1,31 @@
+{
+  "planName": "pressure-tests-framework",
+  "status": "completed",
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Monorepo Workspace & Package Environment Setup",
+      "status": "completed"
+    },
+    {
+      "id": "task-2",
+      "name": "Scenario Engine & Schema Definition",
+      "status": "completed"
+    },
+    {
+      "id": "task-3",
+      "name": "Sandbox Runner with OpenRouter Integration",
+      "status": "completed"
+    },
+    {
+      "id": "task-4",
+      "name": "LLM Judge & Report Archiving Implementation",
+      "status": "completed"
+    },
+    {
+      "id": "task-5",
+      "name": "Self-Tuner, CI Action & AGENTS.md Update",
+      "status": "completed"
+    }
+  ]
+}

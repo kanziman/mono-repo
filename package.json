@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "design-system",
-    "projects/nsq"
+    "projects/nsq",
+    "projects/SIA"
   ],
   "devDependencies": {
     "@commitlint/cli": "^21.0.2",

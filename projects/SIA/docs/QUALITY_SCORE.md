@@ -4,11 +4,12 @@ Since SIA (Self Improving A.I.) features autonomous code modification and genera
 
 ## 🎯 Quality Scoring Rubric
 
-* **Grade A (Production-Ready)**: Test coverage > 95% for core improvement algorithms, 0 linter errors or warnings, completely documented APIs, verified no-regression status.
-* **Grade B (Stable)**: Test coverage > 85%, 0 linter errors, documented interfaces.
-* **Grade C (Unsafe / Refactor Required)**: Test coverage < 85%, or contains linter errors/warnings. Autonomous improvements producing Grade C code must be automatically rolled back.
+- **Grade A (Production-Ready)**: Test coverage > 95% for core improvement algorithms, 0 linter errors or warnings, completely documented APIs, verified no-regression status.
+- **Grade B (Stable)**: Test coverage > 85%, 0 linter errors, documented interfaces.
+- **Grade C (Unsafe / Refactor Required)**: Test coverage < 85%, or contains linter errors/warnings. Autonomous improvements producing Grade C code must be automatically rolled back.
 
 ## 📏 General Quality Rules
+
 1. **Linter-Driven CI**: All generated code must be automatically formatted (`prettier`) and linted (`eslint`) before passing to the evaluator.
 2. **Deterministic Execution**: Avoid flaky tests. AI improvement steps must be tested under deterministic sandboxed environments.
 3. **No-Regression Rule**: Autonomous modifications must maintain or improve the existing code coverage score and never lower it.

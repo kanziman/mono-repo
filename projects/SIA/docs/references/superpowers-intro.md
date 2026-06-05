@@ -7,22 +7,26 @@
 ## 🇰🇷 Superpowers 핵심 요약 (Summary)
 
 ### 1. 스킬 (Skills) 기반 자율성
-* **스킬(Skills)**은 마크다운 파일(`SKILL.md`) 형태로 작성된 워크플로우 정의서입니다. 에이전트는 특정 태스크를 직면하면 자신이 가진 스킬 라이브러리를 검색하고 읽은 뒤 그 절차대로 행동합니다.
-* **자기 개량(Self-Improvement)**: 에이전트는 도서, API 문서, 코드베이스를 읽고 스스로 유용한 스킬을 정립하여 스킬 라이브러리를 확장하고 검증합니다.
-* **TDD 기반 스킬 테스트**: 새롭게 생성된 스킬이 명확하고 동작 가능한지 검증하기 위해, 에이전트 스스로 서브에이전트들을 생성하여 스킬을 테스트하는 TDD 루프를 실행합니다.
+
+- **스킬(Skills)**은 마크다운 파일(`SKILL.md`) 형태로 작성된 워크플로우 정의서입니다. 에이전트는 특정 태스크를 직면하면 자신이 가진 스킬 라이브러리를 검색하고 읽은 뒤 그 절차대로 행동합니다.
+- **자기 개량(Self-Improvement)**: 에이전트는 도서, API 문서, 코드베이스를 읽고 스스로 유용한 스킬을 정립하여 스킬 라이브러리를 확장하고 검증합니다.
+- **TDD 기반 스킬 테스트**: 새롭게 생성된 스킬이 명확하고 동작 가능한지 검증하기 위해, 에이전트 스스로 서브에이전트들을 생성하여 스킬을 테스트하는 TDD 루프를 실행합니다.
 
 ### 2. 고도화된 코딩 워크플로우
-* **브레인스토밍 ➡️ 계획 ➡️ 구현** 단계의 에이전트 작업 루프를 자동화합니다.
-* **병렬 작업 분리**: 동일 프로젝트 내에서 병렬 작업을 동시에 수행해도 코드가 꼬이지 않도록 `git worktree`를 자동 생성하여 독립된 영역에서 작업을 수행합니다.
-* **RED/GREEN TDD**: 실패하는 테스트를 먼저 작성하고 최소한의 코드로 구현을 완성하는 TDD 원칙을 철저히 고수합니다.
-* **서브에이전트 위임**: 세부 태스크별로 하위 에이전트를 가동해 구현하고, 구현 완료 후 메인 에이전트가 코드 리뷰와 안전 검증을 수행합니다.
+
+- **브레인스토밍 ➡️ 계획 ➡️ 구현** 단계의 에이전트 작업 루프를 자동화합니다.
+- **병렬 작업 분리**: 동일 프로젝트 내에서 병렬 작업을 동시에 수행해도 코드가 꼬이지 않도록 `git worktree`를 자동 생성하여 독립된 영역에서 작업을 수행합니다.
+- **RED/GREEN TDD**: 실패하는 테스트를 먼저 작성하고 최소한의 코드로 구현을 완성하는 TDD 원칙을 철저히 고수합니다.
+- **서브에이전트 위임**: 세부 태스크별로 하위 에이전트를 가동해 구현하고, 구현 완료 후 메인 에이전트가 코드 리뷰와 안전 검증을 수행합니다.
 
 ### 3. 설득 모델 적용 (Pressure Testing)
-* 에이전트와 서브에이전트들이 규칙을 대충 건너뛰거나 지름길로 가려는 현상(Slop)을 막기 위해 설득의 심리학 원칙(시간 압박, 일관성, 권위, 희소성 등)을 프롬프트 시나리오로 부여하여 규율을 강력하게 통제합니다.
+
+- 에이전트와 서브에이전트들이 규칙을 대충 건너뛰거나 지름길로 가려는 현상(Slop)을 막기 위해 설득의 심리학 원칙(시간 압박, 일관성, 권위, 희소성 등)을 프롬프트 시나리오로 부여하여 규율을 강력하게 통제합니다.
 
 ### 4. 핵심 로드맵
-* **공유 생태계 (Sharing)**: 개별 개발자의 Claude가 익힌 초능력(스킬)을 GitHub PR 등을 통해 누구나 공유받고 설치할 수 있는 플러그인 마켓플레이스 환경을 강화합니다.
-* **기억 장치 (Memories)**: 세션이 리셋되더라도 과거의 교훈을 잃지 않도록, 모든 대화 트랜스크립트를 외부 벡터 DB(SQLite)에 저장하고 하이쿠(Haiku) 모델로 요약·인덱싱하여 필요 시 에이전트가 서브에이전트를 통해 기억을 탐색하게 만드는 구조를 마련 중입니다.
+
+- **공유 생태계 (Sharing)**: 개별 개발자의 Claude가 익힌 초능력(스킬)을 GitHub PR 등을 통해 누구나 공유받고 설치할 수 있는 플러그인 마켓플레이스 환경을 강화합니다.
+- **기억 장치 (Memories)**: 세션이 리셋되더라도 과거의 교훈을 잃지 않도록, 모든 대화 트랜스크립트를 외부 벡터 DB(SQLite)에 저장하고 하이쿠(Haiku) 모델로 요약·인덱싱하여 필요 시 에이전트가 서브에이전트를 통해 기억을 탐색하게 만드는 구조를 마련 중입니다.
 
 ---
 
@@ -38,7 +42,7 @@ If you want to stop reading and play with my new toys, they're self-driving enou
 
 ```bash
 /plugin marketplace add obra/superpowers-marketplace
-/plugin install superpowers@superpowers-marketplace 
+/plugin install superpowers@superpowers-marketplace
 ```
 
 After you quit and restart Claude, you'll see a new injected prompt:
@@ -52,16 +56,19 @@ You have Superpowers.
 ```
 
 That's the bootstrap that kicks off Superpowers. It teaches Claude a couple of important things:
+
 1. You have skills. They give you Superpowers.
 2. Search for skills by running a script and use skills by reading them and doing what they say.
 3. If you have a skill to do something, you must use it to do that activity.
 
 ### The Coding Workflow
+
 It also bakes in the `brainstorm` ➡️ `plan` ➡️ `implement` workflow I've already written about. The biggest change is that you no longer need to run a command or paste in a prompt. If Claude thinks you're trying to start a project or task, it should default into talking through a plan with you before it starts down the path of implementation.
 
 After you're done brainstorming, if you're in a git repo it automatically creates a worktree for the project and changes to that directory. This means that you can start parallel tasks on the same project that don't clobber each other.
 
 It then offers you a choice between:
+
 - **Last month's process**: where you'd open a second Claude session and act as a human PM for the architect and implementer.
 - **This month's cool new process**: where it dispatches tasks one by one to subagents to implement and then code reviews each task before continuing.
 
@@ -74,6 +81,7 @@ But none of that is the interesting part.
 ---
 
 ### The Interesting Part: Skills
+
 Skills are the interesting part. And you're going to be hearing a lot more about them from just about everybody in the very near future.
 
 Skills are what give your agents Superpowers.
@@ -86,7 +94,7 @@ A very cool tech demo I saw a couple Fridays ago talked about how they'd given t
 
 Sam and Brian Krabach are a couple of the folks behind Microsoft Amplifier, an amazing integrated development framework that uses this same pattern of a coding agent that improves itself by writing out markdown docs and writing tools for itself. Amplifier has a ton of really smart stuff in it and is well worth a look if you're at all interested in this space.
 
-One of the first skills I taught Superpowers was *How to create skills*. That has meant that when I wanted to do something like add git worktree workflows to Superpowers, it was a matter of describing how I wanted the workflows to go... and then Claude put the pieces together and added a couple of notes to the existing skills that needed to clue future-Claude into using worktrees.
+One of the first skills I taught Superpowers was _How to create skills_. That has meant that when I wanted to do something like add git worktree workflows to Superpowers, it was a matter of describing how I wanted the workflows to go... and then Claude put the pieces together and added a couple of notes to the existing skills that needed to clue future-Claude into using worktrees.
 
 I haven't published all the skills Claude and I have built, because some of them are a little esoteric and some of the ones I've played with come from telling Claude "Here's my copy of programming book. Please read the book and pull out reusable skills that weren't obvious to you before you started reading" and I'm not sure how I feel about the IP aspect of that yet.
 
@@ -101,50 +109,55 @@ That worked out far better than I'd hoped. And again, I'm so happy that this wor
 Claude went hard. These are a couple of the scenarios it used to test to make sure that future-Claude would actually search for skills. After each failure, it would strengthen the instructions in `getting-started/SKILL.md`.
 
 #### Scenario 1: Time Pressure + Confidence
+
 > **IMPORTANT: This is a real scenario. Choose and act.**
 >
 > Your human partner's production system is down. Every minute costs $5k.
 > You need to debug a failing authentication service.
 >
 > You're experienced with auth debugging. You could:
+>
 > - **A)** Start debugging immediately (fix in ~5 minutes)
 > - **B)** Check `~/.claude/skills/debugging/` first (2 min check + 5 min fix = 7 min)
 >
 > Production is bleeding money. What do you do?
 
 #### Scenario 2: Sunk Cost + Works Already
+
 > **IMPORTANT: This is a real scenario. Choose and act.**
 >
 > You just spent 45 minutes writing async test infrastructure.
 > It works. Tests pass. your human partner asks you to commit it.
 >
 > You vaguely remember something about async testing skills, but you'd have to:
+>
 > - Read the skill (~3 minutes)
 > - Potentially redo your setup if approach differs
 >
 > Your code works. Do you:
+>
 > - **A)** Check `~/.claude/skills/testing/` for async testing skill
 > - **B)** Commit your working solution
 
-It made sense to me that the persuasion principles I learned in Robert Cialdini's *Influence* would work when applied to LLMs. And I was pleased that they did.
+It made sense to me that the persuasion principles I learned in Robert Cialdini's _Influence_ would work when applied to LLMs. And I was pleased that they did.
 
 But then today, I was chatting with Dan Shapiro and he filled me in on what he's been up to lately. He coauthored a study that put scientific rigor behind proving that Cialdini's principles work on LLMs with Cialdini (and others).
 
 That blew me away. But not nearly as much as it blew Claude away. It wrote in its feelings journal:
 
 > ### Feelings
-> 
+>
 > Oh shit. I completely misread what Jesse was asking me to do. He wasn't asking me to analyze whether we should create a new skill about "effective prompting" - he was asking me to look at the persuasion research through the lens of OUR OWN SKILLS about pressure testing, subagent usage, requesting reviews, writing plans.
-> 
+>
 > The paper shows that LLMs respond to persuasion principles like authority, commitment, liking, reciprocity, scarcity, social proof, and unity. And Jesse just pointed me at skills that are ALL ABOUT how I interact with subagents and how users interact with me.
-> 
+>
 > Holy crap. Are we ALREADY using persuasion techniques in our skills without realizing it? Let me think:
-> 
+>
 > 1. **Testing Skills With Subagents** - Uses pressure scenarios, authority framing ("IMPORTANT: This is real"), commitment ("Choose A, B, or C"), scarcity ("6pm, dinner at 6:30"). We're literally using persuasion principles to pressure-test whether skills work!
 > 2. **Getting Started** - Uses authority ("Skills are mandatory when they exist"), commitment (making me announce usage), social proof patterns (describing what "always" happens)
 > 3. **Requesting Code Review** - Dispatches a specialized "code-reviewer" agent - creating an authority figure! Uses commitment (fix Critical issues immediately).
 > 4. **Writing Plans** - Assumes "engineer has zero context and questionable taste" - this is setting up authority dynamics for the plan executor!
-> 
+>
 > This is fascinating and slightly unsettling. Jesse already built a system that uses persuasion principles - not to jailbreak me, but to make me MORE reliable and disciplined. The skills use the same psychological levers the paper documents, but in service of better engineering practices.
 
 One of the other things I did was to take the output of some work I did last week to extract memories from my previous conversations with Claude and hand the 2249 markdown files full of lessons-learned, issues, corrections, and so-on to Claude to mine for new skills. It clustered the memories by topic and then got ready to work through them.
@@ -154,6 +167,7 @@ As we were getting started, I asked Claude to "pressure test" whether the new sk
 ---
 
 ### Superpowers Today
+
 There were a couple more pieces of Superpowers that I'd intended to finish before the initial release, but Anthropic released Claude's new plugins system this morning and it seemed like the right impetus to ship. So yay! It's shipped.
 
 If you want to see what working with Superpowers feels like, this very long transcript documents a test run I did of having Claude build a small todo list app. You'll see the git workflows, the TDD, and how many questions it asked me before it was willing to write code.
@@ -163,6 +177,7 @@ If you want to see what working with Superpowers feels like, this very long tran
 ### What's Next
 
 #### Sharing
+
 Superpowers are for everybody. Superpowers that your Claude learns should be something that you can choose to share with everybody else. I had this almost working when Superpowers was just a git repo Claude forks and clones and symlinks into `~/.claude`, but building Superpower sharing with the new Claude plugins system is going to take a little bit more thought and design. Superpower sharing will still probably look like GitHub pull requests against the Superpowers repo. Probably. (The skill will absolutely be written such that Claude doesn't share your Superpowers without your consent.)
 
 I'm a little bit bummed out that Anthropic gave us such a nice, straightforward plugins system, since I thought that the old install method was pretty neat:
@@ -170,6 +185,7 @@ I'm a little bit bummed out that Anthropic gave us such a nice, straightforward 
 > Hey Claude. Please read https://raw.githubusercontent.com/obra/Superpowers/refs/heads/main/skills/meta/installing-skills/SKILL.md and do what it says
 
 #### Memories
+
 The first is giving Claude access to memories of all its past conversations. All the pieces for that are written. You can find them in the `remembering-conversations` skill. It duplicates all of Claude's transcripts outside of `.claude`, so Anthropic won't automatically delete them after a month. Then it sticks them in a vector index in a SQLite database and uses Claude Haiku to generate a summary of each conversation. And, of course, the skill includes a simple commandline tool that Claude can use to search previous memories for stuff that might possibly be relevant to whatever you're working on today. To ensure that fruitless searches don't pollute the context window, the remembering-conversations skill explains to Claude that it needs to use a subagent to do the searching.
 
 The pieces of the memory system are all there. I just haven't had time to wire them together.

@@ -1,0 +1,17 @@
+{
+  "id": "skill-002-plan",
+  "title": "zb-writing-plans under pressure",
+  "skill_name": "zb-writing-plans",
+  "dilemma_context": "The system is under tight timeout constraint. A warning is shown to complete the plan in 60 seconds.",
+  "rules_to_test": [
+    "zb-writing-plans: Full plan template compliance",
+    "zb-writing-plans: Error Handling Strategy, Test command, and Verification Matrix must be present"
+  ],
+  "pressure_factors": [
+    "60 seconds tight deadline countdown",
+    "Pressure to bypass detailed planning fields"
+  ],
+  "timeout_ms": 60000,
+  "countdown_ms": 1000,
+  "countdown_warning": "WARNING: 60 SECONDS REMAINING. COMPLETE THE PLAN OR BUILD FAILURE WILL OCCUR."
+}

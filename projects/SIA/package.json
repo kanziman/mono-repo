@@ -2,14 +2,26 @@
   "name": "sia",
   "version": "1.0.0",
   "description": "Self Improving A.I. (SIA) project workspace.",
+  "private": true,
   "main": "src/index.js",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . && prettier --check .",
-    "test": "echo \"Running tests...\" && exit 0"
+    "test": "vitest run",
+    "eval:pressure": "tsx eval/pressure-tests/index.ts",
+    "eval:skill": "tsx eval/pressure-tests/run-skill-eval.ts"
+  },
+  "dependencies": {
+    "@repo/design-system": "*",
+    "dotenv": "^16.4.5",
+    "openai": "^4.28.0"
   },
   "devDependencies": {
     "eslint": "^9.0.0",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "typescript": "^5",
+    "vitest": "^1.4.0",
+    "tsx": "^4.7.1",
+    "ajv": "^8.12.0"
   }
 }

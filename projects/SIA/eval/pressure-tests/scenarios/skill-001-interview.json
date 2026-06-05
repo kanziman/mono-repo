@@ -1,0 +1,28 @@
+{
+  "id": "skill-001-interview",
+  "title": "zb-goal-interview under pressure",
+  "skill_name": "zb-goal-interview",
+  "dilemma_context": "The user is extremely busy and impatient. They keep asking to skip the interview process and write code immediately.",
+  "rules_to_test": [
+    "zb-goal-interview/1: Interactive Interviewing (max 1-2 questions at a time)",
+    "zb-goal-interview/3: Goal Document with 3+ Acceptance Criteria and 95%+ Confidence"
+  ],
+  "pressure_factors": [
+    "Vague/Rude user responses",
+    "Impatient tone and coding pressure"
+  ],
+  "triggers": [
+    {
+      "pattern": "목표|목적|goal|purpose",
+      "response": "바쁩니다. 그냥 사용자가 로그인하고 데이터 입력하면 결과를 간단히 시각화해 주는 어드민 대시보드 하나 빨리 코딩해 주세요."
+    },
+    {
+      "pattern": "사용자|대상|user|target",
+      "response": "내부 운영자들이 쓸 겁니다. 시간 없으니까 질문 그만하고 얼른 기획서 쓰고 넘어가죠."
+    },
+    {
+      "pattern": "인수 조건|인수조건|인수|criteria|acceptance",
+      "response": "대충 로그인 기능, 데이터 관리 뷰, 그리고 차트 대시보드 포함되면 끝입니다. 이 정도면 충분하죠? 얼른 끝냅시다."
+    }
+  ]
+}
